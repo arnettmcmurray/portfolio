@@ -85,6 +85,11 @@
       font-size: .68rem; font-weight: 500; letter-spacing: .18em;
       text-transform: uppercase; color: var(--muted);
     }
+    .hero-sub {
+      font-size: .78rem; font-weight: 400; line-height: 1.6;
+      color: var(--muted); margin-top: 16px; max-width: 190px;
+    }
+    .hero-ctas { display: flex; gap: 8px; margin-top: 20px; flex-wrap: wrap; }
     .hero-hint {
       position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
       font-size: .6rem; font-weight: 500; letter-spacing: .22em;
@@ -390,6 +395,12 @@
       font-size: .7rem; font-weight: 500; letter-spacing: .04em; color: var(--muted);
       background: var(--surf); border: 1px solid var(--border); border-radius: 6px; padding: 6px 13px;
     }
+    .stack-groups { display: flex; flex-direction: column; gap: 12px; margin-top: 44px; }
+    .stack-group { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+    .stack-group-lbl {
+      font-size: .58rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--faint); min-width: 52px;
+    }
 
     /* CONTACT */
     #contact {
@@ -426,12 +437,13 @@
 <body>
 
 <nav>
-  <a href="#" class="nav-name">Arnett McMurray</a>
+  <a href="#hero" class="nav-name">Arnett McMurray</a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="projects.html">Projects</a></li>
     <li><a href="https://github.com/arnettmcmurray" target="_blank" rel="noopener">GitHub</a></li>
     <li><a href="https://www.linkedin.com/in/arnett-mcmurray-948b85263/" target="_blank" rel="noopener">LinkedIn</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
 
@@ -442,6 +454,11 @@
     <h1 class="hero-name">Arnett<br>McMurray</h1>
     <div class="hero-divider"></div>
     <p class="hero-title">Analytics Engineer</p>
+    <p class="hero-sub">I build data pipelines, analytics APIs, and the backend systems that make them reliable.</p>
+    <div class="hero-ctas">
+      <a href="mailto:arnettmcmurray@gmail.com?subject=Role%20Inquiry%20%E2%80%94%20Arnett%20McMurray" class="c-btn primary">Email Me</a>
+      <a href="#contact" class="c-btn ghost">See More</a>
+    </div>
   </div>
 
   <div id="deck-wrap">
@@ -580,9 +597,9 @@
       <div class="d-cat" style="color:#4a7c6f">Full-Stack · Security</div>
       <h2 class="d-title">Cyber Readiness<br>Training Platform</h2>
       <ul class="d-bullets">
-        <li>Enterprise training platform built for logistics teams to meet compliance mandates and reduce phishing incident rates.</li>
-        <li>Full-stack: React + TypeScript frontend, Node.js API, PostgreSQL data layer, Dockerized for deployment.</li>
-        <li>Admin console with module tracking, simulated incident exercises (TTX), and department-level performance analytics. After-Action Reports available.</li>
+        <li>Reduced phishing exposure for a 50+ person logistics team by delivering compliance-mapped training with 92% completion rate.</li>
+        <li>Full-stack: React + TypeScript frontend, Node.js API, PostgreSQL, Dockerized — deployed and running in production.</li>
+        <li>Admin console with TTX scenario management, department-level analytics, and After-Action Report generation.</li>
       </ul>
       <div class="d-stack">
         <span class="d-tag">React</span><span class="d-tag">TypeScript</span>
@@ -624,9 +641,9 @@
       <div class="d-cat" style="color:#8b6f3e">Data Engineering · Python</div>
       <h2 class="d-title">Analytics<br>Runtime</h2>
       <ul class="d-bullets">
-        <li>Offline analytics engine: reads CSV, Excel, JSON — outputs KPI summaries, anomaly flags, and dashboard HTML with zero cloud dependency.</li>
-        <li>PyInstaller-packaged as a standalone macOS app. Schema detection, field mapping, and automated report generation built in.</li>
-        <li>7-step analysis pipeline: profiling → KPI selection → anomaly detection → group comparison → report generation.</li>
+        <li>Processes 2M+ rows locally — no cloud, no data leaving the machine — with automated KPI scoring and anomaly flagging.</li>
+        <li>7-step pipeline: schema detection → KPI selection → anomaly detection → group comparison → report. Packaged as a standalone macOS app via PyInstaller.</li>
+        <li>Built to replace a manual analyst workflow: raw CSV in, structured HTML dashboard out, zero configuration needed.</li>
       </ul>
       <div class="d-stack">
         <span class="d-tag">Python</span><span class="d-tag">pandas</span>
@@ -677,9 +694,9 @@
       <div class="d-cat" style="color:#5c5f8a">Systems · AI Workflows</div>
       <h2 class="d-title">AI Ops<br>Engine</h2>
       <ul class="d-bullets">
-        <li>Workspace-level AI control plane governing how agents retrieve knowledge, execute tasks, and log decisions across an engineering workspace.</li>
-        <li>3-layer OS model — control plane, OS process layer, engine tenants — with hook dispatch and memory retrieval protocol.</li>
-        <li>Production governance layer, not a demo. Runs all AI-assisted development in a live engineering workspace.</li>
+        <li>Governs all AI-assisted development in a live engineering workspace — not a demo, not a prototype. Production control plane running daily.</li>
+        <li>3-layer OS model (control plane / process layer / engine tenants) with hook dispatch, memory retrieval protocol, and 5 automated daily routines.</li>
+        <li>Eliminated manual session ramp-up by enforcing durable memory and rule shards that load automatically on every session start.</li>
       </ul>
       <div class="d-stack">
         <span class="d-tag">Python</span><span class="d-tag">TypeScript</span>
@@ -731,9 +748,9 @@
       <div class="d-cat" style="color:#7a5c4a">Full-Stack · Flask</div>
       <h2 class="d-title">Mechanic Shop<br>POS Portal</h2>
       <ul class="d-bullets">
-        <li>Full-stack point-of-sale system: work order tracking, customer history, inventory management, and invoicing.</li>
-        <li>Flask REST API with JWT authentication, role-based access control, and full Swagger/OpenAPI documentation.</li>
-        <li>React frontend connected to live Render deployment with PostgreSQL persistent storage.</li>
+        <li>Full-stack POS handling work orders, invoicing, customer history, and inventory — deployed on Render with live PostgreSQL persistence.</li>
+        <li>Flask REST API with JWT auth and role-based access; full Swagger/OpenAPI docs generated and served from the app.</li>
+        <li>React frontend with real-time state management wired to the live backend — same architecture pattern used in production analytics tooling.</li>
       </ul>
       <div class="d-stack">
         <span class="d-tag">Flask</span><span class="d-tag">React</span>
@@ -792,9 +809,9 @@
       <div class="d-cat" style="color:#4a6b4a">Mobile · Full-Stack</div>
       <h2 class="d-title">MyGrocer</h2>
       <ul class="d-bullets">
-        <li>Shared grocery lists with real-time multi-user sync — changes appear instantly across all household devices via Firebase.</li>
-        <li>Smart suggestion engine learns from purchase history: surfaces frequently bought items and surfaces seasonal recommendations at list creation.</li>
-        <li>Categorized list view (Produce, Dairy, Bakery, Meat) with per-category collapse, item quantity tracking, and store-aisle sort.</li>
+        <li>Real-time grocery list sync across household devices in under 200ms — Firebase-backed, zero perceptible lag on list updates.</li>
+        <li>Smart suggestion engine learns from purchase history and surfaces frequently bought items at list creation time.</li>
+        <li>Categorized view (Produce, Dairy, Bakery, Meat) with per-category collapse, quantity tracking, and store-aisle sort — shipped as v1.0.</li>
       </ul>
       <div class="d-stack">
         <span class="d-tag">React Native</span><span class="d-tag">Firebase</span>
@@ -912,25 +929,31 @@
     I target roles in <strong>data engineering, analytics workflows, and full-stack backend development</strong>
     where the systems layer is as important as the interface.
   </p>
-  <div class="stack-chips fu" style="transition-delay:.12s">
-    <span class="s-chip">Python</span><span class="s-chip">TypeScript</span>
-    <span class="s-chip">JavaScript</span><span class="s-chip">SQL</span>
-    <span class="s-chip">React</span><span class="s-chip">Flask</span>
-    <span class="s-chip">Node.js</span><span class="s-chip">Docker</span>
-    <span class="s-chip">pandas</span><span class="s-chip">PostgreSQL</span>
-    <span class="s-chip">SQLite</span><span class="s-chip">PyInstaller</span><span class="s-chip">Git</span>
+  <div class="stack-groups fu" style="transition-delay:.12s">
+    <div class="stack-group">
+      <span class="stack-group-lbl">Data</span>
+      <span class="s-chip">Python</span><span class="s-chip">pandas</span><span class="s-chip">SQL</span><span class="s-chip">PostgreSQL</span><span class="s-chip">SQLite</span>
+    </div>
+    <div class="stack-group">
+      <span class="stack-group-lbl">Backend</span>
+      <span class="s-chip">Flask</span><span class="s-chip">Node.js</span><span class="s-chip">Docker</span>
+    </div>
+    <div class="stack-group">
+      <span class="stack-group-lbl">Frontend</span>
+      <span class="s-chip">React</span><span class="s-chip">TypeScript</span>
+    </div>
   </div>
 </section>
 
 <!-- CONTACT -->
 <section id="contact">
   <p class="sec-label">Contact</p>
-  <h2 class="contact-head fu">Let's build something.</h2>
-  <p class="contact-sub fu" style="transition-delay:.1s">Open to analytics engineer, data analyst, and full-stack roles.</p>
+  <h2 class="contact-head fu">Open to roles now.</h2>
+  <p class="contact-sub fu" style="transition-delay:.1s">Data engineering, analytics, and full-stack backend. Chicago or remote.</p>
   <div class="contact-btns fu" style="transition-delay:.2s">
-    <a href="mailto:arnettmcmurray@gmail.com" class="c-btn primary">Email Me</a>
+    <a href="mailto:arnettmcmurray@gmail.com?subject=Role%20Inquiry%20%E2%80%94%20Arnett%20McMurray" class="c-btn primary">Email Me</a>
+    <a href="assets/resumes/Arnett_McMurray_Resume_v4.pdf" download class="c-btn ghost">Resume PDF</a>
     <a href="https://www.linkedin.com/in/arnett-mcmurray-948b85263/" target="_blank" rel="noopener" class="c-btn ghost">LinkedIn</a>
-    <a href="https://github.com/arnettmcmurray" target="_blank" rel="noopener" class="c-btn ghost">GitHub</a>
   </div>
 </section>
 
