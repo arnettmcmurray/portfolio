@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Option A — Stacked Sections</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0d0d;
+      --bg-card: #141414;
+      --bg-card-hover: #1a1a1a;
+      --border: #242424;
+      --text: #f0f0f0;
+      --text-muted: #888;
+      --text-dim: #555;
+      --max-w: 860px;
+      --gap: 96px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13,13,13,0.92);
+      backdrop-filter: blur(8px);
+    }
+    .nav-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-name { font-size: 14px; font-weight: 600; letter-spacing: 0.04em; color: var(--text); text-decoration: none; }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a { font-size: 13px; color: var(--text-muted); text-decoration: none; letter-spacing: 0.02em; }
+    .nav-links a:hover { color: var(--text); }
+
+    /* HERO */
+    .hero {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 120px 24px 100px;
+      text-align: center;
+    }
+    .hero-word {
+      font-size: clamp(52px, 10vw, 96px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: var(--text);
+      margin-bottom: 28px;
+    }
+    .hero-name {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .hero-sub {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+    .btn-row { display: flex; gap: 12px; justify-content: center; }
+    .btn {
+      display: inline-block;
+      padding: 11px 24px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: opacity 0.15s;
+    }
+    .btn:hover { opacity: 0.8; }
+    .btn-primary { background: var(--text); color: var(--bg); }
+    .btn-ghost { border: 1px solid var(--border); color: var(--text-muted); }
+
+    /* DIVIDER */
+    .divider { border: none; border-top: 1px solid var(--border); }
+
+    /* PILL LABEL */
+    .pill {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 4px 14px;
+      margin-bottom: 28px;
+    }
+
+    /* SECTIONS */
+    section {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: var(--gap) 24px;
+    }
+    section h2 {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 48px;
+    }
+
+    /* PROJECT CARD — STACKED (image full-width, content below) */
+    .project {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--bg-card);
+      margin-bottom: 32px;
+    }
+    .project-img {
+      width: 100%;
+      display: block;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      object-position: top;
+      border-bottom: 1px solid var(--border);
+    }
+    .project-img.tall {
+      aspect-ratio: 4/3;
+    }
+    .project-body { padding: 28px 32px 32px; }
+    .project-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .project-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .project-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .project-bullets {
+      list-style: none;
+      margin-bottom: 22px;
+    }
+    .project-bullets li {
+      font-size: 13px;
+      color: var(--text-muted);
+      padding: 6px 0;
+      border-bottom: 1px solid #1e1e1e;
+      line-height: 1.6;
+    }
+    .project-bullets li:last-child { border-bottom: none; }
+    .project-bullets strong { color: #ccc; font-weight: 500; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .tag {
+      font-size: 11px;
+      color: var(--text-dim);
+      border: 1px solid #222;
+      border-radius: 4px;
+      padding: 3px 10px;
+      letter-spacing: 0.03em;
+    }
+    .status-badge {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #555;
+      border: 1px solid #222;
+      border-radius: 4px;
+      padding: 3px 8px;
+    }
+    .project-link { font-size: 13px; color: var(--text-muted); text-decoration: none; border-bottom: 1px solid #333; padding-bottom: 1px; }
+    .project-link:hover { color: var(--text); border-color: #555; }
+
+    /* SUPPORTING (lighter cards) */
+    .project.supporting .project-img { aspect-ratio: 16/7; }
+    .project.supporting .project-body { padding: 22px 28px 26px; }
+    .project.supporting .project-title { font-size: 17px; }
+
+    /* DATA SIGNAL */
+    .data-gallery {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .data-gallery img {
+      width: 100%;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      display: block;
+    }
+    .data-gallery img.wide { grid-column: 1 / -1; }
+
+    /* BACKGROUND */
+    .cred-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    .cred-item {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 14px 16px;
+      background: var(--bg-card);
+    }
+    .cred-title { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+    .cred-org { font-size: 12px; color: var(--text-dim); }
+
+    .stack-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .stack-tag {
+      font-size: 12px;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 5px 12px;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 28px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    footer p { font-size: 12px; color: var(--text-dim); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 12px; color: var(--text-dim); text-decoration: none; }
+    .footer-links a:hover { color: var(--text-muted); }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="nav-name">Arnett McMurray</a>
+      <div class="nav-links">
+        <a href="#projects">Projects</a>
+        <a href="#background">Background</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-name">Arnett McMurray</p>
+    <h1 class="hero-word">ANALYTICS<br>ENGINEER</h1>
+    <p class="hero-sub">Former culinary operator turned software engineer building analytics pipelines, training platforms, and operational systems.</p>
+    <div class="btn-row">
+      <a href="#projects" class="btn btn-primary">View My Work</a>
+      <a href="https://github.com/arnettmcmurray" class="btn btn-ghost" target="_blank">GitHub</a>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- FEATURED PROJECTS -->
+  <section id="projects">
+    <span class="pill">Featured Projects</span>
+
+    <!-- Cyber Readiness -->
+    <div class="project">
+      <img class="project-img" src="file:///Users/arnettmcmurray/Desktop/FE_portfolio_screenshots/localhost_5173_capabilities.png" alt="Cyber Readiness Training Platform — Capabilities" />
+      <div class="project-body">
+        <div class="project-meta">
+          <span class="status-badge">Active</span>
+        </div>
+        <h3 class="project-title">Cyber Readiness Training Platform</h3>
+        <p class="project-desc">Full-stack platform for delivering cybersecurity training, tabletop exercises, and after-action reporting to logistics organizations.</p>
+        <ul class="project-bullets">
+          <li><strong>What it is:</strong> Multi-role training environment with learner flows, admin dashboards, TTX scenario management, and group reporting</li>
+          <li><strong>What I built:</strong> React/TypeScript UI, Node/Express backend, PostgreSQL, Docker environment, auth flows, seeded data, operational runbooks</li>
+          <li><strong>Why it matters:</strong> Enterprise product architecture at real scale — security domain, multi-surface complexity, production-grade delivery</li>
+        </ul>
+        <div class="tags">
+          <span class="tag">React / TypeScript</span>
+          <span class="tag">Node / Express</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">Docker</span>
+          <span class="tag">Cybersecurity</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Analytics Runtime -->
+    <div class="project">
+      <img class="project-img" src="file:///Users/arnettmcmurray/Desktop/FE_portfolio_screenshots/admin-kb.png" alt="Analytics Runtime — Pipeline Output" />
+      <div class="project-body">
+        <div class="project-meta">
+          <span class="status-badge">Active — v2.1</span>
+        </div>
+        <h3 class="project-title">Analytics Runtime</h3>
+        <p class="project-desc">A local desktop analytics engine that turns raw business files into KPI summaries, anomaly reports, charts, and analyst-ready dashboards.</p>
+        <ul class="project-bullets">
+          <li><strong>What it is:</strong> Multi-stage Python pipeline — file intake → schema profiling → cleaning → KPI analysis → report output — packaged as a standalone macOS desktop app</li>
+          <li><strong>What I built:</strong> Ingest layer (CSV, Excel, JSON, Parquet), column profiler, anomaly detection, segment comparison, SQL mode, scenario engine, PyInstaller packaging</li>
+          <li><strong>Why it matters:</strong> End-to-end data engineering in a local runtime — no cloud dependency, handles large files, reproducible outputs</li>
+        </ul>
+        <div class="tags">
+          <span class="tag">Python / pandas</span>
+          <span class="tag">Data Pipeline</span>
+          <span class="tag">KPI Analytics</span>
+          <span class="tag">SQLite</span>
+          <span class="tag">Desktop App</span>
+        </div>
+        <a href="https://github.com/arnettmcmurray/AnalyticsRuntime" class="project-link" target="_blank">GitHub →</a>
+      </div>
+    </div>
+
+    <!-- AI Ops Engine -->
+    <div class="project">
+      <img class="project-img tall" src="file:///Users/arnettmcmurray/Desktop/seanecurrie.github.io_hpac-salary-benchmarking_.png" alt="AI Ops Engine — Analytics Output" />
+      <div class="project-body">
+        <div class="project-meta">
+          <span class="status-badge">In Progress — Phase 2</span>
+        </div>
+        <h3 class="project-title">AI Ops Engine</h3>
+        <p class="project-desc">A structured AI workflow system for controlled task execution, multi-engine orchestration, memory governance, and repeatable planning.</p>
+        <ul class="project-bullets">
+          <li><strong>What it is:</strong> A layered operating environment for AI-assisted work — routing rules, memory tiering, skill chains, and execution governance built in</li>
+          <li><strong>What I built:</strong> OS governance layer (rule shards, hook dispatch), engine layer (isolated pipelines), memory system (raw → processed → knowledge), session protocols</li>
+          <li><strong>Why it matters:</strong> Systems architecture beyond app building — operational discipline, AI workflow design, and governance at infrastructure level</li>
+        </ul>
+        <div class="tags">
+          <span class="tag">AI Systems</span>
+          <span class="tag">Workflow Orchestration</span>
+          <span class="tag">Governance</span>
+          <span class="tag">Multi-Engine</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- DATA SIGNAL -->
+  <section id="data">
+    <span class="pill">Data &amp; Analysis Outputs</span>
+    <p style="color:var(--text-muted); font-size:14px; margin-bottom:28px; line-height:1.7;">
+      Actual output from the Analytics Runtime pipeline — KPI summaries, anomaly detection, segment comparisons, and rendered HTML dashboards.
+    </p>
+    <div class="data-gallery">
+      <img class="wide" src="file:///Users/arnettmcmurray/Desktop/seanecurrie.github.io_hpac-salary-benchmarking_.png" alt="Analytics Report Output" />
+      <img src="file:///Users/arnettmcmurray/Desktop/FE_portfolio_screenshots/localhost_5173_capabilities (1).png" alt="Platform View 1" />
+      <img src="file:///Users/arnettmcmurray/Desktop/FE_portfolio_screenshots/localhost_5173_capabilities (2).png" alt="Platform View 2" />
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- SUPPORTING -->
+  <section>
+    <span class="pill">Supporting Projects</span>
+    <div class="project supporting">
+      <div class="project-body">
+        <h3 class="project-title">Mechanic Shop POS Portal</h3>
+        <p class="project-desc">Deployed Flask API with JWT auth, Swagger docs, PostgreSQL, and a React frontend. Full-stack service ticket management from intake to completion.</p>
+        <div class="tags">
+          <span class="tag">Flask / Python</span><span class="tag">JWT Auth</span><span class="tag">React</span><span class="tag">Render</span>
+        </div>
+      </div>
+    </div>
+    <div class="project supporting">
+      <div class="project-body">
+        <h3 class="project-title">MyGrocer</h3>
+        <p class="project-desc">Shared grocery planning app for managing lists, categories, and recurring household workflows.</p>
+        <div class="tags">
+          <span class="tag">React</span><span class="tag">Shared State</span><span class="tag">Consumer App</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- BACKGROUND -->
+  <section id="background">
+    <span class="pill">Background</span>
+    <p style="color:var(--text-muted); font-size:15px; line-height:1.8; margin-bottom:36px; max-width:640px;">
+      Former culinary operations leader turned software engineer — the same execution discipline that ran a kitchen now goes into building systems that process data, surface insights, and scale cleanly.
+    </p>
+    <div class="cred-grid">
+      <div class="cred-item"><div class="cred-title">Full-Stack Software Engineering</div><div class="cred-org">Coding Temple — 2025</div></div>
+      <div class="cred-item"><div class="cred-title">Backend &amp; Frontend Specialist</div><div class="cred-org">Coding Temple — 2025</div></div>
+      <div class="cred-item"><div class="cred-title">Python Foundations for Data Analysis</div><div class="cred-org">Coding Temple — 2025</div></div>
+      <div class="cred-item"><div class="cred-title">Business Management</div><div class="cred-org">DePaul University</div></div>
+    </div>
+    <div class="stack-tags">
+      <span class="stack-tag">Python</span><span class="stack-tag">TypeScript</span><span class="stack-tag">React</span>
+      <span class="stack-tag">Node.js</span><span class="stack-tag">Flask</span><span class="stack-tag">SQL</span>
+      <span class="stack-tag">Docker</span><span class="stack-tag">pandas</span><span class="stack-tag">PostgreSQL</span>
+      <span class="stack-tag">SQLite</span><span class="stack-tag">Git</span>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <footer id="contact">
+    <p>arnettmcmurray@gmail.com</p>
+    <div class="footer-links">
+      <a href="https://github.com/arnettmcmurray" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/in/arnett-mcmurray-948b85263/" target="_blank">LinkedIn</a>
+    </div>
+  </footer>
+
+</body>
+</html>

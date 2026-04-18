@@ -1,102 +1,253 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Projects - Arnett McMurray</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <header>
-      <div class="nav-bar">
-        <h1><a href="index.html" class="site-title">Arnett McMurray</a></h1>
-        <nav>
-          <a href="about.html">About</a>
-          <a href="projects.html">Projects</a>
-          <a href="contact.html">Contact</a>
-        </nav>
-      </div>
-    </header>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects — Arnett McMurray</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:     #080808;
+      --surf:   #111010;
+      --surf2:  #1c1b1a;
+      --border: rgba(255,255,255,0.065);
+      --text:   #edebe6;
+      --muted:  #6b6865;
+      --faint:  #2e2c2a;
+      --font:   'Inter', system-ui, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100dvh;
+      -webkit-font-smoothing: antialiased;
+    }
+    body::after {
+      content: '';
+      position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+      opacity: .038;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 160px 160px;
+    }
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-thumb { background: var(--faint); border-radius: 2px; }
 
-    <div class="hero-banner">
-      <div class="raindrop-container"></div>
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px 48px;
+    }
+    .nav-name {
+      font-size: .78rem; font-weight: 600; letter-spacing: .05em;
+      color: var(--text); text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      font-size: .72rem; font-weight: 500; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--muted); text-decoration: none;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--text); }
 
-      <main>
-        <div class="page-wrapper">
-          <div class="page-content">
-            <section>
-              <h2>Recent Work</h2>
-              <p>
-                Here's where the magic happens. Each repo a spell, every commit
-                a mark of progress.
-              </p>
-              <ul>
-                <li>
-                  🛠 <strong>Portfolio Site - HTML/CSS</strong><br />
-                  <a
-                    href="https://github.com/arnettmcmurray/html-profile"
-                    target="_blank"
-                    >GitHub Repo</a
-                  >
-                </li>
-                <li>
-                  📰 <strong>News Website Template:</strong> Responsive news
-                  layout using CSS Grid and Flexbox.<br />
-                  <a
-                    href="https://arnettmcmurray.github.io/news-website-template/"
-                    target="_blank"
-                    >Live Site</a
-                  >
-                </li>
-                <li>
-                  🎯 <strong>High Stakes Night:</strong> CSS event signup page
-                  for a fictional charity.<br />
-                  <a
-                    href="https://arnettmcmurray.github.io/high-stakes-night/"
-                    target="_blank"
-                    >Live Site</a
-                  >
-                </li>
-                <li>
-                  🧱 <strong>Module 2 HTML/CSS Assignments:</strong> Base work
-                  from early frontend lessons.<br />
-                  <a
-                    href="https://arnettmcmurray.github.io/module-2-html-css/"
-                    target="_blank"
-                    >Live Site</a
-                  >
-                </li>
-              </ul>
-            </section>
-          </div>
+    main { max-width: 860px; margin: 0 auto; padding: 140px 48px 120px; }
+
+    .page-eyebrow {
+      font-size: .6rem; font-weight: 600; letter-spacing: .22em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 16px;
+    }
+    h1 {
+      font-size: clamp(2.4rem,4vw,3.6rem); font-weight: 900;
+      letter-spacing: -.05em; line-height: .9; color: var(--text);
+      margin-bottom: 60px;
+    }
+
+    .sec-label {
+      font-size: .6rem; font-weight: 600; letter-spacing: .22em;
+      text-transform: uppercase; color: var(--muted);
+      display: flex; align-items: center; gap: 16px; margin-bottom: 32px;
+    }
+    .sec-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    .project-list { display: flex; flex-direction: column; gap: 0; margin-bottom: 80px; }
+
+    .project-item {
+      padding: 32px 0; border-bottom: 1px solid var(--border);
+      display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: start;
+    }
+    .project-item:first-child { border-top: 1px solid var(--border); }
+
+    .proj-cat {
+      font-size: .58rem; font-weight: 600; letter-spacing: .18em;
+      text-transform: uppercase; margin-bottom: 10px;
+    }
+    .proj-title {
+      font-size: 1.25rem; font-weight: 800; letter-spacing: -.03em;
+      color: var(--text); margin-bottom: 12px;
+    }
+    .proj-desc {
+      font-size: .84rem; font-weight: 400; line-height: 1.7;
+      color: var(--muted); margin-bottom: 16px; max-width: 520px;
+    }
+    .proj-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+    .proj-tag {
+      font-size: .6rem; font-weight: 500; letter-spacing: .04em; color: var(--muted);
+      background: var(--surf2); border: 1px solid var(--border); border-radius: 4px; padding: 3px 8px;
+    }
+
+    .proj-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; flex-shrink: 0; }
+    .proj-status {
+      font-size: .6rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+      border-radius: 100px; padding: 5px 12px; border: 1px solid;
+    }
+    .proj-link {
+      font-size: .68rem; font-weight: 600; letter-spacing: .08em;
+      text-transform: uppercase; text-decoration: none; color: var(--muted);
+      border: 1px solid var(--border); border-radius: 7px; padding: 8px 16px;
+      transition: .2s;
+    }
+    .proj-link:hover { border-color: rgba(255,255,255,.2); color: var(--text); }
+
+    footer {
+      padding: 22px 48px; border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    footer span { font-size: .62rem; letter-spacing: .08em; color: var(--faint); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-name">Arnett McMurray</a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="https://github.com/arnettmcmurray" target="_blank" rel="noopener">GitHub</a></li>
+    <li><a href="https://www.linkedin.com/in/arnett-mcmurray-948b85263/" target="_blank" rel="noopener">LinkedIn</a></li>
+  </ul>
+</nav>
+
+<main>
+  <p class="page-eyebrow">Selected Work</p>
+  <h1>Projects</h1>
+
+  <p class="sec-label">Featured</p>
+  <div class="project-list">
+
+    <div class="project-item">
+      <div>
+        <div class="proj-cat" style="color:#4a7c6f">Full-Stack · Security</div>
+        <div class="proj-title">Cyber Readiness Training Platform</div>
+        <p class="proj-desc">
+          Enterprise cybersecurity training platform built for logistics teams. React + TypeScript frontend,
+          Node.js API, PostgreSQL, Dockerized. Admin console with learner tracking, tabletop exercise modules
+          (TTX), After-Action Reports, and department-level performance analytics.
+        </p>
+        <div class="proj-tags">
+          <span class="proj-tag">React</span><span class="proj-tag">TypeScript</span>
+          <span class="proj-tag">Node.js</span><span class="proj-tag">PostgreSQL</span>
+          <span class="proj-tag">Docker</span>
         </div>
-      </main>
+      </div>
+      <div class="proj-meta">
+        <span class="proj-status" style="color:#4a7c6f;border-color:rgba(74,124,111,.28)">Live</span>
+      </div>
     </div>
 
-    <footer>
-      <p>&copy; 2025 Arnett McMurray</p>
-    </footer>
+    <div class="project-item">
+      <div>
+        <div class="proj-cat" style="color:#8b6f3e">Data Engineering · Python</div>
+        <div class="proj-title">Analytics Runtime</div>
+        <p class="proj-desc">
+          Offline analytics engine: reads CSV, Excel, JSON — outputs KPI summaries, anomaly flags, trend charts,
+          and dashboard HTML with zero cloud dependency. PyInstaller-packaged as a standalone macOS app. Schema
+          detection, field mapping, and automated report generation built in. 2M+ rows processed locally.
+        </p>
+        <div class="proj-tags">
+          <span class="proj-tag">Python</span><span class="proj-tag">pandas</span>
+          <span class="proj-tag">Flask</span><span class="proj-tag">PyInstaller</span>
+          <span class="proj-tag">SQLite</span>
+        </div>
+      </div>
+      <div class="proj-meta">
+        <span class="proj-status" style="color:#8b6f3e;border-color:rgba(139,111,62,.28)">v2.1 · Live</span>
+        <a href="https://github.com/arnettmcmurray/AnalyticsRuntime" target="_blank" rel="noopener" class="proj-link">GitHub ↗</a>
+      </div>
+    </div>
 
-    <script>
-      const container = document.querySelector(".raindrop-container");
+    <div class="project-item">
+      <div>
+        <div class="proj-cat" style="color:#5c5f8a">Systems · AI Workflows</div>
+        <div class="proj-title">AI Ops Engine</div>
+        <p class="proj-desc">
+          Workspace-level AI control plane governing how agents retrieve knowledge, execute tasks, and log decisions.
+          3-layer OS model — control plane, OS process layer, engine tenants — with hook dispatch, memory retrieval
+          protocol, and structured output governance. Production system, not a demo.
+        </p>
+        <div class="proj-tags">
+          <span class="proj-tag">Python</span><span class="proj-tag">TypeScript</span>
+          <span class="proj-tag">Shell</span><span class="proj-tag">Git Hooks</span>
+        </div>
+      </div>
+      <div class="proj-meta">
+        <span class="proj-status" style="color:#5c5f8a;border-color:rgba(92,95,138,.28)">Operational</span>
+      </div>
+    </div>
 
-      for (let i = 0; i < 144; i++) {
-        const drop = document.createElement("div");
-        drop.classList.add("raindrop");
-        drop.style.color = `hsl(${Math.random() * 360}, 100%, 60%)`;
+  </div>
 
-        const hue = (300 / 144) * i;
-        const left = (i / 144) * 100;
-        const delay = Math.random() * 4;
-        const scale = 0.5 + Math.random();
+  <p class="sec-label">Supporting Work</p>
+  <div class="project-list">
 
-        drop.style.left = `${left}%`;
-        drop.style.animationDelay = `-${delay}s`;
-        drop.style.background = `linear-gradient(to bottom, black, hsla(${hue}, 100%, 50%, 0.8))`;
-        drop.style.transform = `scaleY(${scale})`;
+    <div class="project-item">
+      <div>
+        <div class="proj-cat" style="color:#7a5c4a">Full-Stack · Flask</div>
+        <div class="proj-title">Mechanic Shop POS Portal</div>
+        <p class="proj-desc">
+          Full-stack point-of-sale system: work order tracking, customer history, inventory, and invoicing.
+          Flask REST API with JWT auth, role-based access control, and full Swagger/OpenAPI documentation.
+          React frontend connected to live Render deployment with PostgreSQL persistent storage.
+        </p>
+        <div class="proj-tags">
+          <span class="proj-tag">Flask</span><span class="proj-tag">React</span>
+          <span class="proj-tag">PostgreSQL</span><span class="proj-tag">JWT</span>
+          <span class="proj-tag">Swagger</span><span class="proj-tag">Render</span>
+        </div>
+      </div>
+      <div class="proj-meta">
+        <span class="proj-status" style="color:#7a5c4a;border-color:rgba(122,92,74,.28)">Deployed</span>
+      </div>
+    </div>
 
-        container.appendChild(drop);
-      }
-    </script>
-  </body>
+    <div class="project-item">
+      <div>
+        <div class="proj-cat" style="color:#4a6b4a">Full-Stack · React Native</div>
+        <div class="proj-title">MyGrocer</div>
+        <p class="proj-desc">
+          Shared grocery list with real-time multi-user sync, item categorization, and smart suggestions.
+          React Native mobile-first with Firebase backend for real-time data synchronization.
+        </p>
+        <div class="proj-tags">
+          <span class="proj-tag">React Native</span><span class="proj-tag">Firebase</span>
+          <span class="proj-tag">TypeScript</span>
+        </div>
+      </div>
+      <div class="proj-meta">
+        <span class="proj-status" style="color:#4a6b4a;border-color:rgba(74,107,74,.28)">Complete</span>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <span>&copy; 2026 Arnett McMurray</span>
+  <span>Analytics Engineer</span>
+</footer>
+
+</body>
 </html>

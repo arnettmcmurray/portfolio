@@ -95,25 +95,6 @@
       content: ''; width: 28px; height: 1px; background: var(--faint);
     }
 
-    /* PROJECT NAV STRIP */
-    .proj-nav {
-      display: flex; gap: 6px; flex-wrap: wrap; justify-content: center;
-      margin-top: 28px;
-    }
-    .proj-nav-btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: .63rem; font-weight: 600; letter-spacing: .08em;
-      text-transform: uppercase; color: var(--muted);
-      background: var(--surf); border: 1px solid var(--border);
-      border-radius: 8px; padding: 7px 14px; cursor: pointer;
-      transition: border-color .2s, color .2s; user-select: none;
-    }
-    .proj-nav-btn:hover { border-color: rgba(255,255,255,.18); color: var(--text); }
-    .proj-nav-num {
-      font-size: .58rem; font-weight: 700; letter-spacing: .04em;
-      opacity: .5;
-    }
-
     /* DECK WRAP */
     #deck-wrap {
       position: relative; flex: 0 0 auto;
@@ -268,7 +249,7 @@
 
     /* VISUAL PANEL */
     .d-visual {
-      width: 100%; min-height: 280px; border-radius: 14px;
+      width: 100%; aspect-ratio: 5/4; border-radius: 14px;
       border: 1px solid var(--border); overflow: hidden;
       background: var(--surf); display: flex; flex-direction: column;
     }
@@ -282,65 +263,7 @@
       background: var(--faint); border-radius: 3px; opacity: .4;
     }
     .d-content { flex: 1; overflow: hidden; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
-    .d-content img {
-      width: 100%; height: 100%; object-fit: cover; object-position: top;
-      cursor: zoom-in; transition: opacity .2s;
-    }
-    .d-content img:hover { opacity: .88; }
-
-    /* SCREENSHOT GALLERY */
-    .d-gallery {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
-      overflow-y: auto; flex: 1;
-    }
-    .d-gallery img {
-      width: 100%; aspect-ratio: 16/10; object-fit: cover; object-position: top;
-      border-radius: 6px; cursor: zoom-in; transition: opacity .2s;
-      border: 1px solid var(--border);
-    }
-    .d-gallery img:hover { opacity: .88; }
-
-    /* TERMINAL BLOCK */
-    .d-terminal {
-      flex: 1; padding: 14px 16px;
-      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; font-size: .7rem; line-height: 1.7;
-      color: #8db58a; background: #090d09; overflow-y: auto;
-    }
-    .d-terminal .t-head { color: #c8c3b8; font-weight: 600; margin-bottom: 4px; }
-    .d-terminal .t-div  { color: #2a3a2a; margin-bottom: 6px; }
-    .d-terminal .t-warn { color: #c4903a; }
-    .d-terminal .t-ok   { color: #5a8a5a; }
-    .d-terminal .t-rec  { color: #7a9faa; }
-    .d-terminal .t-dim  { color: #3a4a3a; }
-
-    /* FILE TREE BLOCK */
-    .d-tree {
-      flex: 1; padding: 14px 16px;
-      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; font-size: .68rem; line-height: 1.75;
-      color: #8a8db5; background: #09090e; overflow-y: auto;
-    }
-    .d-tree .tr-root { color: #c8c3b8; font-weight: 600; }
-    .d-tree .tr-dir  { color: #5c5f8a; }
-    .d-tree .tr-lbl  { color: #4a4d6a; font-style: italic; }
-
-    /* LIGHTBOX */
-    #lightbox {
-      display: none; position: fixed; inset: 0; z-index: 9999;
-      background: rgba(0,0,0,.94); backdrop-filter: blur(12px);
-      align-items: center; justify-content: center; cursor: zoom-out;
-    }
-    #lightbox.open { display: flex; }
-    #lightbox img {
-      max-width: 90vw; max-height: 90vh; object-fit: contain;
-      border-radius: 10px; box-shadow: 0 0 80px rgba(0,0,0,.7);
-      cursor: default;
-    }
-    #lb-close {
-      position: fixed; top: 24px; right: 32px;
-      font-size: 1.6rem; line-height: 1; color: var(--muted);
-      background: none; border: none; cursor: pointer; transition: color .2s;
-    }
-    #lb-close:hover { color: var(--text); }
+    .d-content img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
 
     /* MOCK UI COMPONENTS */
     .mock-stat-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
@@ -348,13 +271,17 @@
       background: var(--surf2); border: 1px solid var(--border);
       border-radius: 8px; padding: 10px 12px;
     }
-    .mock-stat-v { font-size: 1rem; font-weight: 800; letter-spacing: -.03em; margin-bottom: 5px; }
+    .mock-stat-v {
+      font-size: 1rem; font-weight: 800; letter-spacing: -.03em; margin-bottom: 5px;
+    }
     .mock-stat-l { height: 5px; border-radius: 3px; background: var(--faint); width: 65%; }
+
     .mock-bars {
       display: flex; align-items: flex-end; gap: 5px;
       flex: 1; padding-top: 8px; border-top: 1px solid var(--border);
     }
     .mock-bar { flex: 1; border-radius: 4px 4px 0 0; opacity: .75; }
+
     .mock-list { display: flex; flex-direction: column; gap: 6px; }
     .mock-row {
       display: flex; align-items: center; gap: 8px;
@@ -367,6 +294,7 @@
       font-size: .55rem; font-weight: 600; letter-spacing: .08em;
       text-transform: uppercase; border-radius: 100px; padding: 2px 7px; flex-shrink: 0;
     }
+
     .mock-section-label {
       font-size: .58rem; font-weight: 600; letter-spacing: .14em;
       text-transform: uppercase; color: var(--faint); margin-bottom: 4px;
@@ -429,7 +357,6 @@
   <a href="#" class="nav-name">Arnett McMurray</a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
-    <li><a href="projects.html">Projects</a></li>
     <li><a href="https://github.com/arnettmcmurray" target="_blank" rel="noopener">GitHub</a></li>
     <li><a href="https://www.linkedin.com/in/arnett-mcmurray-948b85263/" target="_blank" rel="noopener">LinkedIn</a></li>
   </ul>
@@ -556,14 +483,7 @@
 
   </div><!-- /deck-wrap -->
 
-  <div class="hero-hint">Click any card to open</div>
-  <div class="proj-nav">
-    <button class="proj-nav-btn" onclick="openDetail(0)"><span class="proj-nav-num">01</span>Cyber Readiness</button>
-    <button class="proj-nav-btn" onclick="openDetail(1)"><span class="proj-nav-num">02</span>Analytics Runtime</button>
-    <button class="proj-nav-btn" onclick="openDetail(2)"><span class="proj-nav-num">03</span>AI Ops Engine</button>
-    <button class="proj-nav-btn" onclick="openDetail(3)"><span class="proj-nav-num">04</span>Mechanic POS</button>
-    <button class="proj-nav-btn" onclick="openDetail(4)"><span class="proj-nav-num">05</span>MyGrocer</button>
-  </div>
+  <div class="hero-hint">Hover to explore · Click to open</div>
 </section>
 
 <!-- DETAIL OVERLAY -->
@@ -582,7 +502,7 @@
       <ul class="d-bullets">
         <li>Enterprise training platform built for logistics teams to meet compliance mandates and reduce phishing incident rates.</li>
         <li>Full-stack: React + TypeScript frontend, Node.js API, PostgreSQL data layer, Dockerized for deployment.</li>
-        <li>Admin console with module tracking, simulated incident exercises (TTX), and department-level performance analytics. After-Action Reports available.</li>
+        <li>Admin console with module tracking, simulated incident exercises, and department-level performance analytics.</li>
       </ul>
       <div class="d-stack">
         <span class="d-tag">React</span><span class="d-tag">TypeScript</span>
@@ -597,19 +517,24 @@
           <div class="d-stat-lbl">Avg. Completion Rate</div>
         </div>
         <div class="d-stat">
-          <div class="d-stat-val" style="color:#4a7c6f">12</div>
-          <div class="d-stat-lbl">Active Learners</div>
+          <div class="d-stat-val" style="color:#4a7c6f">1,248</div>
+          <div class="d-stat-lbl">Active Users</div>
         </div>
       </div>
     </div>
     <div>
-      <div class="d-gallery" style="border-radius:14px;overflow:hidden;border:1px solid var(--border);">
-        <img src="assets/screenshots/cyber-admin-overview-light.png" alt="Admin Overview" onclick="openLightbox(this.src)" style="border-radius:0;">
-        <img src="assets/screenshots/cyber-ttx-scenarios-light.png" alt="TTX Scenarios" onclick="openLightbox(this.src)" style="border-radius:0;">
-        <img src="assets/screenshots/cyber-ttx-sessions-light.png" alt="TTX Sessions" onclick="openLightbox(this.src)" style="border-radius:0;">
-        <img src="assets/screenshots/cyber-learner-progress-light.png" alt="Learner Progress" onclick="openLightbox(this.src)" style="border-radius:0;">
+      <div class="d-visual">
+        <div class="d-bar"><div class="d-dot"></div><div class="d-dot"></div><div class="d-dot"></div><div class="d-urlbar"></div></div>
+        <div class="d-content" style="padding:0;overflow:hidden;">
+          <img src="../assets/screenshots/cyber-admin-overview-light.png" alt="Cyber Readiness Admin Control Center" style="width:100%;display:block;object-fit:cover;object-position:top;">
+        </div>
       </div>
-      <p style="font-size:.6rem;color:var(--faint);letter-spacing:.08em;text-transform:uppercase;margin-top:8px;text-align:center;">Click any screenshot to expand</p>
+      <div class="d-visual" style="margin-top:12px;">
+        <div class="d-bar"><div class="d-dot"></div><div class="d-dot"></div><div class="d-dot"></div><div class="d-urlbar"></div></div>
+        <div class="d-content" style="padding:0;overflow:hidden;">
+          <img src="../assets/screenshots/cyber-ttx-scenarios-light.png" alt="Cyber Readiness TTX Scenarios" style="width:100%;display:block;object-fit:cover;object-position:top;">
+        </div>
+      </div>
     </div>
   </div>
 
@@ -644,23 +569,29 @@
       </div>
     </div>
     <div>
-      <div class="d-visual" style="min-height:320px;">
-        <div class="d-bar"><div class="d-dot"></div><div class="d-dot"></div><div class="d-dot"></div><div class="d-urlbar" style="width:200px;"></div></div>
-        <div class="d-terminal">
-          <div class="t-head">ANALYTICS RUNTIME — TLC Trip Record v2</div>
-          <div class="t-dim">Findings: 20 &nbsp;·&nbsp; Quality Score: 70/100 &nbsp;·&nbsp; 496,218 outliers flagged</div>
-          <div class="t-div">─────────────────────────────────────────────</div>
-          <div class="t-warn">⚠ &nbsp;fare_amount_sum &nbsp;&nbsp;&nbsp;&nbsp;$78.5M &nbsp;&nbsp;&nbsp;driver: store_and_fwd_flag N</div>
-          <div class="t-warn">⚠ &nbsp;total_amount_sum &nbsp;&nbsp;$109.9M &nbsp;outlier concentration high</div>
-          <div class="t-warn">⚠ &nbsp;trip_distance_sum &nbsp;24M mi &nbsp;&nbsp;segment imbalance flagged</div>
-          <div class="t-warn">⚠ &nbsp;tip_amount_sum &nbsp;&nbsp;&nbsp;&nbsp;$10.6M &nbsp;&nbsp;VendorID 2 rate anomaly</div>
-          <div class="t-div" style="margin-top:4px">─────────────────────────────────────────────</div>
-          <div class="t-rec">→ &nbsp;1. Audit N-flag segment — 99.7% of revenue concentration</div>
-          <div class="t-rec">→ &nbsp;2. Review 496K outlier rows before retraining</div>
-          <div class="t-rec">→ &nbsp;3. Investigate VendorID 2 rate premium vs. VendorID 1</div>
-          <div class="t-rec">→ &nbsp;4. Validate trip_distance outliers (&gt;30 mi threshold)</div>
-          <div class="t-div" style="margin-top:4px">─────────────────────────────────────────────</div>
-          <div class="t-ok">✓ &nbsp;Pipeline complete &nbsp;·&nbsp; 2M+ rows &nbsp;·&nbsp; 7-step analysis</div>
+      <div class="d-visual">
+        <div class="d-bar"><div class="d-dot"></div><div class="d-dot"></div><div class="d-dot"></div><div class="d-urlbar"></div></div>
+        <div class="d-content">
+          <div class="mock-stat-grid">
+            <div class="mock-stat"><div class="mock-stat-v" style="color:#8b6f3e">$847K</div><div class="mock-stat-l"></div></div>
+            <div class="mock-stat"><div class="mock-stat-v" style="color:#8b6f3e">99.8%</div><div class="mock-stat-l"></div></div>
+            <div class="mock-stat"><div class="mock-stat-v" style="color:#8b6f3e">12</div><div class="mock-stat-l"></div></div>
+          </div>
+          <div class="mock-section-label">KPI Output — Last Run</div>
+          <div class="mock-bars" style="flex:1">
+            <div class="mock-bar" style="height:90%;background:var(--surf2);border:1px solid var(--border)"></div>
+            <div class="mock-bar" style="height:62%;background:#8b6f3e"></div>
+            <div class="mock-bar" style="height:75%;background:var(--surf2);border:1px solid var(--border)"></div>
+            <div class="mock-bar" style="height:48%;background:#8b6f3e;opacity:.7"></div>
+            <div class="mock-bar" style="height:83%;background:var(--surf2);border:1px solid var(--border)"></div>
+            <div class="mock-bar" style="height:58%;background:#8b6f3e;opacity:.5"></div>
+            <div class="mock-bar" style="height:70%;background:var(--surf2);border:1px solid var(--border)"></div>
+            <div class="mock-bar" style="height:95%;background:#8b6f3e"></div>
+          </div>
+          <div class="mock-list">
+            <div class="mock-row"><div class="mock-rdot" style="background:#8b6f3e"></div><span style="font-size:.65rem;color:var(--muted)">Data Ingestion · 2,847 rows processed</span></div>
+            <div class="mock-row"><div class="mock-rdot" style="background:#7a5c4a"></div><span style="font-size:.65rem;color:var(--muted)">Anomaly Detection · 12 flags raised</span></div>
+          </div>
         </div>
       </div>
     </div>
@@ -700,21 +631,21 @@
       </div>
     </div>
     <div>
-      <div class="d-visual" style="min-height:320px;">
-        <div class="d-bar"><div class="d-dot"></div><div class="d-dot"></div><div class="d-dot"></div><div class="d-urlbar" style="width:160px;"></div></div>
-        <div class="d-tree">
-          <div class="tr-root">EngineOS/</div>
-          <div>├── <span class="tr-dir">OS/</span> &nbsp;<span class="tr-lbl">control plane &amp; governance</span></div>
-          <div>│ &nbsp;&nbsp;├── <span class="tr-dir">hooks/</span> &nbsp;<span class="tr-lbl">post-commit, pre-push dispatch</span></div>
-          <div>│ &nbsp;&nbsp;├── <span class="tr-dir">memory/</span> &nbsp;<span class="tr-lbl">knowledge articles + indexed maps</span></div>
-          <div>│ &nbsp;&nbsp;└── CLAUDE.md &nbsp;<span class="tr-lbl">authoritative operator rules</span></div>
-          <div>├── <span class="tr-dir">engines/</span> &nbsp;<span class="tr-lbl">isolated project tenants</span></div>
-          <div>│ &nbsp;&nbsp;└── <span class="tr-dir">data-analyst-intern/</span></div>
-          <div>│ &nbsp;&nbsp; &nbsp;&nbsp;├── pipeline/ &nbsp;<span class="tr-lbl">7-step analysis runtime</span></div>
-          <div>│ &nbsp;&nbsp; &nbsp;&nbsp;├── outputs/latest/ &nbsp;<span class="tr-lbl">promoted run artifacts</span></div>
-          <div>│ &nbsp;&nbsp; &nbsp;&nbsp;└── gui.py &nbsp;<span class="tr-lbl">PySide6 desktop UI</span></div>
-          <div>├── <span class="tr-dir">.claude/rules/</span> &nbsp;<span class="tr-lbl">rule shards (auto-loaded)</span></div>
-          <div>└── <span class="tr-dir">hooks/</span> &nbsp;<span class="tr-lbl">dispatch stubs → OS/hooks/</span></div>
+      <div class="d-visual">
+        <div class="d-bar"><div class="d-dot"></div><div class="d-dot"></div><div class="d-dot"></div><div class="d-urlbar"></div></div>
+        <div class="d-content">
+          <div class="mock-stat-grid">
+            <div class="mock-stat"><div class="mock-stat-v" style="color:#5c5f8a">12</div><div class="mock-stat-l"></div></div>
+            <div class="mock-stat"><div class="mock-stat-v" style="color:#5c5f8a">156</div><div class="mock-stat-l"></div></div>
+            <div class="mock-stat"><div class="mock-stat-v" style="color:#5c5f8a">8.4K</div><div class="mock-stat-l"></div></div>
+          </div>
+          <div class="mock-section-label">Pipeline Status</div>
+          <div class="mock-list">
+            <div class="mock-row" style="justify-content:space-between"><code style="font-size:.58rem;color:var(--faint)">pipeline-001</code><span style="font-size:.65rem;color:var(--muted);flex:1;padding:0 8px">Data Ingestion</span><span style="font-size:.65rem;color:#5c5f8a;font-weight:700">99.8%</span><div class="mock-badge" style="background:rgba(92,95,138,.15);color:#5c5f8a">Active</div></div>
+            <div class="mock-row" style="justify-content:space-between"><code style="font-size:.58rem;color:var(--faint)">pipeline-002</code><span style="font-size:.65rem;color:var(--muted);flex:1;padding:0 8px">Transform & Validate</span><span style="font-size:.65rem;color:#5c5f8a;font-weight:700">99.9%</span><div class="mock-badge" style="background:rgba(92,95,138,.15);color:#5c5f8a">Active</div></div>
+            <div class="mock-row" style="justify-content:space-between"><code style="font-size:.58rem;color:var(--faint)">pipeline-003</code><span style="font-size:.65rem;color:var(--muted);flex:1;padding:0 8px">Business Rules Engine</span><span style="font-size:.65rem;color:#5c5f8a;font-weight:700">98.7%</span><div class="mock-badge" style="background:rgba(92,95,138,.15);color:#5c5f8a">Active</div></div>
+            <div class="mock-row" style="justify-content:space-between"><code style="font-size:.58rem;color:var(--faint)">pipeline-004</code><span style="font-size:.65rem;color:var(--muted);flex:1;padding:0 8px">Output & Distribution</span><span style="font-size:.65rem;color:var(--muted);font-weight:700">99.6%</span><div class="mock-badge" style="background:var(--surf2);color:var(--muted)">Idle</div></div>
+          </div>
         </div>
       </div>
     </div>
@@ -789,114 +720,49 @@
     </button>
     <div>
       <div class="d-eyebrow">05 of 05</div>
-      <div class="d-cat" style="color:#4a6b4a">Mobile · Full-Stack</div>
+      <div class="d-cat" style="color:#4a6b4a">Full-Stack · React</div>
       <h2 class="d-title">MyGrocer</h2>
       <ul class="d-bullets">
-        <li>Shared grocery lists with real-time multi-user sync — changes appear instantly across all household devices via Firebase.</li>
-        <li>Smart suggestion engine learns from purchase history: surfaces frequently bought items and surfaces seasonal recommendations at list creation.</li>
-        <li>Categorized list view (Produce, Dairy, Bakery, Meat) with per-category collapse, item quantity tracking, and store-aisle sort.</li>
+        <li>Real-time shared grocery list with multi-user sync, item categorization, and recipe integration.</li>
+        <li>Smart suggestion engine surfaces frequently purchased items and seasonal recommendations based on purchase history.</li>
+        <li>React Native mobile-first with Firebase backend for real-time data synchronization.</li>
       </ul>
       <div class="d-stack">
-        <span class="d-tag">React Native</span><span class="d-tag">Firebase</span>
-        <span class="d-tag">TypeScript</span><span class="d-tag">Expo</span>
+        <span class="d-tag">React Native</span><span class="d-tag">Firebase</span><span class="d-tag">TypeScript</span>
       </div>
       <div class="d-links">
-        <span class="d-status" style="color:#4a6b4a;border-color:rgba(74,107,74,.28)">Complete</span>
+        <span class="d-status" style="color:#4a6b4a;border-color:rgba(74,107,74,.28)">In Progress</span>
       </div>
       <div class="d-stat-row">
         <div class="d-stat">
-          <div class="d-stat-val" style="color:#4a6b4a">v1.0</div>
-          <div class="d-stat-lbl">Shipped</div>
-        </div>
-        <div class="d-stat">
-          <div class="d-stat-val" style="color:#4a6b4a">&lt;200ms</div>
-          <div class="d-stat-lbl">Sync latency</div>
+          <div class="d-stat-val" style="color:#4a6b4a">WIP</div>
+          <div class="d-stat-lbl">Active build</div>
         </div>
       </div>
     </div>
     <div>
-      <div class="d-visual" style="min-height:340px;background:#0f1a10;">
-        <!-- App header -->
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px 8px;border-bottom:1px solid rgba(74,107,74,.2);">
-          <div>
-            <div style="font-size:.58rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#4a6b4a;margin-bottom:2px;">MyGrocer</div>
-            <div style="font-size:.72rem;font-weight:700;color:#d4e8d4;">Weekly Shop</div>
+      <div class="d-visual">
+        <div class="d-bar"><div class="d-dot"></div><div class="d-dot"></div><div class="d-dot"></div><div class="d-urlbar"></div></div>
+        <div class="d-content">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:.72rem;font-weight:700;color:var(--text)">Shopping List</span>
+            <div class="mock-badge" style="background:rgba(74,107,74,.15);color:#4a6b4a">2 members · Synced</div>
           </div>
-          <div style="display:flex;align-items:center;gap:6px;">
-            <div style="display:flex;">
-              <div style="width:22px;height:22px;border-radius:50%;background:#2d4a2d;border:2px solid #0f1a10;display:flex;align-items:center;justify-content:center;font-size:.5rem;font-weight:700;color:#4a6b4a;">AM</div>
-              <div style="width:22px;height:22px;border-radius:50%;background:#1e3a2e;border:2px solid #0f1a10;margin-left:-6px;display:flex;align-items:center;justify-content:center;font-size:.5rem;font-weight:700;color:#5a8a6a;">JK</div>
-            </div>
-            <div style="font-size:.55rem;color:#4a6b4a;background:rgba(74,107,74,.15);border:1px solid rgba(74,107,74,.25);border-radius:100px;padding:3px 8px;">● Live</div>
+          <div class="mock-list">
+            <div class="mock-row"><div style="width:14px;height:14px;border-radius:4px;border:1px solid #4a6b4a;background:rgba(74,107,74,.2);flex-shrink:0"></div><span style="font-size:.7rem;color:var(--faint);text-decoration:line-through">Organic milk</span></div>
+            <div class="mock-row"><div style="width:14px;height:14px;border-radius:4px;border:1px solid #4a6b4a;background:rgba(74,107,74,.2);flex-shrink:0"></div><span style="font-size:.7rem;color:var(--faint);text-decoration:line-through">Chicken breast (2 lbs)</span></div>
+            <div class="mock-row"><div style="width:14px;height:14px;border-radius:4px;border:1px solid var(--border);background:transparent;flex-shrink:0"></div><span style="font-size:.7rem;color:var(--muted)">Fresh basil</span></div>
+            <div class="mock-row"><div style="width:14px;height:14px;border-radius:4px;border:1px solid var(--border);background:transparent;flex-shrink:0"></div><span style="font-size:.7rem;color:var(--muted)">Cherry tomatoes</span></div>
+            <div class="mock-row"><div style="width:14px;height:14px;border-radius:4px;border:1px solid var(--border);background:transparent;flex-shrink:0"></div><span style="font-size:.7rem;color:var(--muted)">Parmesan</span></div>
+            <div class="mock-row"><div style="width:14px;height:14px;border-radius:4px;border:1px solid var(--border);background:transparent;flex-shrink:0"></div><span style="font-size:.7rem;color:var(--muted)">Sourdough bread</span></div>
           </div>
-        </div>
-        <!-- Progress bar -->
-        <div style="padding:8px 14px 4px;">
-          <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
-            <span style="font-size:.55rem;color:#4a6b4a;letter-spacing:.06em;">7 of 18 items collected</span>
-            <span style="font-size:.55rem;color:#3a5a3a;">39%</span>
-          </div>
-          <div style="height:3px;background:rgba(74,107,74,.15);border-radius:2px;">
-            <div style="height:100%;width:39%;background:#4a6b4a;border-radius:2px;"></div>
-          </div>
-        </div>
-        <!-- Category: Produce -->
-        <div style="padding:6px 14px 2px;">
-          <div style="font-size:.54rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#3a5a3a;margin-bottom:4px;">Produce</div>
-          <div style="display:flex;flex-direction:column;gap:3px;">
-            <div style="display:flex;align-items:center;gap:8px;padding:5px 8px;background:rgba(74,107,74,.08);border-radius:6px;">
-              <div style="width:13px;height:13px;border-radius:3px;background:rgba(74,107,74,.3);border:1px solid #4a6b4a;flex-shrink:0;display:flex;align-items:center;justify-content:center;"><svg width="8" height="8" viewBox="0 0 8 8"><path d="M1 4l2 2 4-3" stroke="#4a6b4a" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg></div>
-              <span style="font-size:.65rem;color:#3a5a3a;text-decoration:line-through;flex:1;">Cherry tomatoes</span>
-              <span style="font-size:.55rem;color:#3a5a3a;">×1</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:8px;padding:5px 8px;background:rgba(74,107,74,.08);border-radius:6px;">
-              <div style="width:13px;height:13px;border-radius:3px;background:rgba(74,107,74,.3);border:1px solid #4a6b4a;flex-shrink:0;display:flex;align-items:center;justify-content:center;"><svg width="8" height="8" viewBox="0 0 8 8"><path d="M1 4l2 2 4-3" stroke="#4a6b4a" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg></div>
-              <span style="font-size:.65rem;color:#3a5a3a;text-decoration:line-through;flex:1;">Fresh basil</span>
-              <span style="font-size:.55rem;color:#3a5a3a;">×1</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:6px;">
-              <div style="width:13px;height:13px;border-radius:3px;border:1px solid rgba(74,107,74,.3);flex-shrink:0;"></div>
-              <span style="font-size:.65rem;color:#8ab48a;flex:1;">Avocados</span>
-              <span style="font-size:.55rem;color:#4a6b4a;">×2</span>
-            </div>
-          </div>
-        </div>
-        <!-- Category: Dairy -->
-        <div style="padding:6px 14px 2px;">
-          <div style="font-size:.54rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#3a5a3a;margin-bottom:4px;">Dairy</div>
-          <div style="display:flex;flex-direction:column;gap:3px;">
-            <div style="display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:6px;">
-              <div style="width:13px;height:13px;border-radius:3px;border:1px solid rgba(74,107,74,.3);flex-shrink:0;"></div>
-              <span style="font-size:.65rem;color:#8ab48a;flex:1;">Parmesan</span>
-              <span style="font-size:.55rem;color:#4a6b4a;">×1</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:6px;">
-              <div style="width:13px;height:13px;border-radius:3px;border:1px solid rgba(74,107,74,.3);flex-shrink:0;"></div>
-              <span style="font-size:.65rem;color:#8ab48a;flex:1;">Organic milk (2%)</span>
-              <span style="font-size:.55rem;color:#4a6b4a;">×1 gal</span>
-            </div>
-          </div>
-        </div>
-        <!-- Smart suggestions -->
-        <div style="padding:8px 14px;border-top:1px solid rgba(74,107,74,.12);margin-top:6px;">
-          <div style="font-size:.54rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#3a5a3a;margin-bottom:5px;">Smart Suggestions</div>
-          <div style="display:flex;gap:5px;flex-wrap:wrap;">
-            <div style="font-size:.6rem;color:#4a6b4a;background:rgba(74,107,74,.12);border:1px solid rgba(74,107,74,.22);border-radius:100px;padding:3px 9px;">+ Sourdough</div>
-            <div style="font-size:.6rem;color:#4a6b4a;background:rgba(74,107,74,.12);border:1px solid rgba(74,107,74,.22);border-radius:100px;padding:3px 9px;">+ Olive oil</div>
-            <div style="font-size:.6rem;color:#4a6b4a;background:rgba(74,107,74,.12);border:1px solid rgba(74,107,74,.22);border-radius:100px;padding:3px 9px;">+ Garlic</div>
-          </div>
+          <span style="font-size:.62rem;color:var(--faint);margin-top:auto">+12 more items · Real-time sync active</span>
         </div>
       </div>
     </div>
   </div>
 
 </div><!-- /detail -->
-
-<!-- LIGHTBOX -->
-<div id="lightbox" onclick="closeLightbox()">
-  <button id="lb-close" onclick="closeLightbox()">×</button>
-  <img id="lb-img" src="" alt="">
-</div>
 
 <!-- ABOUT -->
 <section id="about">
@@ -948,6 +814,7 @@
 
   let fanned = false, activeIdx = null;
 
+  // Initial z-index
   cardEls.forEach((c,i) => c.style.zIndex = 5-i);
 
   function setStack() {
@@ -970,6 +837,7 @@
 
   setStack();
 
+  // Fan / collapse
   let collapseT;
 
   function expandDeck() {
@@ -989,31 +857,19 @@
   wrap.addEventListener('mouseenter', expandDeck);
   wrap.addEventListener('mouseleave', maybeCollapse);
 
-  // Per-card fan z-index values (mirrors setFan logic)
-  const FAN_Z = cardEls.map((_, i) => i === 2 ? 5 : (i < 2 ? 3-i : 5-i));
-
+  // Per-card tilt + glow
   cardEls.forEach((c, i) => {
     c.addEventListener('mouseenter', () => {
       clearTimeout(collapseT);
       if (activeIdx !== null) return;
       if (!fanned) { fanned = true; setFan(); }
-      // Lift this card above all others
-      c.style.zIndex = '20';
-      const f = FAN[i];
-      c.style.transform = `translateX(${f.x}px) rotate(0deg) translateY(-55px) scale(1.06)`;
-      // Dim siblings
-      cardEls.forEach((o, j) => { if (j !== i) o.style.opacity = '0.5'; });
     });
 
     c.addEventListener('mouseleave', () => {
       if (activeIdx !== null) return;
-      // Restore this card to fan position
-      c.style.zIndex = String(FAN_Z[i]);
       const f = FAN[i];
       c.style.transform = `translateX(${f.x}px) rotate(${f.rot}deg) translateY(-10px)`;
       c.style.boxShadow = '';
-      // Restore siblings
-      cardEls.forEach(o => { o.style.opacity = '1'; });
       maybeCollapse();
     });
 
@@ -1026,11 +882,11 @@
       const ry = ((x-cx)/cx) * 11;
       const f  = FAN[i];
       c.style.transform =
-        `translateX(${f.x}px) rotate(0deg) translateY(-55px) scale(1.06) ` +
+        `translateX(${f.x}px) rotate(${f.rot}deg) translateY(-22px) ` +
         `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(20px)`;
       c.style.setProperty('--gx', `${(x/r.width)*100}%`);
       c.style.setProperty('--gy', `${(y/r.height)*100}%`);
-      c.style.boxShadow = `0 36px 80px rgba(0,0,0,.7)`;
+      c.style.boxShadow = `0 28px 70px rgba(0,0,0,.65)`;
     });
 
     c.addEventListener('click', () => {
@@ -1039,8 +895,10 @@
     });
   });
 
+  // Detail open/close
   function openDetail(idx) {
     activeIdx = idx;
+
     cardEls.forEach((c, i) => {
       if (i !== idx) {
         c.style.opacity = '0';
@@ -1051,10 +909,12 @@
         c.style.zIndex = '10';
       }
     });
+
     panels.forEach((p, i) => {
       if (i === idx) p.classList.add('active');
       else p.classList.remove('active');
     });
+
     setTimeout(() => detail.classList.add('open'), 60);
     document.addEventListener('keydown', escClose);
   }
@@ -1072,6 +932,7 @@
 
   function escClose(e) { if (e.key === 'Escape') closeDetail(); }
 
+  // Entry animation
   cardEls.forEach((c, i) => {
     c.style.opacity = '0';
     c.style.transform = 'translateY(50px) scale(.92)';
@@ -1081,8 +942,7 @@
 
   requestAnimationFrame(() => {
     setTimeout(() => {
-      setFan();
-      fanned = true;
+      setStack();
       cardEls.forEach(c => c.style.opacity = '1');
       setTimeout(() => {
         cardEls.forEach(c => {
@@ -1092,30 +952,11 @@
     }, 180);
   });
 
+  // Scroll fade-ups
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: .15 });
   document.querySelectorAll('.fu').forEach(el => io.observe(el));
-
-  // Lightbox
-  const lightbox = document.getElementById('lightbox');
-  const lbImg    = document.getElementById('lb-img');
-
-  function openLightbox(src) {
-    lbImg.src = src;
-    lightbox.classList.add('open');
-    document.addEventListener('keydown', lbEscClose);
-  }
-
-  function closeLightbox() {
-    lightbox.classList.remove('open');
-    document.removeEventListener('keydown', lbEscClose);
-    setTimeout(() => { lbImg.src = ''; }, 300);
-  }
-
-  function lbEscClose(e) { if (e.key === 'Escape') closeLightbox(); }
-
-  lbImg.addEventListener('click', e => e.stopPropagation());
 </script>
 </body>
 </html>

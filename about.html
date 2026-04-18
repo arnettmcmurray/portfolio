@@ -1,100 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>About - Arnett McMurray</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <header>
-      <div class="nav-bar">
-        <h1><a href="index.html" class="site-title">Arnett McMurray</a></h1>
-        <nav>
-          <a href="about.html">About</a>
-          <a href="projects.html">Projects</a>
-          <a href="contact.html">Contact</a>
-        </nav>
-      </div>
-    </header>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Arnett McMurray</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:     #080808;
+      --surf:   #111010;
+      --surf2:  #1c1b1a;
+      --border: rgba(255,255,255,0.065);
+      --text:   #edebe6;
+      --muted:  #6b6865;
+      --faint:  #2e2c2a;
+      --font:   'Inter', system-ui, sans-serif;
+      --out:    cubic-bezier(.16,1,.3,1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100dvh;
+      -webkit-font-smoothing: antialiased;
+    }
+    body::after {
+      content: '';
+      position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+      opacity: .038;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 160px 160px;
+    }
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-thumb { background: var(--faint); border-radius: 2px; }
 
-    <div class="hero-banner">
-      <div class="raindrop-container"></div>
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px 48px;
+    }
+    .nav-name {
+      font-size: .78rem; font-weight: 600; letter-spacing: .05em;
+      color: var(--text); text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      font-size: .72rem; font-weight: 500; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--muted); text-decoration: none;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--text); }
 
-      <main>
-        <div class="page-wrapper">
-          <div class="page-content">
-            <section>
-              <h2>Who is Arnett?</h2>
+    main { max-width: 720px; margin: 0 auto; padding: 140px 48px 120px; }
 
-              <p>
-                I'm the kind of guy who will fix your code, season your cast
-                iron, and still find time to walk the dog before sunrise. A
-                former chef who worked in Michelin-starred kitchens, I now write
-                software with the same precision I once plated foie gras —
-                clean, intentional, and bold.
-              </p>
+    .sec-label {
+      font-size: .6rem; font-weight: 600; letter-spacing: .22em;
+      text-transform: uppercase; color: var(--muted);
+      display: flex; align-items: center; gap: 16px; margin-bottom: 32px;
+    }
+    .sec-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-              <p>
-                I grew up on the North Side of Chicago, raised in the city’s
-                rhythm and grit. I’ve run soccer fields, coached youth sports,
-                and rebuilt my backyard with nothing but a few chains, some
-                lumber, and stubbornness. These days, I’m more likely to be
-                debugging JavaScript or fine-tuning a SQL query, but I bring
-                that same discipline and hustle to every project I touch.
-              </p>
+    .page-eyebrow {
+      font-size: .6rem; font-weight: 600; letter-spacing: .22em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 16px;
+    }
+    h1 {
+      font-size: clamp(2.4rem,4vw,3.6rem); font-weight: 900;
+      letter-spacing: -.05em; line-height: .9; color: var(--text);
+      margin-bottom: 36px;
+    }
 
-              <p>
-                I don’t just study systems — I build them. Whether it's a
-                terminal HUD, a portfolio site, or a full-stack application, I
-                want things to work well and look sharp. I'm obsessed with the
-                process and always curious about the "why" behind the "what."
-              </p>
+    .about-body { display: flex; flex-direction: column; gap: 20px; margin-bottom: 80px; }
+    .about-body p {
+      font-size: 1rem; font-weight: 300; line-height: 1.78;
+      color: var(--muted); max-width: 600px;
+    }
+    .about-body p strong { font-weight: 600; color: var(--text); }
 
-              <p>
-                I’ve helped others navigate complicated life situations and
-                taught myself how to untangle problems most people run from.
-                That perspective fuels my work — thoughtful, resilient, and
-                unafraid to go deep where others quit.
-              </p>
+    .cred-list { display: flex; flex-direction: column; gap: 0; margin-bottom: 80px; }
+    .cred-item {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 16px 0; border-bottom: 1px solid var(--border);
+    }
+    .cred-item:first-child { border-top: 1px solid var(--border); }
+    .cred-title { font-size: .88rem; font-weight: 500; color: var(--text); }
+    .cred-org { font-size: .72rem; font-weight: 400; color: var(--muted); }
 
-              <p>
-                Outside the screen glow, you’ll find me grilling in the yard,
-                working on DIY builds, or taking inspiration from the chaos that
-                my pets bring into my workspace. I’m building a career that
-                blends creativity, logic, and integrity — one clean line of code
-                at a time.
-              </p>
-            </section>
-          </div>
-        </div>
-      </main>
+    .stack-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 80px; }
+    .s-chip {
+      font-size: .7rem; font-weight: 500; letter-spacing: .04em; color: var(--muted);
+      background: var(--surf); border: 1px solid var(--border); border-radius: 6px; padding: 6px 13px;
+    }
+
+    .cta-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .c-btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: .72rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; text-decoration: none; border-radius: 8px; padding: 12px 24px;
+      transition: .2s;
+    }
+    .c-btn.primary { background: var(--text); color: var(--bg); }
+    .c-btn.primary:hover { background: #fff; }
+    .c-btn.ghost { border: 1px solid var(--border); color: var(--muted); }
+    .c-btn.ghost:hover { border-color: rgba(255,255,255,.18); color: var(--text); }
+
+    footer {
+      padding: 22px 48px; border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    footer span { font-size: .62rem; letter-spacing: .08em; color: var(--faint); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-name">Arnett McMurray</a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="https://github.com/arnettmcmurray" target="_blank" rel="noopener">GitHub</a></li>
+    <li><a href="https://www.linkedin.com/in/arnett-mcmurray-948b85263/" target="_blank" rel="noopener">LinkedIn</a></li>
+  </ul>
+</nav>
+
+<main>
+  <p class="page-eyebrow">Background</p>
+  <h1>Arnett<br>McMurray</h1>
+
+  <div class="about-body">
+    <p>
+      Former <strong>culinary operations leader</strong> turned software engineer — the same execution discipline
+      that ran a kitchen now goes into building systems that process data, surface insights, and scale cleanly.
+    </p>
+    <p>
+      Before software, I led high-pressure culinary operations: managing production teams, controlling costs under
+      constraints, and building repeatable systems for consistent quality. That background directly shapes how I
+      approach engineering — define the outcome, structure the workflow, reduce friction, ship something people
+      can rely on.
+    </p>
+    <p>
+      My current work spans <strong>analytics tooling</strong>, <strong>full-stack product development</strong>,
+      and AI workflow systems. Recent builds include a local analytics engine that turns raw business files into
+      KPI reports and dashboards, a cybersecurity training platform for logistics teams, and a structured AI
+      workflow governance system.
+    </p>
+    <p>
+      I target roles where both product thinking and systems execution matter: analytics engineer, data analyst,
+      and full-stack software engineer positions in analytics products, workflow software, and operational platforms.
+    </p>
+  </div>
+
+  <p class="sec-label">Education &amp; Training</p>
+  <div class="cred-list">
+    <div class="cred-item">
+      <span class="cred-title">Full-Stack Software Engineering</span>
+      <span class="cred-org">Coding Temple — 2025</span>
     </div>
+    <div class="cred-item">
+      <span class="cred-title">Backend Specialist</span>
+      <span class="cred-org">Coding Temple — 2025</span>
+    </div>
+    <div class="cred-item">
+      <span class="cred-title">Frontend Specialist</span>
+      <span class="cred-org">Coding Temple — 2025</span>
+    </div>
+    <div class="cred-item">
+      <span class="cred-title">Python Foundations for Data Analysis</span>
+      <span class="cred-org">Coding Temple — 2025</span>
+    </div>
+    <div class="cred-item">
+      <span class="cred-title">Advanced Querying with SQL</span>
+      <span class="cred-org">Coding Temple — 2025</span>
+    </div>
+    <div class="cred-item">
+      <span class="cred-title">Business Management</span>
+      <span class="cred-org">DePaul University</span>
+    </div>
+  </div>
 
-    <footer>
-      <p>&copy; 2025 Arnett McMurray</p>
-    </footer>
+  <p class="sec-label">Stack</p>
+  <div class="stack-chips">
+    <span class="s-chip">Python</span><span class="s-chip">TypeScript</span>
+    <span class="s-chip">JavaScript</span><span class="s-chip">SQL</span>
+    <span class="s-chip">React</span><span class="s-chip">Flask</span>
+    <span class="s-chip">Node.js</span><span class="s-chip">Docker</span>
+    <span class="s-chip">pandas</span><span class="s-chip">PostgreSQL</span>
+    <span class="s-chip">SQLite</span><span class="s-chip">PyInstaller</span><span class="s-chip">Git</span>
+  </div>
 
-    <script>
-      const container = document.querySelector(".raindrop-container");
+  <p class="sec-label">Contact</p>
+  <div class="cta-row">
+    <a href="mailto:arnettmcmurray@gmail.com" class="c-btn primary">Email Me</a>
+    <a href="https://www.linkedin.com/in/arnett-mcmurray-948b85263/" target="_blank" rel="noopener" class="c-btn ghost">LinkedIn</a>
+    <a href="https://github.com/arnettmcmurray" target="_blank" rel="noopener" class="c-btn ghost">GitHub</a>
+  </div>
+</main>
 
-      for (let i = 0; i < 144; i++) {
-        const drop = document.createElement("div");
-        drop.classList.add("raindrop");
-        drop.style.color = `hsl(${Math.random() * 360}, 100%, 60%)`;
+<footer>
+  <span>&copy; 2026 Arnett McMurray</span>
+  <span>Analytics Engineer</span>
+</footer>
 
-        const hue = (300 / 144) * i;
-        const left = (i / 144) * 100;
-        const delay = Math.random() * 4;
-        const scale = 0.5 + Math.random();
-
-        drop.style.left = `${left}%`;
-        drop.style.animationDelay = `-${delay}s`;
-        drop.style.background = `linear-gradient(to bottom, black, hsla(${hue}, 100%, 50%, 0.8))`;
-        drop.style.transform = `scaleY(${scale})`;
-
-        container.appendChild(drop);
-      }
-    </script>
-  </body>
+</body>
 </html>

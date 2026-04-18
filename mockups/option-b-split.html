@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Option B — Split Layout</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0d0d;
+      --bg-card: #111;
+      --border: #222;
+      --text: #f0f0f0;
+      --text-muted: #888;
+      --text-dim: #444;
+      --accent-line: #2a2a2a;
+      --max-w: 1000px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(10px);
+    }
+    .nav-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-name { font-size: 13px; font-weight: 600; color: var(--text); text-decoration: none; letter-spacing: 0.05em; text-transform: uppercase; }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a { font-size: 13px; color: var(--text-muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--text); }
+
+    /* HERO — asymmetric, left-heavy */
+    .hero {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 100px 32px 80px;
+    }
+    .hero-eyebrow {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 20px;
+    }
+    .hero-word {
+      font-size: clamp(60px, 9vw, 108px);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 0.92;
+      color: var(--text);
+      margin-bottom: 32px;
+    }
+    .hero-sub {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 460px;
+      line-height: 1.75;
+      margin-bottom: 40px;
+    }
+    .btn-row { display: flex; gap: 12px; }
+    .btn {
+      display: inline-block;
+      padding: 10px 22px;
+      border-radius: 5px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    .btn-primary { background: var(--text); color: var(--bg); }
+    .btn-ghost { border: 1px solid var(--border); color: var(--text-muted); }
+
+    hr { border: none; border-top: 1px solid var(--border); }
+
+    /* PILL */
+    .pill {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 4px 14px;
+      margin-bottom: 40px;
+    }
+
+    /* SECTIONS */
+    .section {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 80px 32px;
+    }
+
+    /* SPLIT PROJECT — image left, content right */
+    .split-project {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--bg-card);
+      margin-bottom: 24px;
+    }
+    .split-project.reverse { direction: rtl; }
+    .split-project.reverse > * { direction: ltr; }
+
+    .split-img {
+      width: 100%;
+      height: 100%;
+      min-height: 360px;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      border-right: 1px solid var(--border);
+    }
+    .split-project.reverse .split-img { border-right: none; border-left: 1px solid var(--border); }
+
+    .split-body {
+      padding: 36px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .split-num {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 16px;
+    }
+    .split-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+    .split-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .bullet-list { list-style: none; margin-bottom: 22px; }
+    .bullet-list li {
+      font-size: 13px;
+      color: var(--text-muted);
+      padding: 7px 0;
+      border-bottom: 1px solid #1a1a1a;
+      line-height: 1.6;
+    }
+    .bullet-list li:last-child { border-bottom: none; }
+    .bullet-list strong { color: #ccc; font-weight: 500; }
+    .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 20px; }
+    .tag {
+      font-size: 11px;
+      color: var(--text-dim);
+      border: 1px solid #1e1e1e;
+      border-radius: 3px;
+      padding: 3px 9px;
+    }
+    .status {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #444;
+      border: 1px solid #1e1e1e;
+      border-radius: 3px;
+      padding: 3px 8px;
+      display: inline-block;
+      margin-bottom: 16px;
+    }
+    .proj-link { font-size: 13px; color: var(--text-muted); text-decoration: none; border-bottom: 1px solid #333; }
+    .proj-link:hover { color: var(--text); }
+
+    /* DATA SECTION — 3-col grid */
+    .data-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 16px;
+    }
+    .data-grid img {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      display: block;
+    }
+    .data-stack { display: flex; flex-direction: column; gap: 16px; }
+    .data-caption { font-size: 11px; color: var(--text-dim); margin-top: 8px; letter-spacing: 0.03em; }
+
+    /* SUPPORTING — 2-col grid */
+    .support-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .support-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px 28px;
+      background: var(--bg-card);
+    }
+    .support-title { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 10px; }
+    .support-desc { font-size: 13px; color: var(--text-muted); line-height: 1.65; margin-bottom: 16px; }
+
+    /* BACKGROUND */
+    .bg-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+    .bg-bio { font-size: 15px; color: var(--text-muted); line-height: 1.8; }
+    .cred-list { list-style: none; }
+    .cred-list li {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+    .cred-list li:last-child { border-bottom: none; }
+    .cred-list .ctitle { color: var(--text); font-weight: 500; display: block; margin-bottom: 2px; }
+    .cred-list .corg { color: var(--text-dim); font-size: 12px; }
+    .stack-line { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+    .stack-t { font-size: 12px; color: var(--text-muted); border: 1px solid var(--border); border-radius: 4px; padding: 4px 12px; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 24px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    footer p { font-size: 12px; color: var(--text-dim); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 12px; color: var(--text-dim); text-decoration: none; }
+    .footer-links a:hover { color: var(--text-muted); }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="nav-name">Arnett McMurray</a>
+      <div class="nav-links">
+        <a href="#projects">Projects</a>
+        <a href="#background">Background</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="section">
+    <p class="hero-eyebrow">Arnett McMurray</p>
+    <h1 class="hero-word">ANALYTICS<br>ENGINEER</h1>
+    <p class="hero-sub">Former culinary operator turned software engineer. I build analytics pipelines, training platforms, and operational systems.</p>
+    <div class="btn-row">
+      <a href="#projects" class="btn btn-primary">View My Work</a>
+      <a href="https://github.com/arnettmcmurray" class="btn btn-ghost" target="_blank">GitHub</a>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- FEATURED PROJECTS -->
+  <div class="section" id="projects">
+    <span class="pill">Featured Projects</span>
+
+    <!-- 1: Cyber Readiness — image left -->
+    <div class="split-project">
+      <img class="split-img" src="file:///Users/arnettmcmurray/Desktop/FE_portfolio_screenshots/localhost_5173_capabilities.png" alt="Cyber Readiness Training Platform" />
+      <div class="split-body">
+        <span class="status">Active</span>
+        <div class="split-num">01 — Cybersecurity / Full-Stack</div>
+        <h3 class="split-title">Cyber Readiness Training Platform</h3>
+        <p class="split-desc">Full-stack platform for cybersecurity training, TTX scenario delivery, and after-action reporting for logistics organizations.</p>
+        <ul class="bullet-list">
+          <li><strong>Built:</strong> React/TypeScript UI, Node/Express, PostgreSQL, Docker, auth, admin dashboards</li>
+          <li><strong>Scope:</strong> Learner flows, TTX management, group reporting, operational runbooks</li>
+          <li><strong>Signal:</strong> Enterprise product architecture — multi-surface, security domain, production-grade</li>
+        </ul>
+        <div class="tags">
+          <span class="tag">React / TypeScript</span><span class="tag">Node / Express</span>
+          <span class="tag">PostgreSQL</span><span class="tag">Docker</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2: Analytics Runtime — image right -->
+    <div class="split-project reverse">
+      <img class="split-img" src="file:///Users/arnettmcmurray/Desktop/FE_portfolio_screenshots/admin-kb.png" alt="Analytics Runtime" />
+      <div class="split-body">
+        <span class="status">Active — v2.1</span>
+        <div class="split-num">02 — Data Engineering / Analytics</div>
+        <h3 class="split-title">Analytics Runtime</h3>
+        <p class="split-desc">Local desktop analytics engine — raw files in, KPI summaries and dashboards out. No cloud required.</p>
+        <ul class="bullet-list">
+          <li><strong>Built:</strong> Python pipeline (intake → profiling → KPI → anomaly → report), SQL mode, desktop packaging</li>
+          <li><strong>Scope:</strong> CSV, Excel, JSON, Parquet support — 50MB+ chunked reads, v2.1 deployed</li>
+          <li><strong>Signal:</strong> End-to-end data engineering as a runtime, not a notebook</li>
+        </ul>
+        <div class="tags">
+          <span class="tag">Python / pandas</span><span class="tag">Data Pipeline</span>
+          <span class="tag">SQLite</span><span class="tag">PyInstaller</span>
+        </div>
+        <a href="https://github.com/arnettmcmurray/AnalyticsRuntime" class="proj-link" target="_blank">GitHub →</a>
+      </div>
+    </div>
+
+    <!-- 3: AI Ops Engine — image left -->
+    <div class="split-project">
+      <img class="split-img" src="file:///Users/arnettmcmurray/Desktop/seanecurrie.github.io_hpac-salary-benchmarking_.png" alt="AI Ops Engine — Workflow Output" style="object-position: top; object-fit: cover;" />
+      <div class="split-body">
+        <span class="status">In Progress — Phase 2</span>
+        <div class="split-num">03 — AI Systems / Architecture</div>
+        <h3 class="split-title">AI Ops Engine</h3>
+        <p class="split-desc">Structured AI workflow system — controlled execution, multi-engine orchestration, memory governance, repeatable planning.</p>
+        <ul class="bullet-list">
+          <li><strong>Built:</strong> OS governance layer, engine routing, memory tiering (raw → processed → knowledge)</li>
+          <li><strong>Scope:</strong> Session protocols, skill chains, rule shards, hook dispatch</li>
+          <li><strong>Signal:</strong> Infrastructure-level systems thinking beyond application development</li>
+        </ul>
+        <div class="tags">
+          <span class="tag">AI Systems</span><span class="tag">Orchestration</span>
+          <span class="tag">Governance</span><span class="tag">Multi-Engine</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- DATA SIGNAL -->
+  <div class="section" id="data">
+    <span class="pill">Data &amp; Analysis Outputs</span>
+    <p style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:28px;">Actual output from the Analytics Runtime — KPI summaries, anomaly detection, segment comparisons, and HTML dashboards.</p>
+    <div class="data-grid">
+      <div>
+        <img src="file:///Users/arnettmcmurray/Desktop/seanecurrie.github.io_hpac-salary-benchmarking_.png" alt="Analytics Report" />
+        <p class="data-caption">Full report output — KPI summary · trend analysis · segment breakdown</p>
+      </div>
+      <div class="data-stack">
+        <img src="file:///Users/arnettmcmurray/Desktop/FE_portfolio_screenshots/localhost_5173_capabilities (3).png" alt="Dashboard view" />
+        <img src="file:///Users/arnettmcmurray/Desktop/FE_portfolio_screenshots/localhost_5173_capabilities (4).png" alt="Analysis view" />
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- SUPPORTING -->
+  <div class="section">
+    <span class="pill">Supporting Projects</span>
+    <div class="support-grid">
+      <div class="support-card">
+        <div class="split-num" style="margin-bottom:12px;">Full-Stack / Deployed</div>
+        <h4 class="support-title">Mechanic Shop POS Portal</h4>
+        <p class="support-desc">Flask REST API with JWT auth, Swagger docs, PostgreSQL, and a React frontend deployed on Render.</p>
+        <div class="tags">
+          <span class="tag">Flask</span><span class="tag">JWT</span><span class="tag">React</span><span class="tag">Render</span>
+        </div>
+      </div>
+      <div class="support-card">
+        <div class="split-num" style="margin-bottom:12px;">Consumer App / In Progress</div>
+        <h4 class="support-title">MyGrocer</h4>
+        <p class="support-desc">Shared grocery planning app for household list management, category organization, and recurring workflows.</p>
+        <div class="tags">
+          <span class="tag">React</span><span class="tag">Shared State</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- BACKGROUND -->
+  <div class="section" id="background">
+    <span class="pill">Background</span>
+    <div class="bg-layout">
+      <div>
+        <p class="bg-bio">Former culinary operations leader turned software engineer — the same execution discipline that ran a kitchen now builds systems that process data, surface insights, and scale cleanly.</p>
+        <p class="bg-bio" style="margin-top:16px;">I target analytics engineer, data analyst, and full-stack engineering roles where systems thinking and production quality both matter.</p>
+        <div class="stack-line">
+          <span class="stack-t">Python</span><span class="stack-t">TypeScript</span><span class="stack-t">React</span>
+          <span class="stack-t">Node.js</span><span class="stack-t">Flask</span><span class="stack-t">SQL</span>
+          <span class="stack-t">Docker</span><span class="stack-t">pandas</span><span class="stack-t">PostgreSQL</span>
+        </div>
+      </div>
+      <div>
+        <ul class="cred-list">
+          <li><span class="ctitle">Full-Stack Software Engineering</span><span class="corg">Coding Temple — 2025</span></li>
+          <li><span class="ctitle">Backend &amp; Frontend Specialist</span><span class="corg">Coding Temple — 2025</span></li>
+          <li><span class="ctitle">Python Foundations for Data Analysis</span><span class="corg">Coding Temple — 2025</span></li>
+          <li><span class="ctitle">Advanced SQL Querying</span><span class="corg">Coding Temple — 2025</span></li>
+          <li><span class="ctitle">Business Management</span><span class="corg">DePaul University</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <footer id="contact">
+    <p>arnettmcmurray@gmail.com</p>
+    <div class="footer-links">
+      <a href="https://github.com/arnettmcmurray" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/in/arnett-mcmurray-948b85263/" target="_blank">LinkedIn</a>
+    </div>
+  </footer>
+
+</body>
+</html>
