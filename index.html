@@ -3,20 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Arnett McMurray — Analytics Engineer</title>
+  <title>Arnett McMurray — Data Systems Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg:     #080808;
-      --border: rgba(255,255,255,0.065);
-      --text:   #edebe6;
-      --muted:  #6b6865;
-      --faint:  #2e2c2a;
-      --font:   'Inter', system-ui, sans-serif;
-      --mono:   'SF Mono', 'Fira Code', 'Consolas', monospace;
-      --out:    cubic-bezier(.16,1,.3,1);
+      --bg:       #121212;
+      --surf:     #1a1a1a;
+      --border:   rgba(255,255,255,0.07);
+      --text:     #f0f0ec;
+      --muted:    #666460;
+      --faint:    #2a2a2a;
+      --accent-g: #00FF41;
+      --accent-b: #0070F3;
+      --font:     'Inter', system-ui, sans-serif;
+      --mono:     'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+      --out:      cubic-bezier(.16,1,.3,1);
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { font-size: 16px; scroll-behavior: smooth; }
@@ -38,61 +41,194 @@
     ::-webkit-scrollbar { width: 3px; }
     ::-webkit-scrollbar-thumb { background: var(--faint); border-radius: 2px; }
 
-    /* ── NAV ────────────────────────────────────── */
+    /* ── NAV ──────────────────────────────────── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 500;
       display: flex; align-items: center; justify-content: space-between;
       padding: 24px 64px;
     }
     .nav-name {
-      font-size: .75rem; font-weight: 600; letter-spacing: .05em;
-      color: var(--text); text-decoration: none;
+      font-size: .7rem; font-weight: 700; letter-spacing: .08em;
+      color: var(--text); text-decoration: none; font-family: var(--mono);
     }
     .nav-links { display: flex; gap: 36px; list-style: none; }
     .nav-links a {
-      font-size: .68rem; font-weight: 500; letter-spacing: .1em;
+      font-size: .65rem; font-weight: 500; letter-spacing: .1em;
       text-transform: uppercase; color: var(--muted); text-decoration: none;
       transition: color .2s;
     }
     .nav-links a:hover { color: var(--text); }
 
-    /* ── HERO ───────────────────────────────────── */
+    /* ── STATUS DOT ────────────────────────────── */
+    .status-dot {
+      display: inline-block;
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--accent-g);
+      box-shadow: 0 0 7px var(--accent-g);
+      margin-right: 7px;
+      animation: pulse-dot 2.4s ease-in-out infinite;
+      vertical-align: middle;
+      flex-shrink: 0;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: .28; }
+    }
+
+    /* ── HERO ──────────────────────────────────── */
     #hero {
       height: 100dvh;
-      display: flex; flex-direction: column; justify-content: flex-end;
-      padding: 0 64px 88px;
+      display: grid;
+      grid-template-columns: 42% 58%;
+      align-items: center;
+      padding: 80px 48px 80px 64px;
       border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Telemetry texture */
+    .hero-telemetry {
+      position: absolute; inset: 0;
+      overflow: hidden; pointer-events: none; z-index: 0;
+    }
+    .hero-telemetry span {
+      position: absolute;
+      font-family: var(--mono); font-size: .43rem;
+      color: rgba(255,255,255,0.038);
+      letter-spacing: .04em; user-select: none; white-space: nowrap;
+    }
+
+    /* Hero left */
+    .hero-left {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column;
+    }
+    .hero-meta-top {
+      display: flex; align-items: center; gap: 20px; margin-bottom: 52px;
+    }
+    .h-status {
+      font-family: var(--mono); font-size: .54rem; font-weight: 700;
+      letter-spacing: .18em; color: var(--accent-g);
+      display: flex; align-items: center;
+    }
+    .h-build {
+      font-family: var(--mono); font-size: .5rem;
+      color: var(--faint); letter-spacing: .1em;
     }
     .display-name {
-      font-size: clamp(5.5rem, 11vw, 12rem);
+      font-size: clamp(4rem, 7.5vw, 9rem);
       font-weight: 900; letter-spacing: -.05em; line-height: .86;
-      color: var(--text);
+      color: var(--text); margin-bottom: 36px;
     }
-    .display-sub {
-      display: flex; align-items: baseline; gap: 32px; margin-top: 32px;
-    }
+    .display-sub { display: flex; align-items: baseline; gap: 24px; }
     .display-role {
-      font-size: .7rem; font-weight: 500; letter-spacing: .2em;
+      font-size: .66rem; font-weight: 500; letter-spacing: .2em;
       text-transform: uppercase; color: var(--muted);
     }
     .display-index {
-      font-size: .62rem; font-weight: 400; letter-spacing: .1em;
+      font-size: .56rem; font-weight: 400; letter-spacing: .1em;
       color: var(--faint); font-family: var(--mono);
     }
+
+    /* ── BLADE DECK ────────────────────────────── */
+    .blade-deck {
+      position: relative; height: 500px; z-index: 1;
+      perspective: 1400px;
+    }
+
+    .blade {
+      position: absolute; top: 40px; left: 60px;
+      width: 258px; height: 400px;
+      background: #181818;
+      border: 1px solid rgba(255,255,255,0.09);
+      box-shadow:
+        inset 1px 1px 0 rgba(255,255,255,0.10),
+        inset -1px -1px 0 rgba(0,0,0,0.55);
+      transform-style: preserve-3d;
+      cursor: pointer;
+      transition: transform .45s var(--out), box-shadow .3s;
+      overflow: hidden;
+      user-select: none;
+      opacity: 0;
+    }
+    .blade:hover {
+      box-shadow:
+        inset 1px 1px 0 rgba(255,255,255,0.18),
+        inset -1px -1px 0 rgba(0,0,0,0.6),
+        0 0 0 1px rgba(0,112,243,0.32);
+    }
+
+    /* Blade face */
+    .blade-face {
+      position: absolute; inset: 0;
+      padding: 16px 15px; overflow: hidden;
+    }
+    .b-num {
+      position: absolute; top: 12px; right: 12px;
+      font-family: var(--mono); font-size: .46rem; font-weight: 700;
+      color: rgba(255,255,255,0.10); letter-spacing: .1em;
+    }
+    .b-fig {
+      font-family: var(--mono); font-size: .5rem; font-weight: 700;
+      letter-spacing: .1em; color: rgba(255,255,255,0.3);
+      text-transform: uppercase; display: block; margin-bottom: 6px;
+    }
+    .b-div { height: 1px; background: rgba(255,255,255,0.07); margin-bottom: 10px; }
+    .b-meta {
+      font-family: var(--mono); font-size: .54rem; line-height: 1.78;
+      color: rgba(255,255,255,0.2); white-space: pre;
+    }
+    .b-meta .k  { color: rgba(255,255,255,0.16); }
+    .b-meta .v  { color: rgba(255,255,255,0.36); }
+    .b-meta .bg { color: var(--accent-g); opacity: .85; }
+    .b-meta .bb { color: rgba(0,112,243,0.75); }
+    .b-img-wrap {
+      margin-top: 10px;
+      border: 1px solid rgba(255,255,255,0.07);
+      overflow: hidden; position: relative;
+    }
+    .b-img-wrap img {
+      width: 100%; display: block;
+      filter: grayscale(50%) contrast(1.08);
+      max-height: 110px; object-fit: cover; object-position: top;
+    }
+    .b-img-label {
+      position: absolute; bottom: 0; right: 0;
+      font-family: var(--mono); font-size: .4rem; letter-spacing: .09em;
+      color: rgba(255,255,255,0.28); background: rgba(0,0,0,0.76);
+      padding: 2px 6px; text-transform: uppercase;
+    }
+
+    /* Terminal overlay */
+    .blade-overlay {
+      position: absolute; inset: 0;
+      background: rgba(6,10,6,0.96);
+      padding: 15px 13px;
+      font-family: var(--mono); font-size: .53rem; line-height: 1.78;
+      color: #2a4a2a;
+      opacity: 0; transition: opacity .22s;
+      overflow-y: auto; scrollbar-width: none;
+    }
+    .blade-overlay::-webkit-scrollbar { display: none; }
+    .blade:hover .blade-overlay { opacity: 1; }
+    .blade-overlay span { display: block; }
+    .ov-head { color: #7aaa7a; font-weight: 700; margin-bottom: 3px; }
+    .ov-dim  { color: #1e3a1e; }
+    .ov-g    { color: var(--accent-g); }
+    .ov-b    { color: rgba(0,150,255,0.9); }
 
     /* ── ENTRY ──────────────────────────────────── */
     .entry {
       border-top: 1px solid var(--border);
-      padding-top: 140px;
-      padding-bottom: 160px;
+      padding-top: 140px; padding-bottom: 160px;
     }
     .entry-header { padding: 0 64px; margin-bottom: 64px; }
-    .entry-meta {
-      display: flex; align-items: center; gap: 24px; margin-bottom: 24px;
-    }
+    .entry-meta { display: flex; align-items: center; gap: 24px; margin-bottom: 24px; }
     .entry-num {
       font-size: .58rem; font-weight: 700; letter-spacing: .2em;
-      text-transform: uppercase; color: var(--faint); font-family: var(--mono);
+      text-transform: uppercase; color: var(--accent-b); font-family: var(--mono);
+      border-left: 2px solid var(--accent-b); padding-left: 8px;
     }
     .entry-cat {
       font-size: .58rem; font-weight: 500; letter-spacing: .14em;
@@ -100,25 +236,38 @@
     }
     .entry-title {
       font-size: clamp(3.4rem, 6.5vw, 7.5rem);
-      font-weight: 900; letter-spacing: -.04em; line-height: .88;
-      color: var(--text);
+      font-weight: 900; letter-spacing: -.04em; line-height: .88; color: var(--text);
     }
 
     /* ── PRIMARY VISUAL ─────────────────────────── */
     .entry-visual { width: 100%; margin-bottom: 80px; }
     .entry-visual img {
       width: 100%; display: block;
+      max-height: 520px; object-fit: cover; object-position: top;
       cursor: zoom-in; transition: opacity .2s;
     }
     .entry-visual img:hover { opacity: .88; }
 
-    /* terminal visual */
+    /* Inset figure — P01 only */
+    #p01 .entry-visual { padding: 0 64px; }
+    .fig-wrap {
+      position: relative;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.05);
+    }
+    .fig-wrap img { max-height: 480px; }
+    .fig-label {
+      position: absolute; bottom: 0; right: 0;
+      font-family: var(--mono); font-size: .5rem; font-weight: 700;
+      letter-spacing: .11em; color: rgba(255,255,255,0.28);
+      background: rgba(0,0,0,0.78); padding: 4px 12px;
+      text-transform: uppercase;
+    }
+
+    /* Terminal visual */
     .entry-terminal {
-      background: #05090505;
-      background: #060a06;
-      padding: 52px 64px;
-      font-family: var(--mono);
-      font-size: .78rem; line-height: 1.9; color: #8db58a;
+      background: #060a06; padding: 52px 64px;
+      font-family: var(--mono); font-size: .78rem; line-height: 1.9; color: #8db58a;
     }
     .t-head { color: #c8c3b8; font-weight: 600; display: block; margin-bottom: 8px; }
     .t-dim  { color: #3a4a3a; display: block; }
@@ -127,34 +276,25 @@
     .t-ok   { color: #5a8a5a; display: block; }
     .t-rec  { color: #7a9faa; display: block; }
 
-    /* diagram visual */
-    .entry-diagram {
-      padding: 60px 64px;
-      background: #060609;
-    }
+    /* Diagram visual */
+    .entry-diagram { padding: 60px 64px; background: #060609; }
     .entry-diagram svg { display: block; width: 100%; }
 
-    /* image strip */
-    .entry-img-strip {
-      display: flex; gap: 2px; overflow-x: auto;
-      margin-top: 2px;
-    }
+    /* Image strip */
+    .entry-img-strip { display: flex; gap: 2px; overflow-x: auto; margin-top: 2px; }
     .entry-img-strip::-webkit-scrollbar { height: 0; }
     .entry-img-strip img {
-      flex: 0 0 42%;
-      aspect-ratio: 16/10; object-fit: cover; object-position: top;
-      display: block; cursor: zoom-in; transition: opacity .2s;
+      flex: 0 0 42%; aspect-ratio: 16/10;
+      object-fit: cover; object-position: top; display: block;
+      cursor: zoom-in; transition: opacity .2s;
     }
     .entry-img-strip img:hover { opacity: .88; }
 
     /* ── ENTRY BODY ─────────────────────────────── */
     .entry-body {
-      padding: 0 64px;
-      max-width: 760px;
+      padding: 0 64px; max-width: 760px;
       display: flex; flex-direction: column; gap: 56px;
     }
-
-    /* block */
     .block { display: flex; flex-direction: column; gap: 16px; }
     .block-label {
       font-size: .56rem; font-weight: 700; letter-spacing: .24em;
@@ -163,28 +303,23 @@
     .block-text {
       font-size: .95rem; font-weight: 400; line-height: 1.78; color: var(--muted);
     }
-
-    /* system flow */
     .sys-flow {
-      font-family: var(--mono);
-      font-size: .78rem; font-weight: 400; letter-spacing: .02em;
-      color: var(--muted); line-height: 1.6; margin-bottom: 20px;
+      font-family: var(--mono); font-size: .78rem; font-weight: 400;
+      letter-spacing: .02em; color: var(--muted); line-height: 1.6; margin-bottom: 20px;
     }
     .sys-flow span { color: var(--faint); }
-
-    /* component list */
     .sys-list, .out-list {
-      list-style: none;
-      display: flex; flex-direction: column; gap: 12px;
+      list-style: none; display: flex; flex-direction: column; gap: 12px;
     }
     .sys-list li, .out-list li {
       font-size: .88rem; font-weight: 400; line-height: 1.7;
       color: var(--muted); padding-left: 20px; position: relative;
     }
     .sys-list li::before { content: '–'; position: absolute; left: 0; color: var(--faint); }
-    .out-list li::before { content: '→'; position: absolute; left: 0; color: var(--faint); font-family: var(--mono); }
-
-    /* entry link */
+    .out-list li::before {
+      content: '→'; position: absolute; left: 0;
+      color: var(--faint); font-family: var(--mono);
+    }
     .entry-link {
       font-size: .68rem; font-weight: 600; letter-spacing: .1em;
       text-transform: uppercase; color: var(--muted); text-decoration: none;
@@ -196,8 +331,7 @@
     /* ── ABOUT ──────────────────────────────────── */
     #about {
       border-top: 1px solid var(--border);
-      padding: 160px 64px 120px;
-      max-width: 800px;
+      padding: 160px 64px 120px; max-width: 800px;
     }
     .about-label {
       font-size: .56rem; font-weight: 700; letter-spacing: .24em;
@@ -205,20 +339,17 @@
       margin-bottom: 32px; display: block;
     }
     .about-text {
-      font-size: 1.05rem; font-weight: 300; line-height: 1.82; color: var(--muted);
-      margin-bottom: 48px;
+      font-size: 1.05rem; font-weight: 300; line-height: 1.82;
+      color: var(--muted); margin-bottom: 48px;
     }
     .about-text strong { font-weight: 600; color: var(--text); }
     .about-stack {
-      font-size: .72rem; color: var(--faint); letter-spacing: .06em; line-height: 2.2;
-      font-family: var(--mono);
+      font-size: .72rem; color: var(--faint); letter-spacing: .06em;
+      line-height: 2.2; font-family: var(--mono);
     }
 
     /* ── CONTACT ────────────────────────────────── */
-    #contact {
-      border-top: 1px solid var(--border);
-      padding: 100px 64px 140px;
-    }
+    #contact { border-top: 1px solid var(--border); padding: 100px 64px 140px; }
     .contact-label {
       font-size: .56rem; font-weight: 700; letter-spacing: .24em;
       text-transform: uppercase; color: var(--faint); font-family: var(--mono);
@@ -229,8 +360,7 @@
       font-size: clamp(1.8rem, 3.2vw, 3.2rem); font-weight: 700;
       letter-spacing: -.03em; color: var(--text); text-decoration: none;
       border-bottom: 1px solid var(--faint); padding-bottom: 6px;
-      width: fit-content; margin-bottom: 36px;
-      transition: border-color .2s;
+      width: fit-content; margin-bottom: 36px; transition: border-color .2s;
     }
     .contact-email:hover { border-color: var(--muted); }
     .contact-links { display: flex; gap: 36px; }
@@ -243,11 +373,10 @@
 
     /* ── FOOTER ─────────────────────────────────── */
     footer {
-      padding: 24px 64px;
-      border-top: 1px solid var(--border);
+      padding: 24px 64px; border-top: 1px solid var(--border);
       display: flex; justify-content: space-between;
     }
-    footer span { font-size: .6rem; letter-spacing: .08em; color: var(--faint); }
+    footer span { font-size: .58rem; letter-spacing: .08em; color: var(--faint); font-family: var(--mono); }
 
     /* ── LIGHTBOX ───────────────────────────────── */
     #lightbox {
@@ -256,7 +385,7 @@
       align-items: center; justify-content: center; cursor: zoom-out;
     }
     #lightbox.open { display: flex; }
-    #lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 4px; }
+    #lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; }
     #lb-close {
       position: fixed; top: 24px; right: 32px;
       font-size: 1.4rem; color: var(--muted);
@@ -272,7 +401,7 @@
 <body>
 
 <nav>
-  <a href="#hero" class="nav-name">Arnett McMurray</a>
+  <a href="#hero" class="nav-name">AM //</a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="https://github.com/arnettmcmurray" target="_blank" rel="noopener">GitHub</a></li>
@@ -283,11 +412,209 @@
 
 <!-- ── HERO ──────────────────────────────────────── -->
 <section id="hero">
-  <h1 class="display-name fade">Arnett<br>McMurray</h1>
-  <div class="display-sub fade" style="transition-delay:.12s">
-    <span class="display-role">Analytics Engineer</span>
-    <span class="display-index">5 entries · 2025–2026</span>
+
+  <div class="hero-telemetry" aria-hidden="true">
+    <span style="top:7%;left:3%">LAT 41.8781 // LONG -87.6298 // CHICAGO_IL</span>
+    <span style="top:13%;left:50%">BUILD 2026.04.19 // HASH 7a3f8c1d // ACTIVE</span>
+    <span style="top:21%;left:16%">UPTIME 99.9% // THROUGHPUT 1.2GB/s // NODE data-analyst-intern</span>
+    <span style="top:30%;left:64%">R01:OK R02:OK R03:OK R04:OK R05:OK</span>
+    <span style="top:37%;left:5%">PIPELINE: 7 steps // EXEC: 14.2s // ROWS: 2,154,300</span>
+    <span style="top:45%;left:36%">HOOK_DISPATCH: pre-tool // post-tool // git-push</span>
+    <span style="top:53%;left:68%">MEMORY_INDEX: 12 articles // DOMAIN_MAP: v3</span>
+    <span style="top:61%;left:2%">ENGINE_TENANT: data-analyst-intern // ISOLATION: complete</span>
+    <span style="top:68%;left:42%">JWT_ALGO: HS256 // RBAC: admin·mechanic·viewer</span>
+    <span style="top:76%;left:12%">FIREBASE_SYNC: &lt;200ms // DEVICES: 2 // PLATFORM: iOS·Android</span>
+    <span style="top:83%;left:58%">ANOMALY_FLAGS: 496218 // QUALITY_SCORE: 70/100</span>
+    <span style="top:90%;left:26%">DEPLOY: Render·live // DOCS: /api/docs // DB: PostgreSQL</span>
   </div>
+
+  <div class="hero-left fade">
+    <div class="hero-meta-top">
+      <span class="h-status"><span class="status-dot"></span>SYSTEM_ACTIVE</span>
+      <span class="h-build">BUILD v2026.04</span>
+    </div>
+    <h1 class="display-name">Arnett<br>McMurray</h1>
+    <div class="display-sub">
+      <span class="display-role">Data Systems Engineer</span>
+      <span class="display-index">5 modules · 2025–2026</span>
+    </div>
+  </div>
+
+  <div class="blade-deck" id="bladeDeck">
+
+    <!-- Blade 0 — Cyber Readiness -->
+    <div class="blade" data-target="p01">
+      <div class="blade-face">
+        <span class="b-num">01</span>
+        <span class="b-fig">FIG. 1.0 // CYBER_READINESS</span>
+        <div class="b-div"></div>
+        <div class="b-meta"><span class="k">MODULE  : </span><span class="v">TRAINING_PLATFORM</span>
+<span class="k">STATUS  : </span><span class="bg">ACTIVE</span>
+<span class="k">LEARNERS: </span><span class="v">12</span>
+<span class="k">COMPLETE: </span><span class="bg">92%</span>
+<span class="k">STACK   : </span><span class="bb">React·Node·PG</span></div>
+        <div class="b-img-wrap">
+          <img src="assets/screenshots/cyber-admin-overview-light.png" alt="">
+          <span class="b-img-label">[SYSTEM_EXPAND_VIEW]</span>
+        </div>
+      </div>
+      <div class="blade-overlay">
+        <span class="ov-head">// CYBER_READINESS_PLATFORM</span>
+        <span class="ov-dim">─────────────────────────────</span>
+        <span class="ov-g">STATUS    : DEPLOYED</span>
+        <span>LEARNERS  : 12 active</span>
+        <span>COMPLETION: 92% avg</span>
+        <span>TTX_SESS  : live engine</span>
+        <span class="ov-b">STACK     : React + TypeScript</span>
+        <span class="ov-b">API       : Node.js REST</span>
+        <span class="ov-b">DB        : PostgreSQL</span>
+        <span class="ov-b">DEPLOY    : Docker</span>
+        <span class="ov-dim">─────────────────────────────</span>
+        <span>RBAC_ROLES: admin · learner</span>
+        <span>AAR_EXPORT: enabled</span>
+        <span>DEPT_ANALY: by department</span>
+        <span class="ov-dim">─────────────────────────────</span>
+        <span class="ov-g">SCOPE     : 50-person team</span>
+        <span>COMPLIANCE: mapped</span>
+        <span>PHISHING  : tracked</span>
+      </div>
+    </div>
+
+    <!-- Blade 1 — Analytics Runtime -->
+    <div class="blade" data-target="p02">
+      <div class="blade-face">
+        <span class="b-num">02</span>
+        <span class="b-fig">FIG. 2.0 // ANALYTICS_RUNTIME</span>
+        <div class="b-div"></div>
+        <div class="b-meta"><span class="k">DATASET : </span><span class="v">TLC_TRIP_RECORD_v2</span>
+<span class="k">ROWS    : </span><span class="v">2,154,300</span>
+<span class="k">SCORE   : </span><span class="bg">70/100</span>
+<span class="k">FINDINGS: </span><span class="v">20</span>
+<span class="k">OUTLIERS: </span><span class="bb">496,218</span>
+<span class="k">EXEC    : </span><span class="v">14.2s</span>
+<span class="k">APP     : </span><span class="v">PyInstaller·macOS</span></div>
+      </div>
+      <div class="blade-overlay">
+        <span class="ov-head">// ANALYTICS_RUNTIME v1.0</span>
+        <span class="ov-dim">─────────────────────────────</span>
+        <span class="ov-g">⚠ fare_amount_sum  $78.5M</span>
+        <span class="ov-g">⚠ total_amount_sum $109.9M</span>
+        <span class="ov-g">⚠ outlier_rows     496,218</span>
+        <span class="ov-dim">─────────────────────────────</span>
+        <span class="ov-b">→ Audit N-flag segment</span>
+        <span class="ov-b">→ Review 496K outlier rows</span>
+        <span class="ov-b">→ VendorID 2 tip anomaly</span>
+        <span class="ov-dim">─────────────────────────────</span>
+        <span>PIPELINE: 7 steps · 14.2s</span>
+        <span>FORMAT  : CSV·Excel·JSON</span>
+        <span>OUTPUT  : HTML dashboard</span>
+        <span>CLOUD   : none required</span>
+        <span class="ov-g">PACKAGED: standalone .app</span>
+      </div>
+    </div>
+
+    <!-- Blade 2 — AI Ops Engine -->
+    <div class="blade" data-target="p03">
+      <div class="blade-face">
+        <span class="b-num">03</span>
+        <span class="b-fig">FIG. 3.0 // AIOPS_ENGINE</span>
+        <div class="b-div"></div>
+        <div class="b-meta"><span class="k">LAYER1  : </span><span class="bb">CONTROL_PLANE</span>
+<span class="k">LAYER2  : </span><span class="bb">OS_IMPL /OS/</span>
+<span class="k">LAYER3  : </span><span class="bb">ENGINE_TENANTS</span>
+<span class="k">ROUTINES: </span><span class="v">R01–R05</span>
+<span class="k">HOOKS   : </span><span class="bg">4 active</span>
+<span class="k">MEMORY  : </span><span class="v">indexed · 12 art.</span>
+<span class="k">SCHED   : </span><span class="v">08:00–08:40 CDT</span></div>
+      </div>
+      <div class="blade-overlay">
+        <span class="ov-head">// AIOPS_ENGINE — LIVE</span>
+        <span class="ov-dim">─────────────────────────────</span>
+        <span class="ov-g">R01 GATE_CHECK    : OK</span>
+        <span class="ov-g">R02 DOC_SYNC      : OK</span>
+        <span class="ov-g">R03 DRIFT_DETECT  : OK</span>
+        <span class="ov-g">R04 SYS_STATUS    : OK</span>
+        <span class="ov-g">R05 VALIDATION    : OK</span>
+        <span class="ov-dim">─────────────────────────────</span>
+        <span class="ov-b">HOOK: pre-tool  → active</span>
+        <span class="ov-b">HOOK: post-tool → active</span>
+        <span class="ov-b">HOOK: git-push  → active</span>
+        <span class="ov-dim">─────────────────────────────</span>
+        <span>MEMORY: raw·daily·knowledge</span>
+        <span>RULES : auto-load</span>
+        <span>DECISIONS  : logged</span>
+        <span>CHECKPOINTS: logged</span>
+      </div>
+    </div>
+
+    <!-- Blade 3 — Mechanic POS -->
+    <div class="blade" data-target="p04">
+      <div class="blade-face">
+        <span class="b-num">04</span>
+        <span class="b-fig">FIG. 4.0 // MECHANIC_POS</span>
+        <div class="b-div"></div>
+        <div class="b-meta"><span class="bb">GET  /api/work-orders</span>
+<span class="bb">POST /api/invoices</span>
+<span class="bb">GET  /api/customers/:id</span>
+<span class="bb">PUT  /api/parts/inventory</span>
+<span class="k">─────────────────────</span>
+<span class="k">AUTH  : </span><span class="v">JWT · RBAC</span>
+<span class="k">DOCS  : </span><span class="bg">/api/docs (Swagger)</span>
+<span class="k">DEPLOY: </span><span class="v">Render · live</span></div>
+      </div>
+      <div class="blade-overlay">
+        <span class="ov-head">// MECHANIC_POS v1.0</span>
+        <span class="ov-dim">─────────────────────────────</span>
+        <span class="ov-b">GET    /api/work-orders</span>
+        <span class="ov-b">POST   /api/work-orders</span>
+        <span class="ov-b">PATCH  /api/work-orders/:id</span>
+        <span class="ov-b">GET    /api/customers/:id</span>
+        <span class="ov-b">POST   /api/invoices</span>
+        <span class="ov-b">GET    /api/parts</span>
+        <span class="ov-b">PUT    /api/parts/:id</span>
+        <span class="ov-dim">─────────────────────────────</span>
+        <span>JWT_SCOPES: admin·mech·viewer</span>
+        <span>SWAGGER   : /api/docs</span>
+        <span>DB_SCHEMA : FK-linked</span>
+        <span class="ov-g">DEPLOYED  : Render · live</span>
+        <span>FRONTEND  : React + state</span>
+      </div>
+    </div>
+
+    <!-- Blade 4 — MyGrocer -->
+    <div class="blade" data-target="p05">
+      <div class="blade-face">
+        <span class="b-num">05</span>
+        <span class="b-fig">FIG. 5.0 // MYGROCER</span>
+        <div class="b-div"></div>
+        <div class="b-meta"><span class="k">SYNC_LAT : </span><span class="bg">&lt;200ms</span>
+<span class="k">DEVICES  : </span><span class="v">2 active</span>
+<span class="k">DB       : </span><span class="bb">Firebase RT</span>
+<span class="k">HISTORY  : </span><span class="v">purchase model</span>
+<span class="k">SUGGEST  : </span><span class="v">ML-based</span>
+<span class="k">PLATFORM : </span><span class="v">iOS · Android</span>
+<span class="k">VERSION  : </span><span class="bg">v1.0 shipped</span></div>
+      </div>
+      <div class="blade-overlay">
+        <span class="ov-head">// MYGROCER v1.0</span>
+        <span class="ov-dim">─────────────────────────────</span>
+        <span class="ov-g">SYNC_LATENCY : &lt;200ms</span>
+        <span>DEVICE_COUNT : 2 simultaneous</span>
+        <span>DB_TYPE      : Firebase RT</span>
+        <span class="ov-dim">─────────────────────────────</span>
+        <span class="ov-b">CATEGORIES: Produce·Dairy</span>
+        <span class="ov-b">            Bakery·Meat</span>
+        <span>COLLAPSE  : per-category</span>
+        <span>QTY_TRACK : enabled</span>
+        <span>AISLE_SORT: store-ordered</span>
+        <span class="ov-dim">─────────────────────────────</span>
+        <span>SUGGESTION: purchase history</span>
+        <span>PLATFORM  : React Native/Expo</span>
+        <span class="ov-g">SHIPPED   : iOS + Android</span>
+      </div>
+    </div>
+
+  </div><!-- /blade-deck -->
 </section>
 
 <!-- ══════════════════════════════════════════════ -->
@@ -303,11 +630,13 @@
     <h2 class="entry-title">Cyber Readiness<br>Training Platform</h2>
   </div>
 
-  <!-- Primary visual: admin dashboard (real system output) -->
   <div class="entry-visual fade" style="transition-delay:.08s">
-    <img src="assets/screenshots/cyber-admin-overview-light.png"
-         alt="Cyber Readiness admin overview — live system dashboard"
-         onclick="openLightbox(this.src)">
+    <div class="fig-wrap">
+      <img src="assets/screenshots/cyber-admin-overview-light.png"
+           alt="Cyber Readiness admin dashboard"
+           onclick="openLightbox(this.src)">
+      <span class="fig-label">FIG. 1.0 // CYBER_READINESS_ADMIN [SYSTEM_EXPAND_VIEW]</span>
+    </div>
   </div>
 
   <div class="entry-body fade" style="transition-delay:.14s">
@@ -341,7 +670,6 @@
 
   </div>
 
-  <!-- Secondary visuals: remaining 3 screenshots as edge-to-edge strip -->
   <div class="entry-img-strip" style="margin-top:80px;">
     <img src="assets/screenshots/cyber-ttx-scenarios-light.png"
          alt="TTX scenario management" onclick="openLightbox(this.src)">
@@ -366,7 +694,6 @@
     <h2 class="entry-title">Analytics<br>Runtime</h2>
   </div>
 
-  <!-- Primary visual: pipeline output (data, not UI) -->
   <div class="entry-visual fade" style="transition-delay:.08s">
     <div class="entry-terminal">
       <span class="t-head">ANALYTICS RUNTIME — TLC Yellow Cab Trip Record v2</span>
@@ -440,14 +767,10 @@
     <h2 class="entry-title">AI Ops<br>Engine</h2>
   </div>
 
-  <!-- Primary visual: architecture diagram -->
   <div class="entry-visual fade" style="transition-delay:.08s">
     <div class="entry-diagram">
-      <svg viewBox="0 0 1000 320" xmlns="http://www.w3.org/2000/svg" font-family="'SF Mono','Fira Code',monospace">
-        <!-- Layer labels (left side) -->
+      <svg viewBox="0 0 1000 320" xmlns="http://www.w3.org/2000/svg" font-family="'JetBrains Mono','SF Mono','Fira Code',monospace">
         <text x="0" y="46" font-size="8" fill="#3a3d5c" font-weight="700" letter-spacing="2" transform="rotate(-90,0,46)" text-anchor="middle" dominant-baseline="hanging">LAYER 1</text>
-
-        <!-- ── CONTROL PLANE ── -->
         <rect x="20" y="10" width="960" height="72" fill="rgba(92,95,138,.04)" stroke="rgba(92,95,138,.18)" stroke-width="1" rx="0"/>
         <text x="42" y="32" font-size="8" fill="#5c5f8a" font-weight="700" letter-spacing="2.5">CONTROL PLANE</text>
         <text x="42" y="54" font-size="11" fill="#9a9dc8" font-weight="500">/ root</text>
@@ -461,49 +784,35 @@
         <text x="572" y="54" font-size="11" fill="#5a5d80">DECISIONS.md</text>
         <text x="718" y="54" font-size="11" fill="#4a4d6a">·</text>
         <text x="732" y="54" font-size="11" fill="#5a5d80">CHECKPOINTS.md</text>
-
-        <!-- Connectors Layer 1 → 2 -->
-        <line x1="100"  y1="82" x2="100"  y2="114" stroke="#252840" stroke-width="1"/>
-        <line x1="400"  y1="82" x2="400"  y2="114" stroke="#252840" stroke-width="1"/>
-        <line x1="700"  y1="82" x2="700"  y2="114" stroke="#252840" stroke-width="1"/>
+        <line x1="100" y1="82" x2="100" y2="114" stroke="#252840" stroke-width="1"/>
+        <line x1="400" y1="82" x2="400" y2="114" stroke="#252840" stroke-width="1"/>
+        <line x1="700" y1="82" x2="700" y2="114" stroke="#252840" stroke-width="1"/>
         <text x="410" y="100" font-size="8" fill="#252840" font-style="italic">hook dispatch · memory retrieval · routine scheduling</text>
-
-        <!-- ── OS IMPLEMENTATION ── -->
         <rect x="20" y="114" width="960" height="112" fill="rgba(92,95,138,.03)" stroke="rgba(92,95,138,.13)" stroke-width="1" rx="0"/>
         <text x="42" y="133" font-size="8" fill="#5c5f8a" font-weight="700" letter-spacing="2.5">OS IMPLEMENTATION — /OS/</text>
-        <!-- hooks -->
         <rect x="42"  y="142" width="172" height="68" fill="rgba(92,95,138,.07)" stroke="rgba(92,95,138,.22)" stroke-width="1" rx="2"/>
         <text x="56"  y="161" font-size="9.5" fill="#7a7daa" font-weight="600">hooks/</text>
         <text x="56"  y="178" font-size="8" fill="#4a4d6a">pre/post-tool dispatch</text>
         <text x="56"  y="193" font-size="8" fill="#4a4d6a">git pre-push · event log</text>
-        <!-- memory -->
         <rect x="228" y="142" width="172" height="68" fill="rgba(92,95,138,.07)" stroke="rgba(92,95,138,.22)" stroke-width="1" rx="2"/>
         <text x="242" y="161" font-size="9.5" fill="#7a7daa" font-weight="600">memory/</text>
         <text x="242" y="178" font-size="8" fill="#4a4d6a">knowledge articles</text>
         <text x="242" y="193" font-size="8" fill="#4a4d6a">indexed domain maps</text>
-        <!-- routines -->
         <rect x="414" y="142" width="172" height="68" fill="rgba(92,95,138,.07)" stroke="rgba(92,95,138,.22)" stroke-width="1" rx="2"/>
         <text x="428" y="161" font-size="9.5" fill="#7a7daa" font-weight="600">routines/</text>
         <text x="428" y="178" font-size="8" fill="#4a4d6a">5 scheduled daily runs</text>
         <text x="428" y="193" font-size="8" fill="#4a4d6a">08:00 – 08:40 CDT</text>
-        <!-- plans/agents -->
         <rect x="600" y="142" width="360" height="68" fill="rgba(92,95,138,.07)" stroke="rgba(92,95,138,.22)" stroke-width="1" rx="2"/>
         <text x="614" y="161" font-size="9.5" fill="#7a7daa" font-weight="600">plans/ · agents/ · out/asks/</text>
         <text x="614" y="178" font-size="8" fill="#4a4d6a">active plans · ask outbox</text>
         <text x="614" y="193" font-size="8" fill="#4a4d6a">DECISIONS.md · CHECKPOINTS.md</text>
-
-        <!-- Connectors Layer 2 → 3 -->
-        <line x1="260"  y1="226" x2="260"  y2="256" stroke="#252840" stroke-width="1"/>
-        <line x1="680"  y1="226" x2="680"  y2="256" stroke="#252840" stroke-width="1"/>
+        <line x1="260" y1="226" x2="260" y2="256" stroke="#252840" stroke-width="1"/>
+        <line x1="680" y1="226" x2="680" y2="256" stroke="#252840" stroke-width="1"/>
         <text x="286" y="244" font-size="8" fill="#252840" font-style="italic">engine isolation boundary</text>
-
-        <!-- ── ENGINE TENANTS ── -->
         <rect x="20" y="256" width="960" height="54" fill="rgba(92,95,138,.02)" stroke="rgba(92,95,138,.09)" stroke-width="1" rx="0"/>
         <text x="42" y="275" font-size="8" fill="#5c5f8a" font-weight="700" letter-spacing="2.5">ENGINE TENANTS — /engines/</text>
-        <!-- active engine -->
-        <rect x="42"  y="282" width="260" height="20" fill="rgba(92,95,138,.07)" stroke="rgba(92,95,138,.22)" stroke-width="1" rx="2"/>
-        <text x="54"  y="296" font-size="8.5" fill="#7a7daa" font-weight="500">data-analyst-intern/ — pipeline · gui.py · outputs/latest/</text>
-        <!-- future slot -->
+        <rect x="42" y="282" width="260" height="20" fill="rgba(92,95,138,.07)" stroke="rgba(92,95,138,.22)" stroke-width="1" rx="2"/>
+        <text x="54" y="296" font-size="8.5" fill="#7a7daa" font-weight="500">data-analyst-intern/ — pipeline · gui.py · outputs/latest/</text>
         <rect x="316" y="282" width="200" height="20" fill="none" stroke="rgba(92,95,138,.1)" stroke-width="1" stroke-dasharray="4,3" rx="2"/>
         <text x="328" y="296" font-size="8.5" fill="#2e3050">future engine / — isolated tenant slot</text>
       </svg>
@@ -556,23 +865,17 @@
     <h2 class="entry-title">Mechanic<br>Shop POS</h2>
   </div>
 
-  <!-- Primary visual: system architecture diagram -->
   <div class="entry-visual fade" style="transition-delay:.08s">
     <div class="entry-diagram">
-      <svg viewBox="0 0 1000 160" xmlns="http://www.w3.org/2000/svg" font-family="'SF Mono','Fira Code',monospace">
-        <!-- React -->
+      <svg viewBox="0 0 1000 160" xmlns="http://www.w3.org/2000/svg" font-family="'JetBrains Mono','SF Mono','Fira Code',monospace">
         <rect x="20" y="44" width="160" height="72" fill="rgba(122,92,74,.06)" stroke="rgba(122,92,74,.2)" stroke-width="1" rx="2"/>
         <text x="36" y="68" font-size="10" fill="#a07860" font-weight="600">React</text>
         <text x="36" y="85" font-size="8" fill="#5a4035">Work order views</text>
         <text x="36" y="98" font-size="8" fill="#5a4035">Customer portal</text>
         <text x="36" y="111" font-size="8" fill="#5a4035">Invoice UI</text>
-
-        <!-- Arrow 1 -->
         <line x1="180" y1="80" x2="234" y2="80" stroke="#3a2820" stroke-width="1.2"/>
         <polygon points="234,76 242,80 234,84" fill="#3a2820"/>
         <text x="186" y="73" font-size="7.5" fill="#3a2820" font-style="italic">REST</text>
-
-        <!-- Flask API -->
         <rect x="242" y="24" width="200" height="112" fill="rgba(122,92,74,.07)" stroke="rgba(122,92,74,.22)" stroke-width="1" rx="2"/>
         <text x="258" y="48" font-size="10" fill="#a07860" font-weight="600">Flask REST API</text>
         <text x="258" y="66" font-size="8" fill="#5a4035">JWT auth · RBAC</text>
@@ -580,32 +883,21 @@
         <text x="258" y="96" font-size="8" fill="#5a4035">Invoice generation</text>
         <text x="258" y="111" font-size="8" fill="#5a4035">Customer records</text>
         <text x="258" y="126" font-size="8" fill="#4a3830">Swagger /api/docs</text>
-
-        <!-- Arrow 2 -->
         <line x1="442" y1="80" x2="496" y2="80" stroke="#3a2820" stroke-width="1.2"/>
         <polygon points="496,76 504,80 496,84" fill="#3a2820"/>
         <text x="450" y="73" font-size="7.5" fill="#3a2820" font-style="italic">SQL</text>
-
-        <!-- PostgreSQL -->
         <rect x="504" y="44" width="180" height="72" fill="rgba(122,92,74,.06)" stroke="rgba(122,92,74,.2)" stroke-width="1" rx="2"/>
         <text x="520" y="68" font-size="10" fill="#a07860" font-weight="600">PostgreSQL</text>
         <text x="520" y="85" font-size="8" fill="#5a4035">Work order schema</text>
         <text x="520" y="98" font-size="8" fill="#5a4035">Parts inventory</text>
         <text x="520" y="111" font-size="8" fill="#5a4035">Invoice history</text>
-
-        <!-- Arrow 3 -->
         <line x1="684" y1="80" x2="738" y2="80" stroke="#3a2820" stroke-width="1.2"/>
         <polygon points="738,76 746,80 738,84" fill="#3a2820"/>
         <text x="690" y="73" font-size="7.5" fill="#3a2820" font-style="italic">host</text>
-
-        <!-- Render -->
         <rect x="746" y="54" width="150" height="52" fill="rgba(122,92,74,.05)" stroke="rgba(122,92,74,.15)" stroke-width="1" rx="2"/>
         <text x="760" y="75" font-size="10" fill="#a07860" font-weight="600">Render</text>
-        <text x="760" y="92" font-size="8" fill="#5a4035">Continuous deployment</text>
+        <text x="760" y="92" font-size="8" fill="#5a4035">Continuous deploy</text>
         <text x="760" y="105" font-size="8" fill="#5a4035">Persistent storage</text>
-
-        <!-- RBAC label -->
-        <rect x="242" y="146" width="110" height="14" fill="none"/>
         <text x="242" y="156" font-size="8" fill="#3a2820" font-style="italic">admin · mechanic · viewer scopes</text>
       </svg>
     </div>
@@ -656,38 +948,28 @@
     <h2 class="entry-title" style="font-size:clamp(2.8rem,5vw,6rem)">MyGrocer</h2>
   </div>
 
-  <!-- Primary visual: sync architecture -->
   <div class="entry-visual fade" style="transition-delay:.08s">
-    <div class="entry-diagram" style="padding: 48px 64px;">
-      <svg viewBox="0 0 900 120" xmlns="http://www.w3.org/2000/svg" font-family="'SF Mono','Fira Code',monospace">
-        <!-- Device A -->
+    <div class="entry-diagram" style="padding:48px 64px">
+      <svg viewBox="0 0 900 120" xmlns="http://www.w3.org/2000/svg" font-family="'JetBrains Mono','SF Mono','Fira Code',monospace">
         <rect x="20" y="24" width="160" height="72" fill="rgba(74,107,74,.06)" stroke="rgba(74,107,74,.2)" stroke-width="1" rx="2"/>
         <text x="36" y="52" font-size="10" fill="#6a9e6a" font-weight="600">Device A</text>
         <text x="36" y="69" font-size="8" fill="#3a5a3a">List edit</text>
         <text x="36" y="84" font-size="8" fill="#3a5a3a">Category collapse</text>
         <text x="36" y="99" font-size="8" fill="#3a5a3a">Quantity tracking</text>
-
-        <!-- Arrow bidirectional -->
         <line x1="180" y1="60" x2="330" y2="60" stroke="#2a3a2a" stroke-width="1.2"/>
         <polygon points="330,56 338,60 330,64" fill="#2a3a2a"/>
         <polygon points="180,56 172,60 180,64" fill="#2a3a2a"/>
         <text x="224" y="52" font-size="7.5" fill="#2a3a2a" font-style="italic">&lt;200ms sync</text>
-
-        <!-- Firebase -->
         <rect x="338" y="10" width="224" height="100" fill="rgba(74,107,74,.07)" stroke="rgba(74,107,74,.22)" stroke-width="1" rx="2"/>
         <text x="354" y="38" font-size="10" fill="#6a9e6a" font-weight="600">Firebase</text>
         <text x="354" y="56" font-size="8" fill="#3a5a3a">Realtime Database</text>
         <text x="354" y="72" font-size="8" fill="#3a5a3a">Purchase history</text>
         <text x="354" y="88" font-size="8" fill="#3a5a3a">Suggestion engine</text>
         <text x="354" y="104" font-size="8" fill="#2a4a2a">User auth</text>
-
-        <!-- Arrow bidirectional -->
         <line x1="562" y1="60" x2="712" y2="60" stroke="#2a3a2a" stroke-width="1.2"/>
         <polygon points="712,56 720,60 712,64" fill="#2a3a2a"/>
         <polygon points="562,56 554,60 562,64" fill="#2a3a2a"/>
         <text x="606" y="52" font-size="7.5" fill="#2a3a2a" font-style="italic">&lt;200ms sync</text>
-
-        <!-- Device B -->
         <rect x="720" y="24" width="160" height="72" fill="rgba(74,107,74,.06)" stroke="rgba(74,107,74,.2)" stroke-width="1" rx="2"/>
         <text x="736" y="52" font-size="10" fill="#6a9e6a" font-weight="600">Device B</text>
         <text x="736" y="69" font-size="8" fill="#3a5a3a">Live updates</text>
@@ -755,7 +1037,7 @@
 
 <footer>
   <span>&copy; 2026 Arnett McMurray</span>
-  <span>Analytics Engineer · Chicago</span>
+  <span>Data Systems Engineer · Chicago</span>
 </footer>
 
 <!-- ── LIGHTBOX ───────────────────────────────────── -->
@@ -765,9 +1047,9 @@
 </div>
 
 <script>
+  /* ── LIGHTBOX ─────────────────────────────────── */
   const lightbox = document.getElementById('lightbox');
   const lbImg    = document.getElementById('lb-img');
-
   function openLightbox(src) {
     lbImg.src = src;
     lightbox.classList.add('open');
@@ -781,6 +1063,74 @@
   function lbKey(e) { if (e.key === 'Escape') closeLightbox(); }
   lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
 
+  /* ── BLADE FAN ────────────────────────────────── */
+  const fanConfig = [
+    { rz: -22, tx: -75, ty:  18, rx:  7 },
+    { rz: -11, tx: -25, ty:   7, rx:  4 },
+    { rz:   0, tx:  30, ty:   0, rx:  1 },
+    { rz:  11, tx:  88, ty:   7, rx: -3 },
+    { rz:  22, tx: 150, ty:  18, rx: -7 },
+  ];
+
+  const blades = Array.from(document.querySelectorAll('.blade'));
+
+  function fanTransform(f) {
+    return `rotateZ(${f.rz}deg) translateX(${f.tx}px) translateY(${f.ty}px) rotateX(${f.rx}deg)`;
+  }
+
+  blades.forEach((b, i) => {
+    const f = fanConfig[i];
+    const ft = fanTransform(f);
+    b.dataset.fanTransform = ft;
+    b.style.zIndex = i + 1;
+    b.style.transition = 'none';
+    b.style.opacity = '0';
+    b.style.transform = `rotateZ(0deg) translateX(${f.tx}px) translateZ(-180px) scale(0.82)`;
+  });
+
+  /* Staggered fan-in on load */
+  blades.forEach((b, i) => {
+    setTimeout(() => {
+      b.style.transition = `transform .95s cubic-bezier(.16,1,.3,1), opacity .65s ease`;
+      b.style.opacity = '1';
+      b.style.transform = b.dataset.fanTransform;
+    }, 120 + i * 75);
+  });
+
+  /* Hover: eject + terminal overlay */
+  const overlayScrollers = {};
+
+  blades.forEach((b, i) => {
+    const f = fanConfig[i];
+    const overlay = b.querySelector('.blade-overlay');
+
+    b.addEventListener('mouseenter', () => {
+      b.style.zIndex = '20';
+      b.style.transform =
+        `rotateZ(${f.rz * 0.4}deg) translateX(${f.tx}px) translateY(${f.ty - 28}px) rotateX(${f.rx * 0.3}deg) translateZ(36px)`;
+      /* Auto-scroll terminal overlay */
+      overlayScrollers[i] = setInterval(() => {
+        overlay.scrollTop += 1;
+        if (overlay.scrollTop >= overlay.scrollHeight - overlay.clientHeight) {
+          overlay.scrollTop = 0;
+        }
+      }, 28);
+    });
+
+    b.addEventListener('mouseleave', () => {
+      b.style.zIndex = i + 1;
+      b.style.transform = b.dataset.fanTransform;
+      clearInterval(overlayScrollers[i]);
+    });
+
+    /* Click scrolls to project entry */
+    b.addEventListener('click', () => {
+      const target = document.getElementById(b.dataset.target);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  /* ── INTERSECTION FADE ────────────────────────── */
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); }
