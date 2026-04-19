@@ -10,16 +10,14 @@
   <style>
     :root {
       --bg:     #080808;
-      --surf:   #111010;
-      --surf2:  #1c1b1a;
       --border: rgba(255,255,255,0.065);
       --text:   #edebe6;
       --muted:  #6b6865;
       --faint:  #2e2c2a;
       --font:   'Inter', system-ui, sans-serif;
+      --mono:   'SF Mono', 'Fira Code', 'Consolas', monospace;
       --out:    cubic-bezier(.16,1,.3,1);
     }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { font-size: 16px; scroll-behavior: smooth; }
     body {
@@ -32,223 +30,233 @@
     }
     body::after {
       content: '';
-      position: fixed; inset: 0;
-      pointer-events: none; z-index: 9999;
-      opacity: .06;
+      position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+      opacity: .055;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
       background-size: 160px 160px;
     }
     ::-webkit-scrollbar { width: 3px; }
     ::-webkit-scrollbar-thumb { background: var(--faint); border-radius: 2px; }
 
-    /* ── NAV ─────────────────────────────────────────── */
+    /* ── NAV ────────────────────────────────────── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 500;
       display: flex; align-items: center; justify-content: space-between;
       padding: 24px 64px;
     }
     .nav-name {
-      font-size: .78rem; font-weight: 600; letter-spacing: .05em;
+      font-size: .75rem; font-weight: 600; letter-spacing: .05em;
       color: var(--text); text-decoration: none;
     }
-    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
     .nav-links a {
-      font-size: .7rem; font-weight: 500; letter-spacing: .1em;
+      font-size: .68rem; font-weight: 500; letter-spacing: .1em;
       text-transform: uppercase; color: var(--muted); text-decoration: none;
       transition: color .2s;
     }
     .nav-links a:hover { color: var(--text); }
 
-    /* ── HERO ────────────────────────────────────────── */
+    /* ── HERO ───────────────────────────────────── */
     #hero {
       height: 100dvh;
       display: flex; flex-direction: column; justify-content: flex-end;
-      padding: 0 64px 80px;
+      padding: 0 64px 88px;
+      border-bottom: 1px solid var(--border);
     }
     .display-name {
       font-size: clamp(5.5rem, 11vw, 12rem);
       font-weight: 900; letter-spacing: -.05em; line-height: .86;
       color: var(--text);
     }
+    .display-sub {
+      display: flex; align-items: baseline; gap: 32px; margin-top: 32px;
+    }
     .display-role {
-      font-size: .72rem; font-weight: 500; letter-spacing: .2em;
-      text-transform: uppercase; color: var(--muted); margin-top: 28px;
-    }
-
-    /* ── SHARED PROJECT TOKENS ───────────────────────── */
-    .project {
-      border-top: 1px solid var(--border);
-      padding-top: 100px;
-      padding-bottom: 120px;
-    }
-    .proj-info { padding: 0 48px 0 64px; }
-    .p-num {
-      display: block;
-      font-size: .58rem; font-weight: 700; letter-spacing: .16em;
-      text-transform: uppercase; color: var(--faint); margin-bottom: 20px;
-    }
-    .p-title {
-      font-size: clamp(2.6rem, 4vw, 4.8rem);
-      font-weight: 900; letter-spacing: -.04em; line-height: .94;
-      color: var(--text); margin-bottom: 28px;
-    }
-    .p-stat-block { margin-bottom: 24px; }
-    .p-stat-val {
-      font-size: 2.4rem; font-weight: 800; letter-spacing: -.04em; line-height: 1;
-    }
-    .p-stat-lbl {
-      font-size: .6rem; font-weight: 500; letter-spacing: .1em;
-      text-transform: uppercase; color: var(--faint); margin-top: 4px;
-    }
-    .p-desc {
-      font-size: .88rem; font-weight: 400; line-height: 1.72;
-      color: var(--muted); margin-bottom: 20px;
-    }
-    .p-stack {
-      font-size: .65rem; font-weight: 500; letter-spacing: .08em;
-      color: var(--faint); margin-bottom: 24px; line-height: 1.8;
-    }
-    .p-badge {
-      display: inline-block;
-      font-size: .58rem; font-weight: 600; letter-spacing: .1em;
+      font-size: .7rem; font-weight: 500; letter-spacing: .2em;
       text-transform: uppercase; color: var(--muted);
-      border: 1px solid var(--border); border-radius: 4px;
-      padding: 3px 9px; margin-right: 6px; margin-bottom: 6px;
     }
-    .p-link {
-      font-size: .7rem; font-weight: 600; letter-spacing: .08em;
-      text-transform: uppercase; color: var(--muted); text-decoration: none;
-      border-bottom: 1px solid var(--border); padding-bottom: 1px;
-      transition: color .2s, border-color .2s;
+    .display-index {
+      font-size: .62rem; font-weight: 400; letter-spacing: .1em;
+      color: var(--faint); font-family: var(--mono);
     }
-    .p-link:hover { color: var(--text); border-color: var(--muted); }
 
-    /* ── PROJECT 01 — CYBER READINESS ────────────────── */
-    #p01 .project-split {
-      display: grid;
-      grid-template-columns: 420px 1fr;
-      align-items: start;
+    /* ── ENTRY ──────────────────────────────────── */
+    .entry {
+      border-top: 1px solid var(--border);
+      padding-top: 140px;
+      padding-bottom: 160px;
     }
-    #p01 .proj-img-primary img {
+    .entry-header { padding: 0 64px; margin-bottom: 64px; }
+    .entry-meta {
+      display: flex; align-items: center; gap: 24px; margin-bottom: 24px;
+    }
+    .entry-num {
+      font-size: .58rem; font-weight: 700; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--faint); font-family: var(--mono);
+    }
+    .entry-cat {
+      font-size: .58rem; font-weight: 500; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--faint);
+    }
+    .entry-title {
+      font-size: clamp(3.4rem, 6.5vw, 7.5rem);
+      font-weight: 900; letter-spacing: -.04em; line-height: .88;
+      color: var(--text);
+    }
+
+    /* ── PRIMARY VISUAL ─────────────────────────── */
+    .entry-visual { width: 100%; margin-bottom: 80px; }
+    .entry-visual img {
       width: 100%; display: block;
       cursor: zoom-in; transition: opacity .2s;
     }
-    #p01 .proj-img-primary img:hover { opacity: .88; }
-    #p01 .proj-img-strip {
-      display: flex; gap: 2px;
-      margin-top: 2px; margin-left: 420px;
-      overflow-x: auto;
-    }
-    #p01 .proj-img-strip::-webkit-scrollbar { height: 0; }
-    #p01 .proj-img-strip img {
-      flex: 0 0 420px;
-      aspect-ratio: 16/10; object-fit: cover; object-position: top;
-      display: block; cursor: zoom-in; transition: opacity .2s;
-    }
-    #p01 .proj-img-strip img:hover { opacity: .88; }
+    .entry-visual img:hover { opacity: .88; }
 
-    /* ── PROJECT 02 — ANALYTICS RUNTIME ─────────────── */
-    #p02 .project-split {
-      display: grid;
-      grid-template-columns: 420px 1fr;
-      align-items: stretch;
-    }
-    .proj-terminal {
+    /* terminal visual */
+    .entry-terminal {
+      background: #05090505;
       background: #060a06;
-      padding: 36px 44px;
-      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-      font-size: .75rem; line-height: 1.82; color: #8db58a;
+      padding: 52px 64px;
+      font-family: var(--mono);
+      font-size: .78rem; line-height: 1.9; color: #8db58a;
     }
-    .t-head { color: #c8c3b8; font-weight: 600; margin-bottom: 6px; display: block; }
+    .t-head { color: #c8c3b8; font-weight: 600; display: block; margin-bottom: 8px; }
     .t-dim  { color: #3a4a3a; display: block; }
-    .t-div  { color: #192619; display: block; margin: 4px 0; }
+    .t-div  { color: #152015; display: block; margin: 6px 0; }
     .t-warn { color: #c4903a; display: block; }
     .t-ok   { color: #5a8a5a; display: block; }
     .t-rec  { color: #7a9faa; display: block; }
 
-    /* ── PROJECT 03 — AI OPS ENGINE ──────────────────── */
-    #p03 .proj-info {
-      padding-left: 64px; padding-right: 48px;
-      max-width: 500px; margin-bottom: 64px;
+    /* diagram visual */
+    .entry-diagram {
+      padding: 60px 64px;
+      background: #060609;
     }
-    .proj-diagram { padding: 0 64px 0 64px; }
-    .proj-diagram svg { display: block; width: 100%; max-width: 860px; }
+    .entry-diagram svg { display: block; width: 100%; }
 
-    /* ── PROJECT 04 — MECHANIC POS ───────────────────── */
-    #p04 .project-text {
-      display: grid;
-      grid-template-columns: 420px 1fr;
-      gap: 80px;
-      padding-right: 64px;
+    /* image strip */
+    .entry-img-strip {
+      display: flex; gap: 2px; overflow-x: auto;
+      margin-top: 2px;
     }
-    .proj-facts { display: flex; flex-direction: column; gap: 32px; padding-top: 6px; }
-    .proj-fact { display: grid; grid-template-columns: 64px 1fr; gap: 20px; align-items: baseline; }
-    .proj-fact-lbl {
-      font-size: .58rem; font-weight: 700; letter-spacing: .16em;
-      text-transform: uppercase; color: var(--faint); padding-top: 3px;
+    .entry-img-strip::-webkit-scrollbar { height: 0; }
+    .entry-img-strip img {
+      flex: 0 0 42%;
+      aspect-ratio: 16/10; object-fit: cover; object-position: top;
+      display: block; cursor: zoom-in; transition: opacity .2s;
     }
-    .proj-fact-val {
-      font-size: .85rem; font-weight: 400; line-height: 1.68; color: var(--muted);
+    .entry-img-strip img:hover { opacity: .88; }
+
+    /* ── ENTRY BODY ─────────────────────────────── */
+    .entry-body {
+      padding: 0 64px;
+      max-width: 760px;
+      display: flex; flex-direction: column; gap: 56px;
     }
 
-    /* ── PROJECT 05 — MYGROCER ───────────────────────── */
-    #p05 .proj-info { max-width: 560px; }
-    #p05 .p-title { font-size: clamp(2rem, 3vw, 3.4rem); }
+    /* block */
+    .block { display: flex; flex-direction: column; gap: 16px; }
+    .block-label {
+      font-size: .56rem; font-weight: 700; letter-spacing: .24em;
+      text-transform: uppercase; color: var(--faint); font-family: var(--mono);
+    }
+    .block-text {
+      font-size: .95rem; font-weight: 400; line-height: 1.78; color: var(--muted);
+    }
 
-    /* ── ABOUT ───────────────────────────────────────── */
+    /* system flow */
+    .sys-flow {
+      font-family: var(--mono);
+      font-size: .78rem; font-weight: 400; letter-spacing: .02em;
+      color: var(--muted); line-height: 1.6; margin-bottom: 20px;
+    }
+    .sys-flow span { color: var(--faint); }
+
+    /* component list */
+    .sys-list, .out-list {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .sys-list li, .out-list li {
+      font-size: .88rem; font-weight: 400; line-height: 1.7;
+      color: var(--muted); padding-left: 20px; position: relative;
+    }
+    .sys-list li::before { content: '–'; position: absolute; left: 0; color: var(--faint); }
+    .out-list li::before { content: '→'; position: absolute; left: 0; color: var(--faint); font-family: var(--mono); }
+
+    /* entry link */
+    .entry-link {
+      font-size: .68rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--muted); text-decoration: none;
+      border-bottom: 1px solid var(--faint); padding-bottom: 2px;
+      width: fit-content; transition: color .2s, border-color .2s;
+    }
+    .entry-link:hover { color: var(--text); border-color: var(--muted); }
+
+    /* ── ABOUT ──────────────────────────────────── */
     #about {
       border-top: 1px solid var(--border);
-      padding: 160px 64px 100px;
-      max-width: 820px;
+      padding: 160px 64px 120px;
+      max-width: 800px;
+    }
+    .about-label {
+      font-size: .56rem; font-weight: 700; letter-spacing: .24em;
+      text-transform: uppercase; color: var(--faint); font-family: var(--mono);
+      margin-bottom: 32px; display: block;
     }
     .about-text {
-      font-size: 1.08rem; font-weight: 300; line-height: 1.82; color: var(--muted);
+      font-size: 1.05rem; font-weight: 300; line-height: 1.82; color: var(--muted);
+      margin-bottom: 48px;
     }
     .about-text strong { font-weight: 600; color: var(--text); }
     .about-stack {
-      font-size: .72rem; color: var(--faint); letter-spacing: .06em;
-      margin-top: 48px; line-height: 2;
+      font-size: .72rem; color: var(--faint); letter-spacing: .06em; line-height: 2.2;
+      font-family: var(--mono);
     }
 
-    /* ── CONTACT ─────────────────────────────────────── */
+    /* ── CONTACT ────────────────────────────────── */
     #contact {
       border-top: 1px solid var(--border);
-      padding: 80px 64px 120px;
+      padding: 100px 64px 140px;
+    }
+    .contact-label {
+      font-size: .56rem; font-weight: 700; letter-spacing: .24em;
+      text-transform: uppercase; color: var(--faint); font-family: var(--mono);
+      margin-bottom: 28px; display: block;
     }
     .contact-email {
       display: block;
-      font-size: clamp(1.6rem, 3vw, 2.8rem); font-weight: 700;
-      letter-spacing: -.02em; color: var(--text); text-decoration: none;
-      border-bottom: 1px solid var(--faint); padding-bottom: 4px;
-      width: fit-content; transition: border-color .2s;
+      font-size: clamp(1.8rem, 3.2vw, 3.2rem); font-weight: 700;
+      letter-spacing: -.03em; color: var(--text); text-decoration: none;
+      border-bottom: 1px solid var(--faint); padding-bottom: 6px;
+      width: fit-content; margin-bottom: 36px;
+      transition: border-color .2s;
     }
     .contact-email:hover { border-color: var(--muted); }
-    .contact-sub { display: flex; gap: 32px; margin-top: 32px; }
-    .contact-sub a {
-      font-size: .7rem; font-weight: 500; letter-spacing: .12em;
+    .contact-links { display: flex; gap: 36px; }
+    .contact-links a {
+      font-size: .68rem; font-weight: 500; letter-spacing: .12em;
       text-transform: uppercase; color: var(--muted); text-decoration: none;
       transition: color .2s;
     }
-    .contact-sub a:hover { color: var(--text); }
+    .contact-links a:hover { color: var(--text); }
 
-    /* ── FOOTER ──────────────────────────────────────── */
+    /* ── FOOTER ─────────────────────────────────── */
     footer {
       padding: 24px 64px;
       border-top: 1px solid var(--border);
-      display: flex; justify-content: space-between; align-items: center;
+      display: flex; justify-content: space-between;
     }
-    footer span { font-size: .62rem; letter-spacing: .08em; color: var(--faint); }
+    footer span { font-size: .6rem; letter-spacing: .08em; color: var(--faint); }
 
-    /* ── LIGHTBOX ────────────────────────────────────── */
+    /* ── LIGHTBOX ───────────────────────────────── */
     #lightbox {
       display: none; position: fixed; inset: 0; z-index: 9998;
       background: rgba(0,0,0,.94); backdrop-filter: blur(12px);
       align-items: center; justify-content: center; cursor: zoom-out;
     }
     #lightbox.open { display: flex; }
-    #lightbox img {
-      max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 6px;
-    }
+    #lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 4px; }
     #lb-close {
       position: fixed; top: 24px; right: 32px;
       font-size: 1.4rem; color: var(--muted);
@@ -256,7 +264,7 @@
     }
     #lb-close:hover { color: var(--text); }
 
-    /* ── FADE IN ─────────────────────────────────────── */
+    /* ── FADE ───────────────────────────────────── */
     .fade { opacity: 0; transition: opacity .9s var(--out); }
     .fade.in { opacity: 1; }
   </style>
@@ -273,207 +281,472 @@
   </ul>
 </nav>
 
-<!-- ── HERO ──────────────────────────────────────────── -->
+<!-- ── HERO ──────────────────────────────────────── -->
 <section id="hero">
   <h1 class="display-name fade">Arnett<br>McMurray</h1>
-  <p class="display-role fade" style="transition-delay:.15s">Analytics Engineer</p>
-</section>
-
-<!-- ── PROJECT 01 — CYBER READINESS ─────────────────── -->
-<section class="project" id="p01">
-  <div class="project-split">
-    <div class="proj-info fade">
-      <span class="p-num">01 — Full-Stack · Security</span>
-      <h2 class="p-title">Cyber<br>Readiness</h2>
-      <div class="p-stat-block">
-        <div class="p-stat-val" style="color:#4a7c6f">92%</div>
-        <div class="p-stat-lbl">Avg. completion rate · production</div>
-      </div>
-      <p class="p-desc">Enterprise cybersecurity training built for a 50+ person logistics team. Compliance-mapped modules, live TTX scenario exercises, department-level performance analytics, and After-Action Reports.</p>
-      <div class="p-stack">React · TypeScript · Node.js · PostgreSQL · Docker</div>
-      <span class="p-badge">Live</span>
-    </div>
-    <div class="proj-img-primary fade" style="transition-delay:.1s">
-      <img src="assets/screenshots/cyber-admin-overview-light.png" alt="Cyber Readiness admin dashboard" onclick="openLightbox(this.src)">
-    </div>
-  </div>
-  <div class="proj-img-strip">
-    <img src="assets/screenshots/cyber-ttx-scenarios-light.png" alt="TTX scenario management" onclick="openLightbox(this.src)">
-    <img src="assets/screenshots/cyber-ttx-sessions-light.png" alt="TTX session tracking" onclick="openLightbox(this.src)">
-    <img src="assets/screenshots/cyber-learner-progress-light.png" alt="Learner progress analytics" onclick="openLightbox(this.src)">
+  <div class="display-sub fade" style="transition-delay:.12s">
+    <span class="display-role">Analytics Engineer</span>
+    <span class="display-index">5 entries · 2025–2026</span>
   </div>
 </section>
 
-<!-- ── PROJECT 02 — ANALYTICS RUNTIME ───────────────── -->
-<section class="project" id="p02">
-  <div class="project-split">
-    <div class="proj-info fade">
-      <span class="p-num">02 — Data Engineering · Python</span>
-      <h2 class="p-title">Analytics<br>Runtime</h2>
-      <div class="p-stat-block">
-        <div class="p-stat-val" style="color:#8b6f3e">2M+</div>
-        <div class="p-stat-lbl">Rows processed locally · no cloud</div>
-      </div>
-      <p class="p-desc">Local-first analytics engine. Reads CSV, Excel, JSON — outputs KPI summaries, anomaly flags, and dashboard HTML. 7-step pipeline packaged as a standalone macOS app. No configuration needed.</p>
-      <div class="p-stack">Python · pandas · Flask · PyInstaller · SQLite</div>
-      <a href="https://github.com/arnettmcmurray/AnalyticsRuntime" target="_blank" rel="noopener" class="p-link">GitHub ↗</a>
+<!-- ══════════════════════════════════════════════ -->
+<!-- ENTRY 01 — CYBER READINESS                    -->
+<!-- ══════════════════════════════════════════════ -->
+<article class="entry" id="p01">
+
+  <div class="entry-header fade">
+    <div class="entry-meta">
+      <span class="entry-num">01</span>
+      <span class="entry-cat">Full-Stack · Security</span>
     </div>
-    <div class="proj-terminal fade" style="transition-delay:.1s">
-      <span class="t-head">ANALYTICS RUNTIME — TLC Trip Record v2</span>
-      <span class="t-dim">Findings: 20 · Quality Score: 70/100 · 496,218 outliers flagged</span>
-      <span class="t-div">──────────────────────────────────────────────────────────</span>
-      <span class="t-warn">⚠  fare_amount_sum      $78.5M     driver: store_and_fwd_flag N</span>
-      <span class="t-warn">⚠  total_amount_sum     $109.9M    outlier concentration high</span>
-      <span class="t-warn">⚠  trip_distance_sum    24M mi     segment imbalance flagged</span>
-      <span class="t-warn">⚠  tip_amount_sum       $10.6M     VendorID 2 rate anomaly</span>
-      <span class="t-warn">⚠  passenger_count      1.64 avg   solo trips dominate: 73%</span>
-      <span class="t-div" style="margin-top:4px">──────────────────────────────────────────────────────────</span>
+    <h2 class="entry-title">Cyber Readiness<br>Training Platform</h2>
+  </div>
+
+  <!-- Primary visual: admin dashboard (real system output) -->
+  <div class="entry-visual fade" style="transition-delay:.08s">
+    <img src="assets/screenshots/cyber-admin-overview-light.png"
+         alt="Cyber Readiness admin overview — live system dashboard"
+         onclick="openLightbox(this.src)">
+  </div>
+
+  <div class="entry-body fade" style="transition-delay:.14s">
+
+    <div class="block">
+      <span class="block-label">Problem</span>
+      <p class="block-text">A 50-person logistics team had no structured mechanism for delivering compliance-mandated cybersecurity training or measuring department-level readiness. Phishing incident response was untracked.</p>
+    </div>
+
+    <div class="block">
+      <span class="block-label">System</span>
+      <p class="sys-flow">Module delivery <span>→</span> Progress tracking <span>→</span> TTX scenario execution <span>→</span> Department analytics <span>→</span> After-Action reporting</p>
+      <ul class="sys-list">
+        <li>React + TypeScript frontend with two access modes: admin console and learner view. Role-based routing enforced client and server-side.</li>
+        <li>Node.js API handling auth, session state, module completion events, and TTX incident scenario lifecycle.</li>
+        <li>PostgreSQL data layer: learner records, completion timestamps, department rollups, and TTX session archives.</li>
+        <li>Dockerized deployment with environment separation between development and production.</li>
+        <li>After-Action Reports generated per TTX exercise — structured summary of scenario responses, time-to-action, and gap identification.</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <span class="block-label">Output</span>
+      <ul class="out-list">
+        <li>92% average module completion rate across active learner cohort</li>
+        <li>12 active learners tracked with per-department progress visibility</li>
+        <li>Live TTX scenario engine with session management and incident response logging</li>
+        <li>Admin console with department-level compliance analytics and report export</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Secondary visuals: remaining 3 screenshots as edge-to-edge strip -->
+  <div class="entry-img-strip" style="margin-top:80px;">
+    <img src="assets/screenshots/cyber-ttx-scenarios-light.png"
+         alt="TTX scenario management" onclick="openLightbox(this.src)">
+    <img src="assets/screenshots/cyber-ttx-sessions-light.png"
+         alt="TTX session tracking" onclick="openLightbox(this.src)">
+    <img src="assets/screenshots/cyber-learner-progress-light.png"
+         alt="Learner progress analytics" onclick="openLightbox(this.src)">
+  </div>
+
+</article>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- ENTRY 02 — ANALYTICS RUNTIME                  -->
+<!-- ══════════════════════════════════════════════ -->
+<article class="entry" id="p02">
+
+  <div class="entry-header fade">
+    <div class="entry-meta">
+      <span class="entry-num">02</span>
+      <span class="entry-cat">Data Engineering · Python</span>
+    </div>
+    <h2 class="entry-title">Analytics<br>Runtime</h2>
+  </div>
+
+  <!-- Primary visual: pipeline output (data, not UI) -->
+  <div class="entry-visual fade" style="transition-delay:.08s">
+    <div class="entry-terminal">
+      <span class="t-head">ANALYTICS RUNTIME — TLC Yellow Cab Trip Record v2</span>
+      <span class="t-dim">Findings: 20 · Quality Score: 70/100 · 496,218 outlier rows flagged</span>
+      <span class="t-div">────────────────────────────────────────────────────────────────────</span>
+      <span class="t-warn">⚠  fare_amount_sum       $78.5M      driver: store_and_fwd_flag N</span>
+      <span class="t-warn">⚠  total_amount_sum      $109.9M     outlier concentration high</span>
+      <span class="t-warn">⚠  trip_distance_sum     24M mi      segment imbalance flagged</span>
+      <span class="t-warn">⚠  tip_amount_sum        $10.6M      VendorID 2 rate anomaly</span>
+      <span class="t-warn">⚠  passenger_count       1.64 avg    solo trips dominate: 73%</span>
+      <span class="t-div" style="margin-top:6px">────────────────────────────────────────────────────────────────────</span>
       <span class="t-rec">→  1. Audit N-flag segment — 99.7% of revenue concentration</span>
-      <span class="t-rec">→  2. Review 496K outlier rows — fare distortion likely</span>
-      <span class="t-rec">→  3. Investigate VendorID 2 tip rate anomaly</span>
-      <span class="t-rec">→  4. Cross-reference store_and_fwd_flag with GPS data</span>
-      <span class="t-div" style="margin-top:4px">──────────────────────────────────────────────────────────</span>
+      <span class="t-rec">→  2. Review 496K outlier rows — fare distortion source likely upstream</span>
+      <span class="t-rec">→  3. Investigate VendorID 2 tip rate anomaly vs VendorID 1 baseline</span>
+      <span class="t-rec">→  4. Cross-reference store_and_fwd_flag with GPS dropout events</span>
+      <span class="t-div" style="margin-top:6px">────────────────────────────────────────────────────────────────────</span>
       <span class="t-ok">✓  Profiling complete — 2,154,300 rows · 19 columns</span>
       <span class="t-ok">✓  KPI extraction — 8 primary metrics · 4 derived</span>
-      <span class="t-ok">✓  Group comparison — VendorID · Flag · Borough</span>
-      <span class="t-ok">✓  Report written — outputs/latest/dashboard.html</span>
-      <span class="t-dim">Pipeline: 7 steps · 14.2s total · 0 errors</span>
+      <span class="t-ok">✓  Group comparison — VendorID · store_and_fwd_flag · Borough</span>
+      <span class="t-ok">✓  Dashboard written → outputs/latest/dashboard.html</span>
+      <span class="t-dim">Pipeline: 7 steps · 14.2s · 0 errors · PyInstaller app · macOS</span>
     </div>
   </div>
-</section>
 
-<!-- ── PROJECT 03 — AI OPS ENGINE ───────────────────── -->
-<section class="project" id="p03">
-  <div class="proj-info fade">
-    <span class="p-num">03 — Systems · AI Workflows</span>
-    <h2 class="p-title">AI Ops<br>Engine</h2>
-    <p class="p-desc">Production AI governance layer. Controls how agents retrieve knowledge, execute tasks, and log decisions across a live engineering workspace. Not a demo — runs daily.</p>
-    <div class="p-stack">Python · TypeScript · Shell · Git Hooks</div>
-    <span class="p-badge">Operational</span>
-    <span class="p-badge">5 routines / day</span>
-  </div>
-  <div class="proj-diagram fade" style="transition-delay:.12s">
-    <svg viewBox="0 0 860 295" xmlns="http://www.w3.org/2000/svg" font-family="'SF Mono','Fira Code',monospace">
-      <!-- Layer 1: Control Plane -->
-      <rect x="0" y="0" width="860" height="64" rx="0" fill="rgba(92,95,138,.04)" stroke="rgba(92,95,138,.14)" stroke-width="1"/>
-      <text x="24" y="22" font-size="8" fill="#5c5f8a" font-weight="700" letter-spacing="2">CONTROL PLANE</text>
-      <text x="24" y="44" font-size="10.5" fill="#9a9dc8" font-weight="500">/ root</text>
-      <text x="84" y="44" font-size="10" fill="#3a3d5a">·</text>
-      <text x="98" y="44" font-size="10.5" fill="#6b6ea8">CLAUDE.md</text>
-      <text x="204" y="44" font-size="10" fill="#3a3d5a">·</text>
-      <text x="218" y="44" font-size="10.5" fill="#6b6ea8">.claude/rules/</text>
-      <text x="360" y="44" font-size="10" fill="#3a3d5a">·</text>
-      <text x="374" y="44" font-size="10.5" fill="#6b6ea8">CONTEXT.md</text>
-      <text x="494" y="44" font-size="10" fill="#3a3d5a">·</text>
-      <text x="508" y="44" font-size="10.5" fill="#4a4d6a">DECISIONS.md</text>
-      <!-- Connectors down -->
-      <line x1="90"  y1="64" x2="90"  y2="92" stroke="#252840" stroke-width="1"/>
-      <line x1="340" y1="64" x2="340" y2="92" stroke="#252840" stroke-width="1"/>
-      <line x1="600" y1="64" x2="600" y2="92" stroke="#252840" stroke-width="1"/>
-      <!-- Layer 2: OS Implementation -->
-      <rect x="0" y="92" width="860" height="106" rx="0" fill="rgba(92,95,138,.03)" stroke="rgba(92,95,138,.11)" stroke-width="1"/>
-      <text x="24" y="112" font-size="8" fill="#5c5f8a" font-weight="700" letter-spacing="2">OS IMPLEMENTATION — /OS/</text>
-      <!-- hooks box -->
-      <rect x="24"  y="120" width="154" height="62" rx="3" fill="rgba(92,95,138,.07)" stroke="rgba(92,95,138,.2)" stroke-width="1"/>
-      <text x="36"  y="138" font-size="9" fill="#7a7daa" font-weight="600">hooks/</text>
-      <text x="36"  y="153" font-size="7.5" fill="#4a4d6a">pre/post-tool dispatch</text>
-      <text x="36"  y="166" font-size="7.5" fill="#4a4d6a">git pre-push · event log</text>
-      <!-- memory box -->
-      <rect x="192" y="120" width="154" height="62" rx="3" fill="rgba(92,95,138,.07)" stroke="rgba(92,95,138,.2)" stroke-width="1"/>
-      <text x="204" y="138" font-size="9" fill="#7a7daa" font-weight="600">memory/</text>
-      <text x="204" y="153" font-size="7.5" fill="#4a4d6a">knowledge articles</text>
-      <text x="204" y="166" font-size="7.5" fill="#4a4d6a">indexed domain maps</text>
-      <!-- routines box -->
-      <rect x="360" y="120" width="154" height="62" rx="3" fill="rgba(92,95,138,.07)" stroke="rgba(92,95,138,.2)" stroke-width="1"/>
-      <text x="372" y="138" font-size="9" fill="#7a7daa" font-weight="600">routines/</text>
-      <text x="372" y="153" font-size="7.5" fill="#4a4d6a">5 scheduled daily runs</text>
-      <text x="372" y="166" font-size="7.5" fill="#4a4d6a">08:00 – 08:40 CDT</text>
-      <!-- plans/agents box -->
-      <rect x="528" y="120" width="306" height="62" rx="3" fill="rgba(92,95,138,.07)" stroke="rgba(92,95,138,.2)" stroke-width="1"/>
-      <text x="540" y="138" font-size="9" fill="#7a7daa" font-weight="600">plans/ · agents/ · out/</text>
-      <text x="540" y="153" font-size="7.5" fill="#4a4d6a">active plans · ask outbox</text>
-      <text x="540" y="166" font-size="7.5" fill="#4a4d6a">CHECKPOINTS.md · DECISIONS.md</text>
-      <!-- Connectors down -->
-      <line x1="220" y1="198" x2="220" y2="220" stroke="#252840" stroke-width="1"/>
-      <line x1="530" y1="198" x2="530" y2="220" stroke="#252840" stroke-width="1"/>
-      <text x="240" y="212" font-size="7" fill="#2a2d4a" font-style="italic">engine isolation boundary</text>
-      <!-- Layer 3: Engine Tenants -->
-      <rect x="0" y="220" width="860" height="75" rx="0" fill="rgba(92,95,138,.02)" stroke="rgba(92,95,138,.09)" stroke-width="1"/>
-      <text x="24" y="240" font-size="8" fill="#5c5f8a" font-weight="700" letter-spacing="2">ENGINE TENANTS — /engines/</text>
-      <!-- active engine -->
-      <rect x="24"  y="248" width="220" height="34" rx="3" fill="rgba(92,95,138,.07)" stroke="rgba(92,95,138,.2)" stroke-width="1"/>
-      <text x="36"  y="263" font-size="9" fill="#7a7daa" font-weight="600">data-analyst-intern/</text>
-      <text x="36"  y="276" font-size="7.5" fill="#4a4d6a">pipeline · gui.py · outputs/latest/</text>
-      <!-- future tenant -->
-      <rect x="258" y="248" width="180" height="34" rx="3" fill="rgba(92,95,138,.02)" stroke="rgba(92,95,138,.09)" stroke-width="1" stroke-dasharray="4,3"/>
-      <text x="270" y="263" font-size="9" fill="#3a3d5a">future engine /</text>
-      <text x="270" y="276" font-size="7.5" fill="#282a40">isolated tenant slot</text>
-    </svg>
-  </div>
-</section>
+  <div class="entry-body fade" style="transition-delay:.14s">
 
-<!-- ── PROJECT 04 — MECHANIC POS ─────────────────────── -->
-<section class="project" id="p04">
-  <div class="project-text">
-    <div class="proj-info fade">
-      <span class="p-num">04 — Full-Stack · Flask</span>
-      <h2 class="p-title">Mechanic<br>Shop POS</h2>
-      <p class="p-desc">Full-stack point-of-sale system: work orders, invoicing, customer history, and inventory. Deployed on Render with live PostgreSQL persistence.</p>
-      <div class="p-stack">Flask · React · PostgreSQL · JWT · Swagger · Render</div>
-      <span class="p-badge">Active · Deployed</span>
+    <div class="block">
+      <span class="block-label">Problem</span>
+      <p class="block-text">Analysts working with raw CSV exports had no local, repeatable tool for KPI extraction and anomaly detection. Every analysis required manual scripting, cloud tooling, or ad hoc Jupyter notebooks — none of which produced consistent, structured output.</p>
     </div>
-    <div class="proj-facts fade" style="transition-delay:.1s">
-      <div class="proj-fact">
-        <span class="proj-fact-lbl">Auth</span>
-        <span class="proj-fact-val">JWT with role-based access control — admin, mechanic, and viewer scopes enforced at the API layer</span>
-      </div>
-      <div class="proj-fact">
-        <span class="proj-fact-lbl">API</span>
-        <span class="proj-fact-val">Flask REST — full Swagger/OpenAPI documentation generated and served from the app at /api/docs</span>
-      </div>
-      <div class="proj-fact">
-        <span class="proj-fact-lbl">Data</span>
-        <span class="proj-fact-val">PostgreSQL — relational schema linking work orders, customers, parts inventory, and invoice history</span>
-      </div>
-      <div class="proj-fact">
-        <span class="proj-fact-lbl">Frontend</span>
-        <span class="proj-fact-val">React — live API integration, state management across the full work order lifecycle</span>
-      </div>
-      <div class="proj-fact">
-        <span class="proj-fact-lbl">Deploy</span>
-        <span class="proj-fact-val">Render — persistent storage, continuous deployment from main branch</span>
-      </div>
+
+    <div class="block">
+      <span class="block-label">System</span>
+      <p class="sys-flow">Raw file ingestion <span>→</span> Schema detection <span>→</span> KPI extraction <span>→</span> Anomaly scoring <span>→</span> Group comparison <span>→</span> Report generation</p>
+      <ul class="sys-list">
+        <li>Accepts CSV, Excel, and JSON. Schema detection maps columns to known metric types without manual configuration.</li>
+        <li>KPI selection layer identifies primary and derived metrics based on field types and statistical distributions.</li>
+        <li>Anomaly detection flags outlier concentrations and segment imbalances with driver attribution.</li>
+        <li>Group comparison engine cross-segments by categorical fields (VendorID, Borough, flag status) to isolate signal from noise.</li>
+        <li>Report writer produces structured HTML dashboard and JSON findings file. Both land in <code style="font-family:var(--mono);font-size:.8em;color:#7a9faa">outputs/latest/</code>.</li>
+        <li>Full pipeline packaged as a standalone macOS application via PyInstaller — no Python install, no network required.</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <span class="block-label">Output</span>
+      <ul class="out-list">
+        <li>2M+ rows processed locally with no cloud dependency</li>
+        <li>20 findings generated from TLC dataset — quality score 70/100</li>
+        <li>496,218 outlier rows flagged with source attribution</li>
+        <li>Structured dashboard HTML and machine-readable JSON findings in <code style="font-family:var(--mono);font-size:.8em;color:#7a9faa">outputs/latest/</code></li>
+        <li>14.2 second pipeline execution for 2.1M row dataset</li>
+      </ul>
+    </div>
+
+    <a href="https://github.com/arnettmcmurray/AnalyticsRuntime" target="_blank" rel="noopener" class="entry-link">GitHub repository ↗</a>
+
+  </div>
+</article>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- ENTRY 03 — AI OPS ENGINE                      -->
+<!-- ══════════════════════════════════════════════ -->
+<article class="entry" id="p03">
+
+  <div class="entry-header fade">
+    <div class="entry-meta">
+      <span class="entry-num">03</span>
+      <span class="entry-cat">Systems · AI Workflows</span>
+    </div>
+    <h2 class="entry-title">AI Ops<br>Engine</h2>
+  </div>
+
+  <!-- Primary visual: architecture diagram -->
+  <div class="entry-visual fade" style="transition-delay:.08s">
+    <div class="entry-diagram">
+      <svg viewBox="0 0 1000 320" xmlns="http://www.w3.org/2000/svg" font-family="'SF Mono','Fira Code',monospace">
+        <!-- Layer labels (left side) -->
+        <text x="0" y="46" font-size="8" fill="#3a3d5c" font-weight="700" letter-spacing="2" transform="rotate(-90,0,46)" text-anchor="middle" dominant-baseline="hanging">LAYER 1</text>
+
+        <!-- ── CONTROL PLANE ── -->
+        <rect x="20" y="10" width="960" height="72" fill="rgba(92,95,138,.04)" stroke="rgba(92,95,138,.18)" stroke-width="1" rx="0"/>
+        <text x="42" y="32" font-size="8" fill="#5c5f8a" font-weight="700" letter-spacing="2.5">CONTROL PLANE</text>
+        <text x="42" y="54" font-size="11" fill="#9a9dc8" font-weight="500">/ root</text>
+        <text x="106" y="54" font-size="11" fill="#4a4d6a">·</text>
+        <text x="120" y="54" font-size="11" fill="#7a7daa">CLAUDE.md</text>
+        <text x="242" y="54" font-size="11" fill="#4a4d6a">·</text>
+        <text x="256" y="54" font-size="11" fill="#7a7daa">.claude/rules/</text>
+        <text x="410" y="54" font-size="11" fill="#4a4d6a">·</text>
+        <text x="424" y="54" font-size="11" fill="#7a7daa">CONTEXT.md</text>
+        <text x="558" y="54" font-size="11" fill="#4a4d6a">·</text>
+        <text x="572" y="54" font-size="11" fill="#5a5d80">DECISIONS.md</text>
+        <text x="718" y="54" font-size="11" fill="#4a4d6a">·</text>
+        <text x="732" y="54" font-size="11" fill="#5a5d80">CHECKPOINTS.md</text>
+
+        <!-- Connectors Layer 1 → 2 -->
+        <line x1="100"  y1="82" x2="100"  y2="114" stroke="#252840" stroke-width="1"/>
+        <line x1="400"  y1="82" x2="400"  y2="114" stroke="#252840" stroke-width="1"/>
+        <line x1="700"  y1="82" x2="700"  y2="114" stroke="#252840" stroke-width="1"/>
+        <text x="410" y="100" font-size="8" fill="#252840" font-style="italic">hook dispatch · memory retrieval · routine scheduling</text>
+
+        <!-- ── OS IMPLEMENTATION ── -->
+        <rect x="20" y="114" width="960" height="112" fill="rgba(92,95,138,.03)" stroke="rgba(92,95,138,.13)" stroke-width="1" rx="0"/>
+        <text x="42" y="133" font-size="8" fill="#5c5f8a" font-weight="700" letter-spacing="2.5">OS IMPLEMENTATION — /OS/</text>
+        <!-- hooks -->
+        <rect x="42"  y="142" width="172" height="68" fill="rgba(92,95,138,.07)" stroke="rgba(92,95,138,.22)" stroke-width="1" rx="2"/>
+        <text x="56"  y="161" font-size="9.5" fill="#7a7daa" font-weight="600">hooks/</text>
+        <text x="56"  y="178" font-size="8" fill="#4a4d6a">pre/post-tool dispatch</text>
+        <text x="56"  y="193" font-size="8" fill="#4a4d6a">git pre-push · event log</text>
+        <!-- memory -->
+        <rect x="228" y="142" width="172" height="68" fill="rgba(92,95,138,.07)" stroke="rgba(92,95,138,.22)" stroke-width="1" rx="2"/>
+        <text x="242" y="161" font-size="9.5" fill="#7a7daa" font-weight="600">memory/</text>
+        <text x="242" y="178" font-size="8" fill="#4a4d6a">knowledge articles</text>
+        <text x="242" y="193" font-size="8" fill="#4a4d6a">indexed domain maps</text>
+        <!-- routines -->
+        <rect x="414" y="142" width="172" height="68" fill="rgba(92,95,138,.07)" stroke="rgba(92,95,138,.22)" stroke-width="1" rx="2"/>
+        <text x="428" y="161" font-size="9.5" fill="#7a7daa" font-weight="600">routines/</text>
+        <text x="428" y="178" font-size="8" fill="#4a4d6a">5 scheduled daily runs</text>
+        <text x="428" y="193" font-size="8" fill="#4a4d6a">08:00 – 08:40 CDT</text>
+        <!-- plans/agents -->
+        <rect x="600" y="142" width="360" height="68" fill="rgba(92,95,138,.07)" stroke="rgba(92,95,138,.22)" stroke-width="1" rx="2"/>
+        <text x="614" y="161" font-size="9.5" fill="#7a7daa" font-weight="600">plans/ · agents/ · out/asks/</text>
+        <text x="614" y="178" font-size="8" fill="#4a4d6a">active plans · ask outbox</text>
+        <text x="614" y="193" font-size="8" fill="#4a4d6a">DECISIONS.md · CHECKPOINTS.md</text>
+
+        <!-- Connectors Layer 2 → 3 -->
+        <line x1="260"  y1="226" x2="260"  y2="256" stroke="#252840" stroke-width="1"/>
+        <line x1="680"  y1="226" x2="680"  y2="256" stroke="#252840" stroke-width="1"/>
+        <text x="286" y="244" font-size="8" fill="#252840" font-style="italic">engine isolation boundary</text>
+
+        <!-- ── ENGINE TENANTS ── -->
+        <rect x="20" y="256" width="960" height="54" fill="rgba(92,95,138,.02)" stroke="rgba(92,95,138,.09)" stroke-width="1" rx="0"/>
+        <text x="42" y="275" font-size="8" fill="#5c5f8a" font-weight="700" letter-spacing="2.5">ENGINE TENANTS — /engines/</text>
+        <!-- active engine -->
+        <rect x="42"  y="282" width="260" height="20" fill="rgba(92,95,138,.07)" stroke="rgba(92,95,138,.22)" stroke-width="1" rx="2"/>
+        <text x="54"  y="296" font-size="8.5" fill="#7a7daa" font-weight="500">data-analyst-intern/ — pipeline · gui.py · outputs/latest/</text>
+        <!-- future slot -->
+        <rect x="316" y="282" width="200" height="20" fill="none" stroke="rgba(92,95,138,.1)" stroke-width="1" stroke-dasharray="4,3" rx="2"/>
+        <text x="328" y="296" font-size="8.5" fill="#2e3050">future engine / — isolated tenant slot</text>
+      </svg>
     </div>
   </div>
-</section>
 
-<!-- ── PROJECT 05 — MYGROCER ──────────────────────────── -->
-<section class="project" id="p05">
-  <div class="proj-info fade">
-    <span class="p-num">05 — Mobile · Full-Stack</span>
-    <h2 class="p-title">MyGrocer</h2>
-    <p class="p-desc">Shared grocery lists with real-time multi-user sync in under 200ms. Smart suggestion engine learns from purchase history. Categorized view with per-category collapse and quantity tracking.</p>
-    <div class="p-stack">React Native · Firebase · TypeScript · Expo</div>
-    <span class="p-badge">v1.0 Shipped</span>
-    <span class="p-badge">iOS · Android</span>
+  <div class="entry-body fade" style="transition-delay:.14s">
+
+    <div class="block">
+      <span class="block-label">Problem</span>
+      <p class="block-text">AI-assisted development across multiple project contexts produced inconsistent agent behavior, lost session state between conversations, and no durable record of decisions or system architecture. Each session started from scratch.</p>
+    </div>
+
+    <div class="block">
+      <span class="block-label">System</span>
+      <p class="sys-flow">Hook dispatch <span>→</span> Memory retrieval <span>→</span> Task execution <span>→</span> Decision logging <span>→</span> Routine verification</p>
+      <ul class="sys-list">
+        <li>3-layer OS model: control plane at repo root, OS implementation in <code style="font-family:var(--mono);font-size:.82em;color:#7a9faa">/OS/</code>, engine tenants isolated under <code style="font-family:var(--mono);font-size:.82em;color:#7a9faa">/engines/</code>. Each layer has defined responsibilities and cannot absorb concerns from the others.</li>
+        <li>Hook dispatch: pre/post-tool hooks intercept agent actions and update system state. Git hooks enforce documentation at commit and push boundaries.</li>
+        <li>Memory system with three tiers: raw observations, processed daily summaries, and promoted durable knowledge articles with indexed domain maps.</li>
+        <li>5 automated daily routines (R01–R05) covering job-search gate checks, doc sync, drift detection, system status, and validation. Run at 08:00–08:40 CDT via scheduled Claude sessions.</li>
+        <li>Rule shards in <code style="font-family:var(--mono);font-size:.82em;color:#7a9faa">/.claude/rules/</code> load automatically at session start — enforcing retrieval order, memory protocol, and ask outbox discipline without requiring manual instruction.</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <span class="block-label">Output</span>
+      <ul class="out-list">
+        <li>Production governance layer running daily — not a prototype</li>
+        <li>Session context persisted across conversations through indexed memory articles</li>
+        <li>5 daily automated routines producing structured status outputs to <code style="font-family:var(--mono);font-size:.82em;color:#7a9faa">out/asks/</code></li>
+        <li>Decision log, checkpoint log, and active plan maintained as live documents</li>
+        <li>Engine tenant (Analytics Runtime) fully isolated with its own pipeline, outputs, and CLAUDE.md</li>
+      </ul>
+    </div>
+
   </div>
-</section>
+</article>
 
-<!-- ── ABOUT ───────────────────────────────────────────── -->
+<!-- ══════════════════════════════════════════════ -->
+<!-- ENTRY 04 — MECHANIC SHOP POS                  -->
+<!-- ══════════════════════════════════════════════ -->
+<article class="entry" id="p04">
+
+  <div class="entry-header fade">
+    <div class="entry-meta">
+      <span class="entry-num">04</span>
+      <span class="entry-cat">Full-Stack · Flask</span>
+    </div>
+    <h2 class="entry-title">Mechanic<br>Shop POS</h2>
+  </div>
+
+  <!-- Primary visual: system architecture diagram -->
+  <div class="entry-visual fade" style="transition-delay:.08s">
+    <div class="entry-diagram">
+      <svg viewBox="0 0 1000 160" xmlns="http://www.w3.org/2000/svg" font-family="'SF Mono','Fira Code',monospace">
+        <!-- React -->
+        <rect x="20" y="44" width="160" height="72" fill="rgba(122,92,74,.06)" stroke="rgba(122,92,74,.2)" stroke-width="1" rx="2"/>
+        <text x="36" y="68" font-size="10" fill="#a07860" font-weight="600">React</text>
+        <text x="36" y="85" font-size="8" fill="#5a4035">Work order views</text>
+        <text x="36" y="98" font-size="8" fill="#5a4035">Customer portal</text>
+        <text x="36" y="111" font-size="8" fill="#5a4035">Invoice UI</text>
+
+        <!-- Arrow 1 -->
+        <line x1="180" y1="80" x2="234" y2="80" stroke="#3a2820" stroke-width="1.2"/>
+        <polygon points="234,76 242,80 234,84" fill="#3a2820"/>
+        <text x="186" y="73" font-size="7.5" fill="#3a2820" font-style="italic">REST</text>
+
+        <!-- Flask API -->
+        <rect x="242" y="24" width="200" height="112" fill="rgba(122,92,74,.07)" stroke="rgba(122,92,74,.22)" stroke-width="1" rx="2"/>
+        <text x="258" y="48" font-size="10" fill="#a07860" font-weight="600">Flask REST API</text>
+        <text x="258" y="66" font-size="8" fill="#5a4035">JWT auth · RBAC</text>
+        <text x="258" y="81" font-size="8" fill="#5a4035">Work order endpoints</text>
+        <text x="258" y="96" font-size="8" fill="#5a4035">Invoice generation</text>
+        <text x="258" y="111" font-size="8" fill="#5a4035">Customer records</text>
+        <text x="258" y="126" font-size="8" fill="#4a3830">Swagger /api/docs</text>
+
+        <!-- Arrow 2 -->
+        <line x1="442" y1="80" x2="496" y2="80" stroke="#3a2820" stroke-width="1.2"/>
+        <polygon points="496,76 504,80 496,84" fill="#3a2820"/>
+        <text x="450" y="73" font-size="7.5" fill="#3a2820" font-style="italic">SQL</text>
+
+        <!-- PostgreSQL -->
+        <rect x="504" y="44" width="180" height="72" fill="rgba(122,92,74,.06)" stroke="rgba(122,92,74,.2)" stroke-width="1" rx="2"/>
+        <text x="520" y="68" font-size="10" fill="#a07860" font-weight="600">PostgreSQL</text>
+        <text x="520" y="85" font-size="8" fill="#5a4035">Work order schema</text>
+        <text x="520" y="98" font-size="8" fill="#5a4035">Parts inventory</text>
+        <text x="520" y="111" font-size="8" fill="#5a4035">Invoice history</text>
+
+        <!-- Arrow 3 -->
+        <line x1="684" y1="80" x2="738" y2="80" stroke="#3a2820" stroke-width="1.2"/>
+        <polygon points="738,76 746,80 738,84" fill="#3a2820"/>
+        <text x="690" y="73" font-size="7.5" fill="#3a2820" font-style="italic">host</text>
+
+        <!-- Render -->
+        <rect x="746" y="54" width="150" height="52" fill="rgba(122,92,74,.05)" stroke="rgba(122,92,74,.15)" stroke-width="1" rx="2"/>
+        <text x="760" y="75" font-size="10" fill="#a07860" font-weight="600">Render</text>
+        <text x="760" y="92" font-size="8" fill="#5a4035">Continuous deployment</text>
+        <text x="760" y="105" font-size="8" fill="#5a4035">Persistent storage</text>
+
+        <!-- RBAC label -->
+        <rect x="242" y="146" width="110" height="14" fill="none"/>
+        <text x="242" y="156" font-size="8" fill="#3a2820" font-style="italic">admin · mechanic · viewer scopes</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="entry-body fade" style="transition-delay:.14s">
+
+    <div class="block">
+      <span class="block-label">Problem</span>
+      <p class="block-text">Mechanic shops operating with paper-based or spreadsheet work orders had no unified system linking job intake, parts tracking, invoicing, and customer history across the shop lifecycle.</p>
+    </div>
+
+    <div class="block">
+      <span class="block-label">System</span>
+      <p class="sys-flow">Work order intake <span>→</span> Parts tracking <span>→</span> Status management <span>→</span> Invoice generation <span>→</span> Customer history</p>
+      <ul class="sys-list">
+        <li>Flask REST API with JWT authentication and role-based access control — admin, mechanic, and viewer scopes enforced at the endpoint layer.</li>
+        <li>Full Swagger/OpenAPI documentation generated and served from the application at <code style="font-family:var(--mono);font-size:.82em;color:#7a9faa">/api/docs</code>.</li>
+        <li>PostgreSQL relational schema: work orders linked to customers, parts inventory, and invoice records via foreign key relationships.</li>
+        <li>React frontend with live API integration and state management across the full work order lifecycle — intake, in-progress, parts ordered, complete.</li>
+        <li>Deployed on Render with persistent PostgreSQL storage and continuous deployment from main branch.</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <span class="block-label">Output</span>
+      <ul class="out-list">
+        <li>Full work order lifecycle from customer intake to paid invoice</li>
+        <li>Role-scoped access across three user types — admin, mechanic, viewer</li>
+        <li>Live API documentation at /api/docs with full endpoint coverage</li>
+        <li>Persistent deployment on Render — accessible at all times</li>
+      </ul>
+    </div>
+
+  </div>
+</article>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- ENTRY 05 — MYGROCER                           -->
+<!-- ══════════════════════════════════════════════ -->
+<article class="entry" id="p05">
+
+  <div class="entry-header fade">
+    <div class="entry-meta">
+      <span class="entry-num">05</span>
+      <span class="entry-cat">Mobile · React Native</span>
+    </div>
+    <h2 class="entry-title" style="font-size:clamp(2.8rem,5vw,6rem)">MyGrocer</h2>
+  </div>
+
+  <!-- Primary visual: sync architecture -->
+  <div class="entry-visual fade" style="transition-delay:.08s">
+    <div class="entry-diagram" style="padding: 48px 64px;">
+      <svg viewBox="0 0 900 120" xmlns="http://www.w3.org/2000/svg" font-family="'SF Mono','Fira Code',monospace">
+        <!-- Device A -->
+        <rect x="20" y="24" width="160" height="72" fill="rgba(74,107,74,.06)" stroke="rgba(74,107,74,.2)" stroke-width="1" rx="2"/>
+        <text x="36" y="52" font-size="10" fill="#6a9e6a" font-weight="600">Device A</text>
+        <text x="36" y="69" font-size="8" fill="#3a5a3a">List edit</text>
+        <text x="36" y="84" font-size="8" fill="#3a5a3a">Category collapse</text>
+        <text x="36" y="99" font-size="8" fill="#3a5a3a">Quantity tracking</text>
+
+        <!-- Arrow bidirectional -->
+        <line x1="180" y1="60" x2="330" y2="60" stroke="#2a3a2a" stroke-width="1.2"/>
+        <polygon points="330,56 338,60 330,64" fill="#2a3a2a"/>
+        <polygon points="180,56 172,60 180,64" fill="#2a3a2a"/>
+        <text x="224" y="52" font-size="7.5" fill="#2a3a2a" font-style="italic">&lt;200ms sync</text>
+
+        <!-- Firebase -->
+        <rect x="338" y="10" width="224" height="100" fill="rgba(74,107,74,.07)" stroke="rgba(74,107,74,.22)" stroke-width="1" rx="2"/>
+        <text x="354" y="38" font-size="10" fill="#6a9e6a" font-weight="600">Firebase</text>
+        <text x="354" y="56" font-size="8" fill="#3a5a3a">Realtime Database</text>
+        <text x="354" y="72" font-size="8" fill="#3a5a3a">Purchase history</text>
+        <text x="354" y="88" font-size="8" fill="#3a5a3a">Suggestion engine</text>
+        <text x="354" y="104" font-size="8" fill="#2a4a2a">User auth</text>
+
+        <!-- Arrow bidirectional -->
+        <line x1="562" y1="60" x2="712" y2="60" stroke="#2a3a2a" stroke-width="1.2"/>
+        <polygon points="712,56 720,60 712,64" fill="#2a3a2a"/>
+        <polygon points="562,56 554,60 562,64" fill="#2a3a2a"/>
+        <text x="606" y="52" font-size="7.5" fill="#2a3a2a" font-style="italic">&lt;200ms sync</text>
+
+        <!-- Device B -->
+        <rect x="720" y="24" width="160" height="72" fill="rgba(74,107,74,.06)" stroke="rgba(74,107,74,.2)" stroke-width="1" rx="2"/>
+        <text x="736" y="52" font-size="10" fill="#6a9e6a" font-weight="600">Device B</text>
+        <text x="736" y="69" font-size="8" fill="#3a5a3a">Live updates</text>
+        <text x="736" y="84" font-size="8" fill="#3a5a3a">Smart suggestions</text>
+        <text x="736" y="99" font-size="8" fill="#3a5a3a">Store-aisle sort</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="entry-body fade" style="transition-delay:.14s">
+
+    <div class="block">
+      <span class="block-label">Problem</span>
+      <p class="block-text">Shared grocery lists across household members required manual refresh to stay current — changes made on one device weren't visible on another until the app was reopened.</p>
+    </div>
+
+    <div class="block">
+      <span class="block-label">System</span>
+      <p class="sys-flow">List edit <span>→</span> Firebase write <span>→</span> Realtime propagation <span>→</span> Device sync <span>→</span> Suggestion generation</p>
+      <ul class="sys-list">
+        <li>Firebase Realtime Database with listener-based sync — changes write and propagate in under 200ms across all connected devices.</li>
+        <li>Purchase history model feeds a suggestion engine that surfaces frequently bought items and category-based recommendations at list creation.</li>
+        <li>Categorized list view (Produce, Dairy, Bakery, Meat) with per-category collapse, item quantity tracking, and store-aisle ordering.</li>
+        <li>React Native / Expo — cross-platform iOS and Android from a single codebase. v1.0 shipped.</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <span class="block-label">Output</span>
+      <ul class="out-list">
+        <li>Under 200ms sync latency across multiple devices</li>
+        <li>Smart suggestions drawn from purchase history at list creation time</li>
+        <li>v1.0 shipped — iOS and Android via Expo</li>
+      </ul>
+    </div>
+
+  </div>
+</article>
+
+<!-- ── ABOUT ──────────────────────────────────────── -->
 <section id="about">
-  <p class="about-text fade">
+  <span class="about-label fade">Engineer</span>
+  <p class="about-text fade" style="transition-delay:.08s">
     Software engineer focused on <strong>data systems, backend architecture, and analytics tooling</strong>.
     Before software, I ran culinary operations at production scale — define the constraint, structure the output, ship something that holds up under real conditions.
   </p>
-  <p class="about-stack fade" style="transition-delay:.1s">
-    Python · pandas · SQL · PostgreSQL · SQLite · Flask · Node.js · React · TypeScript · Docker · PyInstaller
+  <p class="about-stack fade" style="transition-delay:.16s">
+    Python · pandas · SQL · PostgreSQL · SQLite<br>
+    Flask · Node.js · React · TypeScript · React Native<br>
+    Docker · PyInstaller · Firebase · Git
   </p>
 </section>
 
-<!-- ── CONTACT ────────────────────────────────────────── -->
+<!-- ── CONTACT ────────────────────────────────────── -->
 <section id="contact">
-  <a href="mailto:arnettmcmurray@gmail.com?subject=Role%20Inquiry%20%E2%80%94%20Arnett%20McMurray" class="contact-email fade">arnettmcmurray@gmail.com</a>
-  <div class="contact-sub fade" style="transition-delay:.1s">
+  <span class="contact-label fade">Contact</span>
+  <a href="mailto:arnettmcmurray@gmail.com?subject=Role%20Inquiry%20%E2%80%94%20Arnett%20McMurray"
+     class="contact-email fade" style="transition-delay:.08s">arnettmcmurray@gmail.com</a>
+  <div class="contact-links fade" style="transition-delay:.16s">
     <a href="https://www.linkedin.com/in/arnett-mcmurray-948b85263/" target="_blank" rel="noopener">LinkedIn</a>
     <a href="https://github.com/arnettmcmurray" target="_blank" rel="noopener">GitHub</a>
     <a href="assets/resumes/Arnett_McMurray_Resume_v4.pdf" download>Resume PDF</a>
@@ -482,17 +755,16 @@
 
 <footer>
   <span>&copy; 2026 Arnett McMurray</span>
-  <span>Analytics Engineer</span>
+  <span>Analytics Engineer · Chicago</span>
 </footer>
 
-<!-- ── LIGHTBOX ───────────────────────────────────────── -->
+<!-- ── LIGHTBOX ───────────────────────────────────── -->
 <div id="lightbox">
   <button id="lb-close" onclick="closeLightbox()">&#x2715;</button>
   <img id="lb-img" src="" alt="">
 </div>
 
 <script>
-  // Lightbox
   const lightbox = document.getElementById('lightbox');
   const lbImg    = document.getElementById('lb-img');
 
@@ -509,12 +781,11 @@
   function lbKey(e) { if (e.key === 'Escape') closeLightbox(); }
   lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
 
-  // Fade in on scroll
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); }
     });
-  }, { threshold: .1 });
+  }, { threshold: .08 });
   document.querySelectorAll('.fade').forEach(el => observer.observe(el));
 </script>
 </body>
