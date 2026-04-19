@@ -37,7 +37,7 @@
       position: fixed; inset: 0;
       pointer-events: none;
       z-index: 9999;
-      opacity: .038;
+      opacity: .06;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
       background-size: 160px 160px;
     }
@@ -70,26 +70,21 @@
       display: flex; align-items: center; justify-content: center; gap: 64px;
       padding: 80px 48px 64px; overflow: hidden;
     }
-    .hero-id { flex: 0 0 auto; max-width: 200px; }
-    .hero-eyebrow {
-      font-size: .6rem; font-weight: 600; letter-spacing: .22em;
-      text-transform: uppercase; color: var(--muted); margin-bottom: 14px;
-    }
+    .hero-id { flex: 0 0 380px; }
     .hero-name {
-      font-size: clamp(2.2rem,3.2vw,3.4rem);
-      font-weight: 900; letter-spacing: -.05em; line-height: .92;
-      color: var(--text); margin-bottom: 18px;
+      font-size: clamp(3.6rem,5vw,6rem);
+      font-weight: 900; letter-spacing: -.05em; line-height: .88;
+      color: var(--text); margin-bottom: 24px;
     }
-    .hero-divider { width: 24px; height: 1px; background: var(--faint); margin: 16px 0; }
     .hero-title {
       font-size: .68rem; font-weight: 500; letter-spacing: .18em;
       text-transform: uppercase; color: var(--muted);
     }
     .hero-sub {
-      font-size: .78rem; font-weight: 400; line-height: 1.6;
-      color: var(--muted); margin-top: 16px; max-width: 190px;
+      font-size: .88rem; font-weight: 400; line-height: 1.65;
+      color: var(--muted); margin-top: 20px; max-width: 320px;
     }
-    .hero-ctas { display: flex; gap: 8px; margin-top: 20px; flex-wrap: wrap; }
+    .hero-ctas { display: flex; gap: 8px; margin-top: 28px; flex-wrap: wrap; }
     .hero-hint {
       position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
       font-size: .6rem; font-weight: 500; letter-spacing: .22em;
@@ -100,23 +95,41 @@
       content: ''; width: 28px; height: 1px; background: var(--faint);
     }
 
-    /* PROJECT NAV STRIP */
-    .proj-nav {
-      display: flex; gap: 6px; flex-wrap: wrap; justify-content: center;
-      margin-top: 28px;
+    /* PROJECT INDEX */
+    #proj-index {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
     }
-    .proj-nav-btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: .63rem; font-weight: 600; letter-spacing: .08em;
-      text-transform: uppercase; color: var(--muted);
-      background: var(--surf); border: 1px solid var(--border);
-      border-radius: 8px; padding: 7px 14px; cursor: pointer;
-      transition: border-color .2s, color .2s; user-select: none;
+    .proj-index-inner {
+      max-width: 1100px; margin: 0 auto; padding: 0 48px;
     }
-    .proj-nav-btn:hover { border-color: rgba(255,255,255,.18); color: var(--text); }
-    .proj-nav-num {
-      font-size: .58rem; font-weight: 700; letter-spacing: .04em;
-      opacity: .5;
+    .proj-index-row {
+      display: grid; grid-template-columns: 2.5rem 1fr auto;
+      align-items: center; gap: 24px;
+      padding: 18px 0; border-bottom: 1px solid var(--border);
+      cursor: pointer; user-select: none;
+      transition: background .18s;
+    }
+    .proj-index-row:last-child { border-bottom: none; }
+    .proj-index-row:hover { background: rgba(255,255,255,.018); }
+    .proj-index-row:hover .proj-index-title { color: var(--text); }
+    .proj-index-row:hover .proj-index-arrow { opacity: 1; transform: translateX(3px); }
+    .proj-index-num {
+      font-size: .58rem; font-weight: 700; letter-spacing: .1em;
+      color: var(--faint); text-align: right;
+    }
+    .proj-index-meta { display: flex; flex-direction: column; gap: 2px; }
+    .proj-index-title {
+      font-size: .92rem; font-weight: 600; color: var(--muted);
+      transition: color .18s;
+    }
+    .proj-index-cat {
+      font-size: .62rem; font-weight: 500; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--faint);
+    }
+    .proj-index-arrow {
+      font-size: .8rem; color: var(--faint);
+      opacity: 0; transition: opacity .18s, transform .18s;
     }
 
     /* DECK WRAP */
@@ -377,8 +390,58 @@
       text-transform: uppercase; color: var(--faint); margin-bottom: 4px;
     }
 
+    /* FEATURED PROJECT */
+    #featured {
+      padding: 100px 48px; max-width: 1100px; margin: 0 auto;
+    }
+    .featured-header {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-bottom: 48px;
+    }
+    .featured-label {
+      font-size: .6rem; font-weight: 600; letter-spacing: .22em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .featured-open {
+      font-size: .72rem; font-weight: 600; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--muted); cursor: pointer;
+      background: none; border: none; padding: 0;
+      transition: color .2s;
+    }
+    .featured-open:hover { color: var(--text); }
+    .featured-title {
+      font-size: clamp(2rem,3vw,3.2rem); font-weight: 900;
+      letter-spacing: -.04em; line-height: .96; color: var(--text);
+      margin-bottom: 16px;
+    }
+    .featured-desc {
+      font-size: .88rem; font-weight: 400; line-height: 1.7;
+      color: var(--muted); max-width: 520px; margin-bottom: 40px;
+    }
+    .featured-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+      border-radius: 14px; overflow: hidden; border: 1px solid var(--border);
+    }
+    .featured-grid img {
+      width: 100%; aspect-ratio: 16/10; object-fit: cover; object-position: top;
+      display: block; cursor: zoom-in; transition: opacity .2s;
+    }
+    .featured-grid img:hover { opacity: .88; }
+    .featured-stat-row {
+      display: flex; gap: 40px; margin-top: 36px;
+      padding-top: 28px; border-top: 1px solid var(--border);
+    }
+    .featured-stat { display: flex; flex-direction: column; gap: 3px; }
+    .featured-stat-val {
+      font-size: 1.8rem; font-weight: 800; letter-spacing: -.04em; color: #4a7c6f;
+    }
+    .featured-stat-lbl {
+      font-size: .6rem; font-weight: 500; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--faint);
+    }
+
     /* ABOUT */
-    #about { padding: 120px 48px; max-width: 860px; margin: 0 auto; }
+    #about { padding: 100px 48px; max-width: 860px; margin: 0 auto; }
     .sec-label {
       font-size: .6rem; font-weight: 600; letter-spacing: .22em;
       text-transform: uppercase; color: var(--muted);
@@ -399,7 +462,7 @@
     .stack-group { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
     .stack-group-lbl {
       font-size: .58rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
-      color: var(--faint); min-width: 52px;
+      color: var(--muted); min-width: 52px;
     }
 
     /* CONTACT */
@@ -450,14 +513,12 @@
 <!-- HERO -->
 <section id="hero">
   <div class="hero-id">
-    <p class="hero-eyebrow">Portfolio</p>
     <h1 class="hero-name">Arnett<br>McMurray</h1>
-    <div class="hero-divider"></div>
     <p class="hero-title">Analytics Engineer</p>
-    <p class="hero-sub">I build data pipelines, analytics APIs, and the backend systems that make them reliable.</p>
+    <p class="hero-sub">Data systems, backend architecture, and analytics tooling — built to run under real conditions.</p>
     <div class="hero-ctas">
       <a href="mailto:arnettmcmurray@gmail.com?subject=Role%20Inquiry%20%E2%80%94%20Arnett%20McMurray" class="c-btn primary">Email Me</a>
-      <a href="#contact" class="c-btn ghost">See More</a>
+      <a href="#featured" class="c-btn ghost">See Work</a>
     </div>
   </div>
 
@@ -466,7 +527,6 @@
     <!-- CARD 0 — Cyber Readiness -->
     <div class="card" data-i="0" style="--accent:#4a7c6f;--accent-rgb:74,124,111;">
       <div class="card-glow"></div>
-      <div class="card-ambient"></div>
       <div class="card-inner">
         <div class="card-num">01</div>
         <div class="card-cat">Full-Stack · Security</div>
@@ -488,7 +548,6 @@
     <!-- CARD 1 — Analytics Runtime -->
     <div class="card" data-i="1" style="--accent:#8b6f3e;--accent-rgb:139,111,62;">
       <div class="card-glow"></div>
-      <div class="card-ambient"></div>
       <div class="card-inner">
         <div class="card-num">02</div>
         <div class="card-cat">Data Engineering · Python</div>
@@ -510,7 +569,6 @@
     <!-- CARD 2 — AI Ops Engine -->
     <div class="card" data-i="2" style="--accent:#5c5f8a;--accent-rgb:92,95,138;">
       <div class="card-glow"></div>
-      <div class="card-ambient"></div>
       <div class="card-inner">
         <div class="card-num">03</div>
         <div class="card-cat">Systems · AI Workflows</div>
@@ -531,7 +589,6 @@
     <!-- CARD 3 — Mechanic POS -->
     <div class="card" data-i="3" style="--accent:#7a5c4a;--accent-rgb:122,92,74;">
       <div class="card-glow"></div>
-      <div class="card-ambient"></div>
       <div class="card-inner">
         <div class="card-num">04</div>
         <div class="card-cat">Full-Stack · Flask</div>
@@ -553,7 +610,6 @@
     <!-- CARD 4 — MyGrocer -->
     <div class="card" data-i="4" style="--accent:#4a6b4a;--accent-rgb:74,107,74;">
       <div class="card-glow"></div>
-      <div class="card-ambient"></div>
       <div class="card-inner">
         <div class="card-num">05</div>
         <div class="card-cat">Full-Stack · React</div>
@@ -573,15 +629,54 @@
 
   </div><!-- /deck-wrap -->
 
-  <div class="hero-hint">Click any card to open</div>
-  <div class="proj-nav">
-    <button class="proj-nav-btn" onclick="openDetail(0)"><span class="proj-nav-num">01</span>Cyber Readiness</button>
-    <button class="proj-nav-btn" onclick="openDetail(1)"><span class="proj-nav-num">02</span>Analytics Runtime</button>
-    <button class="proj-nav-btn" onclick="openDetail(2)"><span class="proj-nav-num">03</span>AI Ops Engine</button>
-    <button class="proj-nav-btn" onclick="openDetail(3)"><span class="proj-nav-num">04</span>Mechanic POS</button>
-    <button class="proj-nav-btn" onclick="openDetail(4)"><span class="proj-nav-num">05</span>MyGrocer</button>
-  </div>
+  <div class="hero-hint">Hover cards to explore</div>
 </section>
+
+<!-- PROJECT INDEX -->
+<div id="proj-index">
+  <div class="proj-index-inner">
+    <div class="proj-index-row" onclick="openDetail(0)">
+      <span class="proj-index-num">01</span>
+      <div class="proj-index-meta">
+        <span class="proj-index-title">Cyber Readiness Training Platform</span>
+        <span class="proj-index-cat">Full-Stack · Security · React · PostgreSQL</span>
+      </div>
+      <span class="proj-index-arrow">→</span>
+    </div>
+    <div class="proj-index-row" onclick="openDetail(1)">
+      <span class="proj-index-num">02</span>
+      <div class="proj-index-meta">
+        <span class="proj-index-title">Analytics Runtime</span>
+        <span class="proj-index-cat">Data Engineering · Python · pandas · PyInstaller</span>
+      </div>
+      <span class="proj-index-arrow">→</span>
+    </div>
+    <div class="proj-index-row" onclick="openDetail(2)">
+      <span class="proj-index-num">03</span>
+      <div class="proj-index-meta">
+        <span class="proj-index-title">AI Ops Engine</span>
+        <span class="proj-index-cat">Systems · AI Workflows · Python · Shell</span>
+      </div>
+      <span class="proj-index-arrow">→</span>
+    </div>
+    <div class="proj-index-row" onclick="openDetail(3)">
+      <span class="proj-index-num">04</span>
+      <div class="proj-index-meta">
+        <span class="proj-index-title">Mechanic Shop POS Portal</span>
+        <span class="proj-index-cat">Full-Stack · Flask · React · PostgreSQL</span>
+      </div>
+      <span class="proj-index-arrow">→</span>
+    </div>
+    <div class="proj-index-row" onclick="openDetail(4)">
+      <span class="proj-index-num">05</span>
+      <div class="proj-index-meta">
+        <span class="proj-index-title">MyGrocer</span>
+        <span class="proj-index-cat">Mobile · React Native · Firebase · TypeScript</span>
+      </div>
+      <span class="proj-index-arrow">→</span>
+    </div>
+  </div>
+</div>
 
 <!-- DETAIL OVERLAY -->
 <div id="detail">
@@ -662,7 +757,6 @@
     </div>
     <div>
       <div class="d-visual" style="min-height:320px;">
-        <div class="d-bar"><div class="d-dot"></div><div class="d-dot"></div><div class="d-dot"></div><div class="d-urlbar" style="width:200px;"></div></div>
         <div class="d-terminal">
           <div class="t-head">ANALYTICS RUNTIME — TLC Trip Record v2</div>
           <div class="t-dim">Findings: 20 &nbsp;·&nbsp; Quality Score: 70/100 &nbsp;·&nbsp; 496,218 outliers flagged</div>
@@ -717,22 +811,45 @@
       </div>
     </div>
     <div>
-      <div class="d-visual" style="min-height:320px;">
-        <div class="d-bar"><div class="d-dot"></div><div class="d-dot"></div><div class="d-dot"></div><div class="d-urlbar" style="width:160px;"></div></div>
-        <div class="d-tree">
-          <div class="tr-root">EngineOS/</div>
-          <div>├── <span class="tr-dir">OS/</span> &nbsp;<span class="tr-lbl">control plane &amp; governance</span></div>
-          <div>│ &nbsp;&nbsp;├── <span class="tr-dir">hooks/</span> &nbsp;<span class="tr-lbl">post-commit, pre-push dispatch</span></div>
-          <div>│ &nbsp;&nbsp;├── <span class="tr-dir">memory/</span> &nbsp;<span class="tr-lbl">knowledge articles + indexed maps</span></div>
-          <div>│ &nbsp;&nbsp;└── CLAUDE.md &nbsp;<span class="tr-lbl">authoritative operator rules</span></div>
-          <div>├── <span class="tr-dir">engines/</span> &nbsp;<span class="tr-lbl">isolated project tenants</span></div>
-          <div>│ &nbsp;&nbsp;└── <span class="tr-dir">data-analyst-intern/</span></div>
-          <div>│ &nbsp;&nbsp; &nbsp;&nbsp;├── pipeline/ &nbsp;<span class="tr-lbl">7-step analysis runtime</span></div>
-          <div>│ &nbsp;&nbsp; &nbsp;&nbsp;├── outputs/latest/ &nbsp;<span class="tr-lbl">promoted run artifacts</span></div>
-          <div>│ &nbsp;&nbsp; &nbsp;&nbsp;└── gui.py &nbsp;<span class="tr-lbl">PySide6 desktop UI</span></div>
-          <div>├── <span class="tr-dir">.claude/rules/</span> &nbsp;<span class="tr-lbl">rule shards (auto-loaded)</span></div>
-          <div>└── <span class="tr-dir">hooks/</span> &nbsp;<span class="tr-lbl">dispatch stubs → OS/hooks/</span></div>
-        </div>
+      <div class="d-visual" style="min-height:320px; padding: 28px 24px; display:flex; align-items:center; justify-content:center; background:#09090e;">
+        <svg viewBox="0 0 340 260" width="100%" style="max-width:340px;" xmlns="http://www.w3.org/2000/svg" font-family="'SF Mono','Fira Code',monospace">
+          <!-- Layer 1: Control Plane -->
+          <rect x="20" y="10" width="300" height="46" rx="6" fill="none" stroke="#3a3d5c" stroke-width="1.2"/>
+          <text x="36" y="29" font-size="7" fill="#6b6ea8" font-weight="700" letter-spacing="1.5">CONTROL PLANE</text>
+          <text x="36" y="44" font-size="8.5" fill="#9a9dc8">root / &nbsp; CLAUDE.md &nbsp; .claude/rules/</text>
+          <!-- Arrow down -->
+          <line x1="170" y1="56" x2="170" y2="76" stroke="#2a2d4a" stroke-width="1.2"/>
+          <polygon points="170,78 166,72 174,72" fill="#2a2d4a"/>
+          <text x="176" y="68" font-size="6.5" fill="#3a3d5c">hook dispatch</text>
+          <!-- Layer 2: OS Implementation -->
+          <rect x="20" y="80" width="300" height="76" rx="6" fill="none" stroke="#3a3d5c" stroke-width="1.2"/>
+          <text x="36" y="98" font-size="7" fill="#6b6ea8" font-weight="700" letter-spacing="1.5">OS IMPLEMENTATION</text>
+          <rect x="36" y="105" width="62" height="38" rx="4" fill="rgba(92,95,138,.08)" stroke="rgba(92,95,138,.25)" stroke-width="1"/>
+          <text x="42" y="119" font-size="7" fill="#7a7daa">hooks/</text>
+          <text x="42" y="131" font-size="6" fill="#4a4d6a">pre/post-tool</text>
+          <text x="42" y="140" font-size="6" fill="#4a4d6a">git dispatch</text>
+          <rect x="110" y="105" width="68" height="38" rx="4" fill="rgba(92,95,138,.08)" stroke="rgba(92,95,138,.25)" stroke-width="1"/>
+          <text x="116" y="119" font-size="7" fill="#7a7daa">memory/</text>
+          <text x="116" y="131" font-size="6" fill="#4a4d6a">knowledge +</text>
+          <text x="116" y="140" font-size="6" fill="#4a4d6a">indexed maps</text>
+          <rect x="190" y="105" width="112" height="38" rx="4" fill="rgba(92,95,138,.08)" stroke="rgba(92,95,138,.25)" stroke-width="1"/>
+          <text x="196" y="119" font-size="7" fill="#7a7daa">routines/ · plans/</text>
+          <text x="196" y="131" font-size="6" fill="#4a4d6a">5 daily runs · agents</text>
+          <text x="196" y="140" font-size="6" fill="#4a4d6a">DECISIONS.md</text>
+          <!-- Arrow down -->
+          <line x1="170" y1="156" x2="170" y2="174" stroke="#2a2d4a" stroke-width="1.2"/>
+          <polygon points="170,176 166,170 174,170" fill="#2a2d4a"/>
+          <text x="176" y="167" font-size="6.5" fill="#3a3d5c">engine isolation</text>
+          <!-- Layer 3: Engine Tenants -->
+          <rect x="20" y="178" width="300" height="68" rx="6" fill="none" stroke="#3a3d5c" stroke-width="1.2"/>
+          <text x="36" y="196" font-size="7" fill="#6b6ea8" font-weight="700" letter-spacing="1.5">ENGINE TENANTS</text>
+          <rect x="36" y="202" width="124" height="34" rx="4" fill="rgba(92,95,138,.06)" stroke="rgba(92,95,138,.2)" stroke-width="1"/>
+          <text x="44" y="215" font-size="7" fill="#7a7daa">data-analyst-intern/</text>
+          <text x="44" y="227" font-size="6" fill="#4a4d6a">pipeline · gui · outputs</text>
+          <rect x="172" y="202" width="130" height="34" rx="4" fill="rgba(92,95,138,.04)" stroke="rgba(92,95,138,.14)" stroke-width="1" stroke-dasharray="3,2"/>
+          <text x="180" y="215" font-size="7" fill="#4a4d6a">future engine /</text>
+          <text x="180" y="227" font-size="6" fill="#3a3d5a">isolated tenant slot</text>
+        </svg>
       </div>
     </div>
   </div>
@@ -768,7 +885,6 @@
     </div>
     <div>
       <div class="d-visual">
-        <div class="d-bar"><div class="d-dot"></div><div class="d-dot"></div><div class="d-dot"></div><div class="d-urlbar"></div></div>
         <div class="d-content">
           <div class="mock-section-label">Work Orders</div>
           <div class="mock-list">
@@ -914,6 +1030,38 @@
   <button id="lb-close" onclick="closeLightbox()">×</button>
   <img id="lb-img" src="" alt="">
 </div>
+
+<!-- FEATURED PROJECT -->
+<section id="featured" style="border-top: 1px solid var(--border);">
+  <div style="max-width:1100px;margin:0 auto;padding:100px 48px;">
+    <div class="featured-header">
+      <span class="featured-label">Featured Project — 01</span>
+      <button class="featured-open" onclick="openDetail(0)">Open full detail →</button>
+    </div>
+    <h2 class="featured-title">Cyber Readiness<br>Training Platform</h2>
+    <p class="featured-desc">Enterprise security training built for a 50+ person logistics team. Compliance-mapped modules, live TTX scenario exercises, and department-level analytics — 92% average completion rate in production.</p>
+    <div class="featured-grid">
+      <img src="assets/screenshots/cyber-admin-overview-light.png" alt="Admin overview dashboard" onclick="openLightbox(this.src)">
+      <img src="assets/screenshots/cyber-ttx-scenarios-light.png" alt="TTX scenario management" onclick="openLightbox(this.src)">
+      <img src="assets/screenshots/cyber-ttx-sessions-light.png" alt="TTX session tracking" onclick="openLightbox(this.src)">
+      <img src="assets/screenshots/cyber-learner-progress-light.png" alt="Learner progress analytics" onclick="openLightbox(this.src)">
+    </div>
+    <div class="featured-stat-row">
+      <div class="featured-stat">
+        <div class="featured-stat-val">92%</div>
+        <div class="featured-stat-lbl">Avg. Completion Rate</div>
+      </div>
+      <div class="featured-stat">
+        <div class="featured-stat-val">12</div>
+        <div class="featured-stat-lbl">Active Learners</div>
+      </div>
+      <div class="featured-stat">
+        <div class="featured-stat-val">React + Node + PG</div>
+        <div class="featured-stat-lbl">Full-Stack</div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ABOUT -->
 <section id="about">
