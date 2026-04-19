@@ -6,248 +6,349 @@
   <title>Projects — Arnett McMurray</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg:     #080808;
-      --surf:   #111010;
-      --surf2:  #1c1b1a;
-      --border: rgba(255,255,255,0.065);
-      --text:   #edebe6;
-      --muted:  #6b6865;
-      --faint:  #2e2c2a;
-      --font:   'Inter', system-ui, sans-serif;
+      --bg: #080b12;
+      --surface: #101726;
+      --surface-elevated: #18243a;
+      --text: #f5f8fe;
+      --muted: #a8b4c7;
+      --line: rgba(255,255,255,0.09);
+      --accent: #f59e0b;
+      --accent-soft: rgba(245,158,11,0.22);
+      --font-display: "Sora", "Inter", system-ui, sans-serif;
+      --font-body: "Inter", system-ui, sans-serif;
+      --ease: cubic-bezier(.2,.8,.2,1);
+      --shadow-surface: 0 24px 64px rgba(0,0,0,0.38);
+      --shadow-heavy: 0 44px 110px rgba(0,0,0,0.48);
     }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     html { font-size: 16px; scroll-behavior: smooth; }
     body {
-      font-family: var(--font);
-      background: var(--bg);
+      font-family: var(--font-body);
       color: var(--text);
+      background:
+        radial-gradient(1200px 760px at 88% -6%, rgba(245,158,11,0.16), transparent 58%),
+        radial-gradient(900px 620px at 2% 22%, rgba(245,158,11,0.08), transparent 54%),
+        linear-gradient(165deg, #080b12 0%, #0a111c 46%, #090d16 100%);
       min-height: 100dvh;
+      overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
-    body::after {
-      content: '';
-      position: fixed; inset: 0; pointer-events: none; z-index: 9999;
-      opacity: .038;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-size: 160px 160px;
-    }
-    ::-webkit-scrollbar { width: 3px; }
-    ::-webkit-scrollbar-thumb { background: var(--faint); border-radius: 2px; }
-
     nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 22px 48px;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 60;
+      padding: 22px 56px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid transparent;
+      transition: background .3s var(--ease), border-color .3s var(--ease), backdrop-filter .3s var(--ease);
     }
-    .nav-name {
-      font-size: .78rem; font-weight: 600; letter-spacing: .05em;
-      color: var(--text); text-decoration: none;
+    nav.scrolled {
+      background: rgba(8,11,18,0.72);
+      border-bottom-color: var(--line);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
     }
-    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .brand {
+      color: var(--text);
+      text-decoration: none;
+      font-size: .72rem;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-weight: 700;
+    }
+    .nav-links { display: flex; gap: 24px; list-style: none; }
     .nav-links a {
-      font-size: .72rem; font-weight: 500; letter-spacing: .1em;
-      text-transform: uppercase; color: var(--muted); text-decoration: none;
-      transition: color .2s;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .69rem;
+      text-transform: uppercase;
+      letter-spacing: .11em;
+      font-weight: 600;
+      transition: color .2s var(--ease);
     }
     .nav-links a:hover { color: var(--text); }
 
-    main { max-width: 860px; margin: 0 auto; padding: 140px 48px 120px; }
-
-    .page-eyebrow {
-      font-size: .6rem; font-weight: 600; letter-spacing: .22em;
-      text-transform: uppercase; color: var(--muted); margin-bottom: 16px;
+    main { padding: 128px 56px 90px; }
+    .head {
+      max-width: 900px;
+      margin-bottom: 48px;
+    }
+    .eyebrow {
+      color: var(--muted);
+      font-size: .67rem;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: inline-block;
     }
     h1 {
-      font-size: clamp(2.4rem,4vw,3.6rem); font-weight: 900;
-      letter-spacing: -.05em; line-height: .9; color: var(--text);
-      margin-bottom: 60px;
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 7vw, 6.8rem);
+      line-height: .84;
+      letter-spacing: -.04em;
+      margin-bottom: 18px;
+    }
+    .sub {
+      color: var(--muted);
+      max-width: 64ch;
+      line-height: 1.8;
+      font-size: 1rem;
     }
 
-    .sec-label {
-      font-size: .6rem; font-weight: 600; letter-spacing: .22em;
-      text-transform: uppercase; color: var(--muted);
-      display: flex; align-items: center; gap: 16px; margin-bottom: 32px;
+    .project-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
     }
-    .sec-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .project {
+      background: linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)), var(--surface);
+      border-radius: 18px;
+      box-shadow: var(--shadow-surface);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.09);
+    }
+    .project-top {
+      display: grid;
+      grid-template-columns: minmax(360px, 1.08fr) minmax(280px, .92fr);
+      gap: 18px;
+      padding: 20px;
+      align-items: end;
+    }
+    .media {
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow-heavy);
+      position: relative;
+    }
+    .media img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      transition: transform .45s var(--ease);
+    }
+    .media:hover img { transform: scale(1.03); }
+    .mini-media {
+      display: grid;
+      gap: 12px;
+      transform: translateY(18px);
+    }
+    .mini-media .media img { aspect-ratio: 16 / 9; }
+    .media-tag {
+      position: absolute;
+      left: 10px;
+      bottom: 10px;
+      border-radius: 8px;
+      padding: 5px 9px;
+      font-size: .61rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      font-weight: 700;
+      color: #ffe8bf;
+      background: rgba(8,11,18,0.76);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
 
-    .project-list { display: flex; flex-direction: column; gap: 0; margin-bottom: 80px; }
-
-    .project-item {
-      padding: 32px 0; border-bottom: 1px solid var(--border);
-      display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: start;
+    .project-body {
+      padding: 14px 22px 22px;
     }
-    .project-item:first-child { border-top: 1px solid var(--border); }
-
-    .proj-cat {
-      font-size: .58rem; font-weight: 600; letter-spacing: .18em;
-      text-transform: uppercase; margin-bottom: 10px;
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      margin-bottom: 12px;
+      align-items: center;
     }
-    .proj-title {
-      font-size: 1.25rem; font-weight: 800; letter-spacing: -.03em;
-      color: var(--text); margin-bottom: 12px;
+    .cat {
+      color: #f2d9aa;
+      font-size: .68rem;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-weight: 700;
     }
-    .proj-desc {
-      font-size: .84rem; font-weight: 400; line-height: 1.7;
-      color: var(--muted); margin-bottom: 16px; max-width: 520px;
+    .status {
+      color: #d8e8ff;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: .62rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-weight: 700;
     }
-    .proj-tags { display: flex; flex-wrap: wrap; gap: 5px; }
-    .proj-tag {
-      font-size: .6rem; font-weight: 500; letter-spacing: .04em; color: var(--muted);
-      background: var(--surf2); border: 1px solid var(--border); border-radius: 4px; padding: 3px 8px;
+    .title {
+      font-family: var(--font-display);
+      font-size: clamp(1.35rem, 2.2vw, 2rem);
+      letter-spacing: -.02em;
+      margin-bottom: 10px;
     }
-
-    .proj-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; flex-shrink: 0; }
-    .proj-status {
-      font-size: .6rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
-      border-radius: 100px; padding: 5px 12px; border: 1px solid;
+    .desc {
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: .95rem;
+      margin-bottom: 14px;
+      max-width: 76ch;
     }
-    .proj-link {
-      font-size: .68rem; font-weight: 600; letter-spacing: .08em;
-      text-transform: uppercase; text-decoration: none; color: var(--muted);
-      border: 1px solid var(--border); border-radius: 7px; padding: 8px 16px;
-      transition: .2s;
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
     }
-    .proj-link:hover { border-color: rgba(255,255,255,.2); color: var(--text); }
+    .tag {
+      color: #d9e7ff;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: .66rem;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      font-weight: 600;
+      background: rgba(255,255,255,0.02);
+    }
+    .links {
+      margin-top: 14px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .link {
+      color: var(--muted);
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 8px;
+      padding: 9px 13px;
+      font-size: .66rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      font-weight: 700;
+      transition: color .2s var(--ease), border-color .2s var(--ease);
+    }
+    .link:hover {
+      color: var(--text);
+      border-color: rgba(255,255,255,0.3);
+    }
 
     footer {
-      padding: 22px 48px; border-top: 1px solid var(--border);
-      display: flex; justify-content: space-between; align-items: center;
+      border-top: 1px solid var(--line);
+      padding: 22px 56px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: .69rem;
     }
-    footer span { font-size: .62rem; letter-spacing: .08em; color: var(--faint); }
+    @media (max-width: 1080px) {
+      nav, main, footer { padding-left: 28px; padding-right: 28px; }
+      .project-top { grid-template-columns: 1fr; }
+      .mini-media { transform: none; grid-template-columns: 1fr 1fr; }
+      footer { flex-direction: column; }
+    }
   </style>
 </head>
 <body>
+  <nav>
+    <a href="index.html" class="brand">Arnett McMurray</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="https://github.com/arnettmcmurray" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/arnett-mcmurray-948b85263/" target="_blank" rel="noopener">LinkedIn</a></li>
+    </ul>
+  </nav>
 
-<nav>
-  <a href="index.html" class="nav-name">Arnett McMurray</a>
-  <ul class="nav-links">
-    <li><a href="index.html#about">About</a></li>
-    <li><a href="projects.html">Projects</a></li>
-    <li><a href="https://github.com/arnettmcmurray" target="_blank" rel="noopener">GitHub</a></li>
-    <li><a href="https://www.linkedin.com/in/arnett-mcmurray-948b85263/" target="_blank" rel="noopener">LinkedIn</a></li>
-  </ul>
-</nav>
+  <main>
+    <header class="head">
+      <span class="eyebrow">Selected Work</span>
+      <h1>Projects</h1>
+      <p class="sub">Product-facing systems work, analytics runtime delivery, and operations-oriented full-stack builds. Each project emphasizes output quality and real execution behavior.</p>
+    </header>
 
-<main>
-  <p class="page-eyebrow">Selected Work</p>
-  <h1>Projects</h1>
-
-  <p class="sec-label">Featured</p>
-  <div class="project-list">
-
-    <div class="project-item">
-      <div>
-        <div class="proj-cat" style="color:#4a7c6f">Full-Stack · Security</div>
-        <div class="proj-title">Cyber Readiness Training Platform</div>
-        <p class="proj-desc">
-          Enterprise cybersecurity training platform built for logistics teams. React + TypeScript frontend,
-          Node.js API, PostgreSQL, Dockerized. Admin console with learner tracking, tabletop exercise modules
-          (TTX), After-Action Reports, and department-level performance analytics.
-        </p>
-        <div class="proj-tags">
-          <span class="proj-tag">React</span><span class="proj-tag">TypeScript</span>
-          <span class="proj-tag">Node.js</span><span class="proj-tag">PostgreSQL</span>
-          <span class="proj-tag">Docker</span>
+    <section class="project-stack">
+      <article class="project">
+        <div class="project-top">
+          <figure class="media">
+            <img src="assets/screenshots/five-eyes-landing.png" alt="Five Eyes platform landing view">
+            <figcaption class="media-tag">Landing Experience</figcaption>
+          </figure>
+          <div class="mini-media">
+            <figure class="media">
+              <img src="assets/screenshots/five-eyes-login.png" alt="Five Eyes secure login view">
+            </figure>
+            <figure class="media">
+              <img src="assets/screenshots/cyber-ttx-scenarios-light.png" alt="Training scenario control view">
+            </figure>
+          </div>
         </div>
-      </div>
-      <div class="proj-meta">
-        <span class="proj-status" style="color:#4a7c6f;border-color:rgba(74,124,111,.28)">Live</span>
-      </div>
-    </div>
-
-    <div class="project-item">
-      <div>
-        <div class="proj-cat" style="color:#8b6f3e">Data Engineering · Python</div>
-        <div class="proj-title">Analytics Runtime</div>
-        <p class="proj-desc">
-          Offline analytics engine: reads CSV, Excel, JSON — outputs KPI summaries, anomaly flags, trend charts,
-          and dashboard HTML with zero cloud dependency. PyInstaller-packaged as a standalone macOS app. Schema
-          detection, field mapping, and automated report generation built in. 2M+ rows processed locally.
-        </p>
-        <div class="proj-tags">
-          <span class="proj-tag">Python</span><span class="proj-tag">pandas</span>
-          <span class="proj-tag">Flask</span><span class="proj-tag">PyInstaller</span>
-          <span class="proj-tag">SQLite</span>
+        <div class="project-body">
+          <div class="meta">
+            <span class="cat">Full-Stack · Security</span>
+            <span class="status">Live</span>
+          </div>
+          <h2 class="title">Five Eyes Training Platform</h2>
+          <p class="desc">Operational cybersecurity training platform with role-based workflows, scenario execution management, and measurable readiness outputs across team structures.</p>
+          <div class="tags">
+            <span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">Node.js</span><span class="tag">PostgreSQL</span><span class="tag">Docker</span>
+          </div>
         </div>
-      </div>
-      <div class="proj-meta">
-        <span class="proj-status" style="color:#8b6f3e;border-color:rgba(139,111,62,.28)">v2.1 · Live</span>
-        <a href="https://github.com/arnettmcmurray/AnalyticsRuntime" target="_blank" rel="noopener" class="proj-link">GitHub ↗</a>
-      </div>
-    </div>
+      </article>
 
-    <div class="project-item">
-      <div>
-        <div class="proj-cat" style="color:#5c5f8a">Systems · AI Workflows</div>
-        <div class="proj-title">AI Ops Engine</div>
-        <p class="proj-desc">
-          Workspace-level AI control plane governing how agents retrieve knowledge, execute tasks, and log decisions.
-          3-layer OS model — control plane, OS process layer, engine tenants — with hook dispatch, memory retrieval
-          protocol, and structured output governance. Production system, not a demo.
-        </p>
-        <div class="proj-tags">
-          <span class="proj-tag">Python</span><span class="proj-tag">TypeScript</span>
-          <span class="proj-tag">Shell</span><span class="proj-tag">Git Hooks</span>
+      <article class="project">
+        <div class="project-top">
+          <figure class="media">
+            <img src="assets/screenshots/analytics-kpi-summary.png" alt="Analytics Runtime KPI summary dashboard">
+            <figcaption class="media-tag">Primary Output</figcaption>
+          </figure>
+          <div class="mini-media">
+            <figure class="media">
+              <img src="assets/screenshots/analytics-revenue-over-time.png" alt="Revenue over time chart">
+            </figure>
+            <figure class="media">
+              <img src="assets/screenshots/analytics-region-performance.png" alt="Regional performance view">
+            </figure>
+          </div>
         </div>
-      </div>
-      <div class="proj-meta">
-        <span class="proj-status" style="color:#5c5f8a;border-color:rgba(92,95,138,.28)">Operational</span>
-      </div>
-    </div>
-
-  </div>
-
-  <p class="sec-label">Supporting Work</p>
-  <div class="project-list">
-
-    <div class="project-item">
-      <div>
-        <div class="proj-cat" style="color:#7a5c4a">Full-Stack · Flask</div>
-        <div class="proj-title">Mechanic Shop POS Portal</div>
-        <p class="proj-desc">
-          Full-stack point-of-sale system: work order tracking, customer history, inventory, and invoicing.
-          Flask REST API with JWT auth, role-based access control, and full Swagger/OpenAPI documentation.
-          React frontend connected to live Render deployment with PostgreSQL persistent storage.
-        </p>
-        <div class="proj-tags">
-          <span class="proj-tag">Flask</span><span class="proj-tag">React</span>
-          <span class="proj-tag">PostgreSQL</span><span class="proj-tag">JWT</span>
-          <span class="proj-tag">Swagger</span><span class="proj-tag">Render</span>
+        <div class="project-body">
+          <div class="meta">
+            <span class="cat">Data Engineering · Python</span>
+            <span class="status">v2.1 Live</span>
+          </div>
+          <h2 class="title">Analytics Runtime</h2>
+          <p class="desc">Local-first analytics engine that ingests large datasets, extracts KPI signals, flags anomalies, and produces dashboard/report outputs without cloud dependency.</p>
+          <div class="tags">
+            <span class="tag">Python</span><span class="tag">pandas</span><span class="tag">Flask</span><span class="tag">PyInstaller</span><span class="tag">SQLite</span>
+          </div>
+          <div class="links">
+            <a class="link" href="https://github.com/arnettmcmurray/AnalyticsRuntime" target="_blank" rel="noopener">GitHub ↗</a>
+          </div>
         </div>
-      </div>
-      <div class="proj-meta">
-        <span class="proj-status" style="color:#7a5c4a;border-color:rgba(122,92,74,.28)">Deployed</span>
-      </div>
-    </div>
+      </article>
+    </section>
+  </main>
 
-    <div class="project-item">
-      <div>
-        <div class="proj-cat" style="color:#4a6b4a">Full-Stack · React Native</div>
-        <div class="proj-title">MyGrocer</div>
-        <p class="proj-desc">
-          Shared grocery list with real-time multi-user sync, item categorization, and smart suggestions.
-          React Native mobile-first with Firebase backend for real-time data synchronization.
-        </p>
-        <div class="proj-tags">
-          <span class="proj-tag">React Native</span><span class="proj-tag">Firebase</span>
-          <span class="proj-tag">TypeScript</span>
-        </div>
-      </div>
-      <div class="proj-meta">
-        <span class="proj-status" style="color:#4a6b4a;border-color:rgba(74,107,74,.28)">Complete</span>
-      </div>
-    </div>
+  <footer>
+    <span>&copy; 2026 Arnett McMurray</span>
+    <span>Data Systems Engineering</span>
+  </footer>
 
-  </div>
-</main>
-
-<footer>
-  <span>&copy; 2026 Arnett McMurray</span>
-  <span>Analytics Engineer</span>
-</footer>
-
+  <script>
+    const nav = document.querySelector("nav");
+    function syncNavState() {
+      nav.classList.toggle("scrolled", window.scrollY > 10);
+    }
+    syncNavState();
+    window.addEventListener("scroll", syncNavState, { passive: true });
+  </script>
 </body>
 </html>
